@@ -81,7 +81,7 @@ limit: 10000
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 ## theme: landscape
-theme: next
+theme: next-6.x
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
