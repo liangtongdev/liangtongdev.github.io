@@ -3,7 +3,7 @@ layout:     post
 title:      「工程在线」小结
 date:       2018-06-13 15:33:19
 author:     liangtong
-categories: Summary
+categories: summary
 tags: 知建
 
 ---
