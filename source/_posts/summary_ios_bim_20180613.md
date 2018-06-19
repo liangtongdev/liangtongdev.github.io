@@ -1,10 +1,10 @@
 ---
 layout:     post
-title:      「工程在线」小结
+title:      工程在线
 date:       2018-06-13 15:33:19
 author:     liangtong
 categories: summary
-tags: 知建
+tags: bim
 
 ---
 自2015年起，针对道桥、路桥、房屋建设等方面开发道桥系列应用(包括项目在线、BIM+、高新科技园区、路桥在线、地下工程建设等十多个应用)。2018年对该系列项目进行整合，衍生出「工程在线」。
