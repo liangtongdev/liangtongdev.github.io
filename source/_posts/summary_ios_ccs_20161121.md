@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      CCS中地图模式的切换
+title:      地图模式的切换
 date:       2016-11-21 15:33:19
 author:     liangtong
 categories: summary
