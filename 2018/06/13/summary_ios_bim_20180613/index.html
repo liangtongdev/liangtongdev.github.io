@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="自2015年起，针对道桥、路桥、房屋建设等方面开发道桥系列应用(包括项目在线、BIM+、高新科技园区、路桥在线、地下工程建设等十多个应用)。2018年对该系列项目进行整合，衍生出「工程在线」。本文补充记录开发移动iOS端「工程在线」过程中遇到的问题及解决方案。">
+<meta name="keywords" content="bim">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工程在线">
+<meta property="og:url" content="https://liangtongdev.github.io/2018/06/13/summary_ios_bim_20180613/index.html">
+<meta property="og:site_name" content="liangtong">
+<meta property="og:description" content="自2015年起，针对道桥、路桥、房屋建设等方面开发道桥系列应用(包括项目在线、BIM+、高新科技园区、路桥在线、地下工程建设等十多个应用)。2018年对该系列项目进行整合，衍生出「工程在线」。本文补充记录开发移动iOS端「工程在线」过程中遇到的问题及解决方案。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://liangtongdev.github.io/post/summary/bim_mode_20180613.png">
+<meta property="og:image" content="https://liangtongdev.github.io/post/summary/bim_offline_20180613.png">
+<meta property="og:image" content="https://liangtongdev.github.io/post/summary/bim_overview_20180613.png">
+<meta property="og:updated_time" content="2018-06-26T02:50:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="工程在线">
+<meta name="twitter:description" content="自2015年起，针对道桥、路桥、房屋建设等方面开发道桥系列应用(包括项目在线、BIM+、高新科技园区、路桥在线、地下工程建设等十多个应用)。2018年对该系列项目进行整合，衍生出「工程在线」。本文补充记录开发移动iOS端「工程在线」过程中遇到的问题及解决方案。">
+<meta name="twitter:image" content="https://liangtongdev.github.io/post/summary/bim_mode_20180613.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://liangtongdev.github.io/2018/06/13/summary_ios_bim_20180613/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>工程在线 | liangtong</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0403c36751ff449187ad333607a9b98f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liangtong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liangtongdev.github.io/2018/06/13/summary_ios_bim_20180613/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梁通">
+      <meta itemprop="description" content="2018，加油！">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liangtong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">工程在线
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-13 15:33:19" itemprop="dateCreated datePublished" datetime="2018-06-13T15:33:19+08:00">2018-06-13</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-06-26 10:50:04" itemprop="dateModified" datetime="2018-06-26T10:50:04+08:00">2018-06-26</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/summary/" itemprop="url" rel="index"><span itemprop="name">summary</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>自2015年起，针对道桥、路桥、房屋建设等方面开发道桥系列应用(包括项目在线、BIM+、高新科技园区、路桥在线、地下工程建设等十多个应用)。2018年对该系列项目进行整合，衍生出「工程在线」。<br>本文补充记录开发移动iOS端「工程在线」过程中遇到的问题及解决方案。</p>
+<a id="more"></a>
+<h3 id="项目模式"><a href="#项目模式" class="headerlink" title="项目模式"></a>项目模式</h3><p><img src="/post/summary/bim_mode_20180613.png" alt=""></p>
+<h4 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h4><p>移动应用中主要划分两类角色，侧重点不同。具体包括：</p>
+<ul>
+<li><strong>监管人员</strong> <ul>
+<li>可以理解为项目管理人员，监管权限下有多个项目的监管权限。</li>
+<li>监管人员有特定的功能模块。</li>
+<li>针对不同的项目，监管人员还有用不同的功能模块权限。</li>
+</ul>
+</li>
+<li><strong>项目使用人员</strong><ul>
+<li>具体项目的使用人员。主要针对其负责的项目(或者标段)进行操作。</li>
+</ul>
+</li>
+</ul>
+<p>项目具体类别有包括以下3大类：</p>
+<ul>
+<li>路桥类：比如黄河桥、农业路</li>
+<li>地铁类：比如地铁2号线、5号线</li>
+<li>园区类：比如高新科技园区</li>
+</ul>
+<p>项目的功能上具体跟项目挂钩，且部分功能，比如「问题上报」、「设计图纸」、「现场巡检」、「建设资料」要求支持离线操作。</p>
+<h4 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h4><p>将方案之前，补充说明下移动端使用的是MVMCV模式（可以理解成是MVVM模式的变种），简单理解就是将View-Model进行分解，将一些逻辑放在controller中。UI布局上使用Tabbar形式，分别表示首页、功能集聚页、待办页面。</p>
+<p><strong>程序在线/离线模式的切换，基于观察者模式来实现。</strong> 当网络状态发生变更的时候，可以通过主动获取和推送两种方式灵活使用。</p>
+<p><strong>项目首页模式的切换，基于状态模式来实现。</strong> 比如监管模式下，点击地图上项目详情，进入项目模式；项目模式下返回到首页时进入监管模式等。</p>
+<ul>
+<li><p>程序（或者功能）的在线/离线模式</p>
+<ul>
+<li>在管理程序的ViewModel，监听网络变更。变更时发通知。</li>
+<li>不同用户模式下程序在线/离线模式会根据网络情况进行反应。</li>
+<li>功能集聚页会额外根据网络变更通知即使调整功能图标。</li>
+<li>其他：比如具体离线功能内根据不同的模式进行UI调整。</li>
+</ul>
+</li>
+<li><p>项目首页的模式</p>
+<ul>
+<li>在首页的ViewModel，定义两种模式。<ul>
+<li>监管模式</li>
+<li>项目模式</li>
+</ul>
+</li>
+<li>监管人员<ul>
+<li>默认监管模式</li>
+<li>切换管理项目时，将首页模式调整为项目模式。并根据不同的项目类别，加载不同的项目首页<ul>
+<li>路桥首页</li>
+<li>地铁首页</li>
+<li>园区首页</li>
+</ul>
+</li>
+<li>项目首页返回到监管首页时，首页模式调整为监管模式</li>
+</ul>
+</li>
+<li>项目使用人员<ul>
+<li>项目模式，并根据不同的项目类别，加载不同的项目首页</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>功能集聚页</p>
+<ul>
+<li>为监管模式定义特殊的Key。</li>
+<li>项目模式使用约定的Key。</li>
+<li>功能列表根据不同的Key从缓存数据库中获取。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>应用中，首页模式的切换，联动着不同首页的push和pop；集聚功能页（及其他）获取具体功能的key变更。</p>
+</blockquote>
+<h3 id="离线操作"><a href="#离线操作" class="headerlink" title="离线操作"></a>离线操作</h3><p><img src="/post/summary/bim_offline_20180613.png" alt=""></p>
+<h4 id="描述-1"><a href="#描述-1" class="headerlink" title="描述"></a>描述</h4><p>程序的工作环境有时候比较特殊，比如地铁、房屋修建，经常会用到一些比如上报工作进度、问题，或者是查看项目相关的文档、模型等功能，如果应用对网络有强需求，那么程序本身是不容易让人接受的。因此，「工程在线」在项目整合之处，就要求同时支持离线操作模式。<br>此处拿问题上报的离线功能来举例。通常情况下，问题上报会涉及上传照片/视频、问题类别等多种条目。且功能的使用存在不确定性。iOS的沙盒机制决定了我们在进行离线功能设计的时候，不能仅仅依靠本地数据库，还需要借助于文件操作。</p>
+<h4 id="方案-1"><a href="#方案-1" class="headerlink" title="方案"></a>方案</h4><p>功能离线模式通过本地数据库和文件管理两种方式来完成。</p>
+<ul>
+<li>本地数据库<ul>
+<li>离线功能所需数据的缓存。<ul>
+<li>比如问题上报中涉及的位置、问题类别、相关人员等信息。</li>
+</ul>
+</li>
+<li>离线数据的维护。<ul>
+<li>比如URL，HTTP请求方式，参数，所属功能，文件夹标识，请求状态等。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>文件系统<ul>
+<li>程序会在Library的Cache目录下单独建立文件夹来存放离线功能产生/使用的文件。</li>
+<li>文件夹标识<ul>
+<li>使用唯一标识，程序使用yyyyMMddHHmmss格式。    </li>
+<li>在使用到照片/视频时，创建文件夹。且将过程中用到的文件移动/复制到该目录下。</li>
+<li>在线模式功能提交成功后，会删除该文件夹及内部文件。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>离线模式下，点击保存就是将相关的URL、HTTP请求方式、参数、文件标识存入离线数据库中。</p>
+<p>当程序处于网络状态下，程序会后台上传离线数据库中的相关请求数据。此时考虑到多文件、多请求上传会影响程序性能。程序在处理离线任务上传时，对网络请求进行了专门的控制。</p>
+<ul>
+<li>每次只有一个离线任务进行上传。</li>
+<li>上传完成后，删除数据库及文件缓存中相关的数据</li>
+<li>统计并提示最终离线任务结果。针对失败的任务，由用户自行决定是放弃还是后续上传。</li>
+</ul>
+<h3 id="项目总览"><a href="#项目总览" class="headerlink" title="项目总览"></a>项目总览</h3><p><img src="/post/summary/bim_overview_20180613.png" alt=""></p>
+<h4 id="描述-2"><a href="#描述-2" class="headerlink" title="描述"></a>描述</h4><p>部分用户(比如领导、项目管理人员)会比较关心项目整体情况，比如进度、问题、投入等信息。我们的设计师对项目总览功能页面设计出了很多手势相关的操作。功能整体上下滑动，内部左右滚动。<br>首先UI本身并不复杂，但是好的体验就需要用心去做了。比如，切换不同类别页面时，数据的预加载。不同类别的数据如何组织等。</p>
+<h4 id="方案-2"><a href="#方案-2" class="headerlink" title="方案"></a>方案</h4><p>整个项目总览页面使用UIPageViewController来实现，右侧的UIPageControl则通过实现UIPageViewController的相关协议来更新。在每个页面内部，根据具体的类别及数据源来更好的表现/维护代码。为了达到更好的用户体验，总览功能使用了一个viewModel来维护。</p>
+<ul>
+<li>总体<ul>
+<li>在UIPageViewController的Controller中，控制导航栏、PageControl。</li>
+<li>在总览页退出时，取消各个子页面中未完成的网络请求</li>
+</ul>
+</li>
+<li>子页面<ul>
+<li>为了保证数据的展示，建立一定的规则<ul>
+<li>比如为每个请求提供有3次重试的机会。这样当用户滑动过快时(或者某个接口太慢用户直接滑过相关页面时)，程序接口可以继续运行</li>
+</ul>
+</li>
+<li>针对不同数据源，选择合适的处理方法<ul>
+<li>比如进度对比页，需要支持多种摄像头设备现场。使用<strong>策略模式</strong>来针对不同设备进行登录/退出、视频通道等适配<ul>
+<li>大华硬盘录像机设备</li>
+<li>大华视频服务器设备</li>
+<li>海康威视硬盘录像机设备</li>
+<li>海康威视视频服务器设备</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="梁通 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="梁通 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/bim/" rel="tag"># bim</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/10/ios_node_file_manager_20180610/" rel="next" title="沙盒及文件的读写">
+                <i class="fa fa-chevron-left"></i> 沙盒及文件的读写
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="梁通" />
+            
+              <p class="site-author-name" itemprop="name">梁通</p>
+              <p class="site-description motion-element" itemprop="description">2018，加油！</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/liangtongdev" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:liangtongdev@163.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lidm1989.github.io" title="lidm1989" target="_blank">lidm1989</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#项目模式"><span class="nav-number">1.</span> <span class="nav-text">项目模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#描述"><span class="nav-number">1.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方案"><span class="nav-number">1.2.</span> <span class="nav-text">方案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#离线操作"><span class="nav-number">2.</span> <span class="nav-text">离线操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#描述-1"><span class="nav-number">2.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方案-1"><span class="nav-number">2.2.</span> <span class="nav-text">方案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目总览"><span class="nav-number">3.</span> <span class="nav-text">项目总览</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#描述-2"><span class="nav-number">3.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方案-2"><span class="nav-number">3.2.</span> <span class="nav-text">方案</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">梁通</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Pisces</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
