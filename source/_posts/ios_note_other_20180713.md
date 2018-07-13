@@ -17,8 +17,11 @@ tags: note
 
 
 #### Common
+
  > 存放系统宏定义、配置文件等
+
 #### View
+
 + View
  > 业务相关自定义View
 + Storyboard
@@ -27,12 +30,14 @@ tags: note
  > 共通的部分，比如消息相关
 
 #### Container
+
 + Controller
  > 业务页面容器
 + Base
  > 基类
 + Common
  > 共同部分，比如文件、网页容器等
+
 #### ViewModel
 
 + Util
@@ -48,7 +53,11 @@ tags: note
  > 数据库所有操作
 + FileManager
  > 沙盒操作
+
 #### Verdor
+
  > 除pod外的第三方代码，优先使用pod维护
+
 #### Resources
+
  > 资源文件
