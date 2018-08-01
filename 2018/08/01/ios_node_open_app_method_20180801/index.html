@@ -108,25 +108,25 @@
 
 
 
-  <meta name="description" content="这是一篇几年前就应该记的笔记，涉及到iOS沙盒内文件管理，今天给补上。 沙盒iOS系统为了保证安全，文件夹使用沙盒机制。如果你试图通过记录绝对路径的形式来访问沙盒内的文件，结果可能会让你失望。通常情况下，沙盒路径可以通过代码 NSHomeDirectory()获取。沙盒目录文件下，包含三个文件夹。分别是  Documents Library tmp">
+  <meta name="description" content="场景描述：   应用A打开应用B，（并向应用B传递参数）。应用B监听相应方法（并处理相应参数）   说明：应用分享需要真机环境，模拟器不可用 约定 约定打开应用标识，比如：ccs.eep.sippr 应用A配置程序 需要在程序 Info.plist 文件中添加以下字段  1234&amp;lt;key&amp;gt;LSApplicationQueriesSchemes&amp;lt;/key&amp;gt;&amp;lt;array&amp;">
 <meta name="keywords" content="note">
 <meta property="og:type" content="article">
-<meta property="og:title" content="沙盒及文件的读写">
-<meta property="og:url" content="https://liangtongdev.github.io/2018/06/10/ios_node_file_manager_20180610/index.html">
+<meta property="og:title" content="打开移动应用">
+<meta property="og:url" content="https://liangtongdev.github.io/2018/08/01/ios_node_open_app_method_20180801/index.html">
 <meta property="og:site_name" content="liangtong">
-<meta property="og:description" content="这是一篇几年前就应该记的笔记，涉及到iOS沙盒内文件管理，今天给补上。 沙盒iOS系统为了保证安全，文件夹使用沙盒机制。如果你试图通过记录绝对路径的形式来访问沙盒内的文件，结果可能会让你失望。通常情况下，沙盒路径可以通过代码 NSHomeDirectory()获取。沙盒目录文件下，包含三个文件夹。分别是  Documents Library tmp">
+<meta property="og:description" content="场景描述：   应用A打开应用B，（并向应用B传递参数）。应用B监听相应方法（并处理相应参数）   说明：应用分享需要真机环境，模拟器不可用 约定 约定打开应用标识，比如：ccs.eep.sippr 应用A配置程序 需要在程序 Info.plist 文件中添加以下字段  1234&amp;lt;key&amp;gt;LSApplicationQueriesSchemes&amp;lt;/key&amp;gt;&amp;lt;array&amp;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-06-26T02:50:04.000Z">
+<meta property="og:updated_time" content="2018-08-01T07:18:05.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="沙盒及文件的读写">
-<meta name="twitter:description" content="这是一篇几年前就应该记的笔记，涉及到iOS沙盒内文件管理，今天给补上。 沙盒iOS系统为了保证安全，文件夹使用沙盒机制。如果你试图通过记录绝对路径的形式来访问沙盒内的文件，结果可能会让你失望。通常情况下，沙盒路径可以通过代码 NSHomeDirectory()获取。沙盒目录文件下，包含三个文件夹。分别是  Documents Library tmp">
+<meta name="twitter:title" content="打开移动应用">
+<meta name="twitter:description" content="场景描述：   应用A打开应用B，（并向应用B传递参数）。应用B监听相应方法（并处理相应参数）   说明：应用分享需要真机环境，模拟器不可用 约定 约定打开应用标识，比如：ccs.eep.sippr 应用A配置程序 需要在程序 Info.plist 文件中添加以下字段  1234&amp;lt;key&amp;gt;LSApplicationQueriesSchemes&amp;lt;/key&amp;gt;&amp;lt;array&amp;">
 
 
 
 
 
 
-  <link rel="canonical" href="https://liangtongdev.github.io/2018/06/10/ios_node_file_manager_20180610/"/>
+  <link rel="canonical" href="https://liangtongdev.github.io/2018/08/01/ios_node_open_app_method_20180801/"/>
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>沙盒及文件的读写 | liangtong</title>
+  <title>打开移动应用 | liangtong</title>
   
 
 
@@ -315,7 +315,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liangtongdev.github.io/2018/06/10/ios_node_file_manager_20180610/">
+    <link itemprop="mainEntityOfPage" href="https://liangtongdev.github.io/2018/08/01/ios_node_open_app_method_20180801/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="梁通">
@@ -332,7 +332,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">沙盒及文件的读写
+          <h1 class="post-title" itemprop="name headline">打开移动应用
               
             
           </h1>
@@ -357,24 +357,12 @@
                 
               
 
-              <time title="创建时间：2018-06-10 21:00:00" itemprop="dateCreated datePublished" datetime="2018-06-10T21:00:00+08:00">2018-06-10</time>
+              <time title="创建时间：2018-08-01 00:00:00 / 修改时间：15:18:05" itemprop="dateCreated datePublished" datetime="2018-08-01T00:00:00+08:00">2018-08-01</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-06-26 10:50:04" itemprop="dateModified" datetime="2018-06-26T10:50:04+08:00">2018-06-26</time>
               
             
           </span>
@@ -425,41 +413,33 @@
       
 
       
-        <p>这是一篇几年前就应该记的笔记，涉及到iOS沙盒内文件管理，今天给补上。</p>
-<h3 id="沙盒"><a href="#沙盒" class="headerlink" title="沙盒"></a>沙盒</h3><p>iOS系统为了保证安全，文件夹使用沙盒机制。如果你试图通过记录绝对路径的形式来访问沙盒内的文件，结果可能会让你失望。<br>通常情况下，沙盒路径可以通过代码 <strong>NSHomeDirectory()</strong>获取。<br>沙盒目录文件下，包含三个文件夹。分别是</p>
+        <p>场景描述： </p>
+<blockquote>
+<p>应用A打开应用B，（并向应用B传递参数）。应用B监听相应方法（并处理相应参数）</p>
+</blockquote>
+<p> 说明：<strong>应用分享需要真机环境，模拟器不可用</strong></p>
+<h3 id="约定"><a href="#约定" class="headerlink" title="约定"></a>约定</h3><p> 约定打开应用标识，比如：ccs.eep.sippr</p>
+<h3 id="应用A"><a href="#应用A" class="headerlink" title="应用A"></a>应用A</h3><h4 id="配置程序"><a href="#配置程序" class="headerlink" title="配置程序"></a>配置程序</h4><p> 需要在程序 <strong>Info.plist</strong> 文件中添加以下字段</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;key&gt;LSApplicationQueriesSchemes&lt;/key&gt;</span><br><span class="line">&lt;array&gt;</span><br><span class="line">    &lt;string&gt;ccs.eepm.sippr&lt;/string&gt;</span><br><span class="line">&lt;/array&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="打开方法"><a href="#打开方法" class="headerlink" title="打开方法"></a>打开方法</h4><p> URL前缀，必须以 <strong>ccs.eepm.sippr://</strong> 开头。</p>
+<p> iOS 10及之后使用以下方法打开</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">NSURL *url  = [NSURL URLWithString:@&quot;ccs.eepm.sippr://&quot;];</span><br><span class="line">if ([[UIApplication sharedApplication] canOpenURL:url]) &#123;</span><br><span class="line">     [[UIApplication sharedApplication] openURL:url options:@&#123;&#125; completionHandler:^(BOOL success) &#123;</span><br><span class="line">          NSLog(@&quot;open status: %d&quot;,success);</span><br><span class="line">     &#125;];</span><br><span class="line">&#125;else&#123;</span><br><span class="line">     NSLog(@&quot;can not open ccs ...&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> iOS 10 之前使用以下方法打开</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">NSURL *url  = [NSURL URLWithString:@&quot;ccs.eepm.sippr://&quot;];</span><br><span class="line">if ([[UIApplication sharedApplication] canOpenURL:url]) &#123;</span><br><span class="line">     BOOL success = [[UIApplication sharedApplication] openURL:url];</span><br><span class="line">     NSLog(@&quot;open status: %d&quot;,success);</span><br><span class="line">&#125;else&#123;</span><br><span class="line">     NSLog(@&quot;can not open ccs ...&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h4><p>   参数传递类似HTTP GET请求的形式，例如传递的URL形式如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ccs.eepm.sippr://com.liangtong/module1/?from=liangtong&amp;value=test</span><br></pre></td></tr></table></figure>
+<h3 id="应用B"><a href="#应用B" class="headerlink" title="应用B"></a>应用B</h3><h4 id="配置程序-1"><a href="#配置程序-1" class="headerlink" title="配置程序"></a>配置程序</h4><p> 需要在程序 <strong>Info.plist</strong> 文件中添加以下字段</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;key&gt;CFBundleURLTypes&lt;/key&gt;</span><br><span class="line">&lt;array&gt;</span><br><span class="line">    &lt;dict&gt;</span><br><span class="line">        &lt;key&gt;CFBundleURLSchemes&lt;/key&gt;</span><br><span class="line">        &lt;array&gt;</span><br><span class="line">            &lt;string&gt;ccs.eepm.sippr&lt;/string&gt;</span><br><span class="line">        &lt;/array&gt;</span><br><span class="line">        &lt;/dict&gt;</span><br><span class="line">&lt;/array&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="处理请求"><a href="#处理请求" class="headerlink" title="处理请求"></a>处理请求</h4><p> 需要在 <strong>AppDelegate</strong> 协议回调方法进行如下实现，例如</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary *)options&#123;</span><br><span class="line">    if ([[url scheme] isEqualToString:@&quot;ccs.eepm.sippr&quot;]) &#123;</span><br><span class="line">        NSLog(@&quot;host = %@&quot;,[url host]);</span><br><span class="line">        NSLog(@&quot;path = %@&quot;,[url path]);</span><br><span class="line">        NSLog(@&quot;query = %@&quot;,[url query]);</span><br><span class="line">        NSLog(@&quot;relativePath = %@&quot;,[url relativePath]);</span><br><span class="line">        NSLog(@&quot;resourceSpecifier = %@&quot;,[url resourceSpecifier]);</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 控制台log信息如下：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2018-08-01 15:00:22.885475+0800 ALEForSH[1215:546607] host = com.liangtong</span><br><span class="line">2018-08-01 15:00:26.863281+0800 ALEForSH[1215:546607] path = /module1</span><br><span class="line">2018-08-01 15:00:26.863571+0800 ALEForSH[1215:546607] query = from=liangtong&amp;value=test</span><br><span class="line">2018-08-01 15:00:26.863627+0800 ALEForSH[1215:546607] relativePath = /module1</span><br><span class="line">2018-08-01 15:00:26.863701+0800 ALEForSH[1215:546607] resourceSpecifier = //com.liangtong/module1/?from=liangtong&amp;value=test</span><br></pre></td></tr></table></figure></p>
+<h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><p>为了防止被恶意打开，应用B可以对应用A的身份进行验证。比如通过 <strong>url scheme</strong> 的形式进行。</p>
 <ul>
-<li>Documents</li>
-<li>Library</li>
-<li>tmp</li>
+<li>首先验证应用来源URL的 <strong>url scheme</strong></li>
+<li>其次验证应用来源Info.plist文件的 <strong>CFBundleURLSchemes</strong></li>
 </ul>
-  <a id="more"></a>
-<h4 id="Documents"><a href="#Documents" class="headerlink" title="Documents"></a>Documents</h4><p>一般情况下存放程序产生的数据，比如程序内处理的图片。iTunes备份和恢复的时候会包括此目录。可以通过以下代码获取路径：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//宏定义的形式</span><br><span class="line">#define BIM_DOCUMENT_PATH ([NSHomeDirectory() stringByAppendingPathComponent:@&quot;Documents&quot;])</span><br><span class="line">//方法调用的形式</span><br><span class="line">NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>此处需要注意的是，该目录下不要保存从网络上下载的文件，否则上不了架</p>
-</blockquote>
-<h4 id="Library"><a href="#Library" class="headerlink" title="Library"></a>Library</h4><p>Library目录下包含两个子目录。路径获取方法同Documents类似，使用 <strong>NSLibraryDirectory</strong>。</p>
-<ul>
-<li>Caches</li>
-<li><p>Preferences</p>
-<h5 id="Caches"><a href="#Caches" class="headerlink" title="Caches"></a>Caches</h5><p>此目录用来保存程序需要持久化的数据，比如下载的数据、网络请求的临时数据等。这些数据需要用户负责删除。iTunes备份时，不备份该目录。</p>
-</li>
-</ul>
-<h5 id="Preferences"><a href="#Preferences" class="headerlink" title="Preferences"></a>Preferences</h5><p>此目录保存程序等偏好设置，系统的「设置」应用会在该目录下查找应用的设置信息。iTunes会同步备份该目录。在该目录下不能直接创建文件，而是通过系统的方法来获取并设置文件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSString *path = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).lastObject stringByAppendingPathComponent:@&quot;Preferences&quot;];</span><br></pre></td></tr></table></figure>
-<h4 id="tmp"><a href="#tmp" class="headerlink" title="tmp"></a>tmp</h4><p>此目录下保存程序运行时产生的临时数据，比如文件的下载，使用完毕后将对应的数据删除即可。通过<strong>NSTemporaryDirectory()</strong> 获取。程序没有运行时，系统也会清理该目录下的文件。iTunes同步备份时不会备份该目录。</p>
-<blockquote>
-<p>如果写过断点续下载，对该目录应该比较熟悉。</p>
-</blockquote>
-<h3 id="文件读写"><a href="#文件读写" class="headerlink" title="文件读写"></a>文件读写</h3><p>沙盒内文件读写使用<strong>NSFileManager</strong>来管理。</p>
-<h4 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">NSString* path = ...;</span><br><span class="line">NSFileManager *fileManager = [NSFileManager defaultManager];</span><br><span class="line">BOOL fileExists = [fileManager fileExistsAtPath:path];</span><br><span class="line">if (!fileExists) &#123;//判断文件是否存在</span><br><span class="line">    [fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];//创建文件夹</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="获取目录下文件"><a href="#获取目录下文件" class="headerlink" title="获取目录下文件"></a>获取目录下文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">NSFileManager *fileManager = [NSFileManager defaultManager];</span><br><span class="line">NSString* folderPath = ...;</span><br><span class="line">NSArray* fileList =[fileManager contentsOfDirectoryAtPath:folderPath error:nil];</span><br><span class="line">NSMutableArray* pathArray = [[NSMutableArray alloc] init];</span><br><span class="line">for (NSString* fileName in fileList) &#123;</span><br><span class="line">    NSString* filePath = [folderPath stringByAppendingPathComponent:fileName];</span><br><span class="line">    if (filePath) &#123;</span><br><span class="line">        [pathArray addObject:filePath];</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NSString* path = ...;</span><br><span class="line">NSFileManager *fileManager = [NSFileManager defaultManager];</span><br><span class="line">[fileManager removeItemAtPath:filePath error:nil];</span><br></pre></td></tr></table></figure>
-<h4 id="移动文件"><a href="#移动文件" class="headerlink" title="移动文件"></a>移动文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[NSFileManager defaultManager] moveItemAtPath:fromPath toPath:destPath error:&amp;error];</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p> 注：fromPath是位于沙盒内的路径。如果试图从Bundle中移动文件，那么你是没有权限滴！！</p>
-</blockquote>
-<h4 id="文件大小"><a href="#文件大小" class="headerlink" title="文件大小"></a>文件大小</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NSString* path = ...;</span><br><span class="line">NSFileManager *fileManager = [NSFileManager defaultManager];</span><br><span class="line">long long size = [[fileManager attributesOfItemAtPath:filePath error:nil] fileSize];</span><br></pre></td></tr></table></figure>
+<p>感觉微信就是这么搞的（猜测😄）</p>
+<h3 id="参数传递-1"><a href="#参数传递-1" class="headerlink" title="参数传递"></a>参数传递</h3><p>复制粘贴板 -（淘宝😄）</p>
 
       
     </div>
@@ -522,8 +502,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/06/04/ios_note_module_20180604/" rel="next" title="流式布局模块列表">
-                <i class="fa fa-chevron-left"></i> 流式布局模块列表
+              <a href="/2018/07/13/ios_note_other_20180713/" rel="next" title="iOS程序目录结构">
+                <i class="fa fa-chevron-left"></i> iOS程序目录结构
               </a>
             
           </div>
@@ -531,10 +511,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/06/13/summary_ios_bim_20180613/" rel="prev" title="工程在线">
-                工程在线 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -740,7 +716,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#沙盒"><span class="nav-number">1.</span> <span class="nav-text">沙盒</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Documents"><span class="nav-number">1.1.</span> <span class="nav-text">Documents</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Library"><span class="nav-number">1.2.</span> <span class="nav-text">Library</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Caches"><span class="nav-number">1.2.1.</span> <span class="nav-text">Caches</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Preferences"><span class="nav-number">1.2.2.</span> <span class="nav-text">Preferences</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tmp"><span class="nav-number">1.3.</span> <span class="nav-text">tmp</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件读写"><span class="nav-number">2.</span> <span class="nav-text">文件读写</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建目录"><span class="nav-number">2.1.</span> <span class="nav-text">创建目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取目录下文件"><span class="nav-number">2.2.</span> <span class="nav-text">获取目录下文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除文件"><span class="nav-number">2.3.</span> <span class="nav-text">删除文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#移动文件"><span class="nav-number">2.4.</span> <span class="nav-text">移动文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件大小"><span class="nav-number">2.5.</span> <span class="nav-text">文件大小</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#约定"><span class="nav-number">1.</span> <span class="nav-text">约定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用A"><span class="nav-number">2.</span> <span class="nav-text">应用A</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置程序"><span class="nav-number">2.1.</span> <span class="nav-text">配置程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#打开方法"><span class="nav-number">2.2.</span> <span class="nav-text">打开方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数传递"><span class="nav-number">2.3.</span> <span class="nav-text">参数传递</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用B"><span class="nav-number">3.</span> <span class="nav-text">应用B</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置程序-1"><span class="nav-number">3.1.</span> <span class="nav-text">配置程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理请求"><span class="nav-number">3.2.</span> <span class="nav-text">处理请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#验证"><span class="nav-number">3.3.</span> <span class="nav-text">验证</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数传递-1"><span class="nav-number">4.</span> <span class="nav-text">参数传递</span></a></li></ol></div>
             
 
           </div>
