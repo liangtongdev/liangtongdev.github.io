@@ -25,3 +25,9 @@ tags: miniprogram
  + 小程序开发难度不大。只要了解Web前端开发，很快就可以入手。
  + 同移动原生开发类似，善于利用网络资源。比如目前好多开源的小程序开源UI控件。 
 
+
+#### 链接
+
+附上链接地址：https://github.com/liangtongdev/WxWeather
+
+
