@@ -16,7 +16,7 @@ tags: miniprogram
  + 1天用来编写代码
 
 
-![](https://github.com/liangtongdev/WxWeather/blob/master/screenshot.png)
+![](https://github.com/liangtongdev/WxWeather/blob/master/screenshot.png?raw=true)
 
 
 
