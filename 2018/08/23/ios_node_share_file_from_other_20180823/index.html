@@ -108,25 +108,27 @@
 
 
 
-  <meta name="description" content="场景描述：   应用A打开应用B，（并向应用B传递参数）。应用B监听相应方法（并处理相应参数）   说明：应用分享需要真机环境，模拟器不可用 约定 约定打开应用标识，比如：ccs.eep.sippr 应用A配置程序 需要在程序 Info.plist 文件中添加以下字段  1234&amp;lt;key&amp;gt;LSApplicationQueriesSchemes&amp;lt;/key&amp;gt;&amp;lt;array&amp;">
+  <meta name="description" content="当某个应用无法查看/编辑某个文件时，可能会考虑使用其他应用打开。但是iOS沙盒机制前提下，我们对文件操作变得比较麻烦，本文介绍如何注册系统，打开其他应用分析的文件。  如何分享，可参照之前的文章。附上链接">
 <meta name="keywords" content="note">
 <meta property="og:type" content="article">
-<meta property="og:title" content="打开移动应用">
-<meta property="og:url" content="https://liangtongdev.github.io/2018/08/01/ios_node_open_app_method_20180801/index.html">
+<meta property="og:title" content="接受其他应用分享的文件">
+<meta property="og:url" content="https://liangtongdev.github.io/2018/08/23/ios_node_share_file_from_other_20180823/index.html">
 <meta property="og:site_name" content="liangtong">
-<meta property="og:description" content="场景描述：   应用A打开应用B，（并向应用B传递参数）。应用B监听相应方法（并处理相应参数）   说明：应用分享需要真机环境，模拟器不可用 约定 约定打开应用标识，比如：ccs.eep.sippr 应用A配置程序 需要在程序 Info.plist 文件中添加以下字段  1234&amp;lt;key&amp;gt;LSApplicationQueriesSchemes&amp;lt;/key&amp;gt;&amp;lt;array&amp;">
+<meta property="og:description" content="当某个应用无法查看/编辑某个文件时，可能会考虑使用其他应用打开。但是iOS沙盒机制前提下，我们对文件操作变得比较麻烦，本文介绍如何注册系统，打开其他应用分析的文件。  如何分享，可参照之前的文章。附上链接">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-01T07:18:05.000Z">
+<meta property="og:image" content="https://liangtongdev.github.io/post/note/share_file_20180823.png">
+<meta property="og:updated_time" content="2018-08-23T07:40:39.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="打开移动应用">
-<meta name="twitter:description" content="场景描述：   应用A打开应用B，（并向应用B传递参数）。应用B监听相应方法（并处理相应参数）   说明：应用分享需要真机环境，模拟器不可用 约定 约定打开应用标识，比如：ccs.eep.sippr 应用A配置程序 需要在程序 Info.plist 文件中添加以下字段  1234&amp;lt;key&amp;gt;LSApplicationQueriesSchemes&amp;lt;/key&amp;gt;&amp;lt;array&amp;">
+<meta name="twitter:title" content="接受其他应用分享的文件">
+<meta name="twitter:description" content="当某个应用无法查看/编辑某个文件时，可能会考虑使用其他应用打开。但是iOS沙盒机制前提下，我们对文件操作变得比较麻烦，本文介绍如何注册系统，打开其他应用分析的文件。  如何分享，可参照之前的文章。附上链接">
+<meta name="twitter:image" content="https://liangtongdev.github.io/post/note/share_file_20180823.png">
 
 
 
 
 
 
-  <link rel="canonical" href="https://liangtongdev.github.io/2018/08/01/ios_node_open_app_method_20180801/"/>
+  <link rel="canonical" href="https://liangtongdev.github.io/2018/08/23/ios_node_share_file_from_other_20180823/"/>
 
 
 
@@ -136,7 +138,7 @@
   };
 </script>
 
-  <title>打开移动应用 | liangtong</title>
+  <title>接受其他应用分享的文件 | liangtong</title>
   
 
 
@@ -315,7 +317,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liangtongdev.github.io/2018/08/01/ios_node_open_app_method_20180801/">
+    <link itemprop="mainEntityOfPage" href="https://liangtongdev.github.io/2018/08/23/ios_node_share_file_from_other_20180823/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="liangtong">
@@ -332,7 +334,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">打开移动应用
+          <h1 class="post-title" itemprop="name headline">接受其他应用分享的文件
               
             
           </h1>
@@ -357,7 +359,7 @@
                 
               
 
-              <time title="创建时间：2018-08-01 00:00:00 / 修改时间：15:18:05" itemprop="dateCreated datePublished" datetime="2018-08-01T00:00:00+08:00">2018-08-01</time>
+              <time title="创建时间：2018-08-23 16:00:00 / 修改时间：15:40:39" itemprop="dateCreated datePublished" datetime="2018-08-23T16:00:00+08:00">2018-08-23</time>
             
 
             
@@ -413,33 +415,14 @@
       
 
       
-        <p>场景描述： </p>
-<blockquote>
-<p>应用A打开应用B，（并向应用B传递参数）。应用B监听相应方法（并处理相应参数）</p>
-</blockquote>
-<p> 说明：<strong>应用分享需要真机环境，模拟器不可用</strong></p>
-<h3 id="约定"><a href="#约定" class="headerlink" title="约定"></a>约定</h3><p> 约定打开应用标识，比如：ccs.eep.sippr</p>
-<h3 id="应用A"><a href="#应用A" class="headerlink" title="应用A"></a>应用A</h3><h4 id="配置程序"><a href="#配置程序" class="headerlink" title="配置程序"></a>配置程序</h4><p> 需要在程序 <strong>Info.plist</strong> 文件中添加以下字段</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;key&gt;LSApplicationQueriesSchemes&lt;/key&gt;</span><br><span class="line">&lt;array&gt;</span><br><span class="line">    &lt;string&gt;ccs.eepm.sippr&lt;/string&gt;</span><br><span class="line">&lt;/array&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="打开方法"><a href="#打开方法" class="headerlink" title="打开方法"></a>打开方法</h4><p> URL前缀，必须以 <strong>ccs.eepm.sippr://</strong> 开头。</p>
-<p> iOS 10及之后使用以下方法打开</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">NSURL *url  = [NSURL URLWithString:@&quot;ccs.eepm.sippr://&quot;];</span><br><span class="line">if ([[UIApplication sharedApplication] canOpenURL:url]) &#123;</span><br><span class="line">     [[UIApplication sharedApplication] openURL:url options:@&#123;&#125; completionHandler:^(BOOL success) &#123;</span><br><span class="line">          NSLog(@&quot;open status: %d&quot;,success);</span><br><span class="line">     &#125;];</span><br><span class="line">&#125;else&#123;</span><br><span class="line">     NSLog(@&quot;can not open ccs ...&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> iOS 10 之前使用以下方法打开</p>
-   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">NSURL *url  = [NSURL URLWithString:@&quot;ccs.eepm.sippr://&quot;];</span><br><span class="line">if ([[UIApplication sharedApplication] canOpenURL:url]) &#123;</span><br><span class="line">     BOOL success = [[UIApplication sharedApplication] openURL:url];</span><br><span class="line">     NSLog(@&quot;open status: %d&quot;,success);</span><br><span class="line">&#125;else&#123;</span><br><span class="line">     NSLog(@&quot;can not open ccs ...&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h4><p>   参数传递类似HTTP GET请求的形式，例如传递的URL形式如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ccs.eepm.sippr://com.liangtong/module1/?from=liangtong&amp;value=test</span><br></pre></td></tr></table></figure>
-<h3 id="应用B"><a href="#应用B" class="headerlink" title="应用B"></a>应用B</h3><h4 id="配置程序-1"><a href="#配置程序-1" class="headerlink" title="配置程序"></a>配置程序</h4><p> 需要在程序 <strong>Info.plist</strong> 文件中添加以下字段</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;key&gt;CFBundleURLTypes&lt;/key&gt;</span><br><span class="line">&lt;array&gt;</span><br><span class="line">    &lt;dict&gt;</span><br><span class="line">        &lt;key&gt;CFBundleURLSchemes&lt;/key&gt;</span><br><span class="line">        &lt;array&gt;</span><br><span class="line">            &lt;string&gt;ccs.eepm.sippr&lt;/string&gt;</span><br><span class="line">        &lt;/array&gt;</span><br><span class="line">        &lt;/dict&gt;</span><br><span class="line">&lt;/array&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="处理请求"><a href="#处理请求" class="headerlink" title="处理请求"></a>处理请求</h4><p> 需要在 <strong>AppDelegate</strong> 协议回调方法进行如下实现，例如</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary *)options&#123;</span><br><span class="line">    if ([[url scheme] isEqualToString:@&quot;ccs.eepm.sippr&quot;]) &#123;</span><br><span class="line">        NSLog(@&quot;host = %@&quot;,[url host]);</span><br><span class="line">        NSLog(@&quot;path = %@&quot;,[url path]);</span><br><span class="line">        NSLog(@&quot;query = %@&quot;,[url query]);</span><br><span class="line">        NSLog(@&quot;relativePath = %@&quot;,[url relativePath]);</span><br><span class="line">        NSLog(@&quot;resourceSpecifier = %@&quot;,[url resourceSpecifier]);</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 控制台log信息如下：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2018-08-01 15:00:22.885475+0800 ALEForSH[1215:546607] host = com.liangtong</span><br><span class="line">2018-08-01 15:00:26.863281+0800 ALEForSH[1215:546607] path = /module1</span><br><span class="line">2018-08-01 15:00:26.863571+0800 ALEForSH[1215:546607] query = from=liangtong&amp;value=test</span><br><span class="line">2018-08-01 15:00:26.863627+0800 ALEForSH[1215:546607] relativePath = /module1</span><br><span class="line">2018-08-01 15:00:26.863701+0800 ALEForSH[1215:546607] resourceSpecifier = //com.liangtong/module1/?from=liangtong&amp;value=test</span><br></pre></td></tr></table></figure></p>
-<h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><p>为了防止被恶意打开，应用B可以对应用A的身份进行验证。比如通过 <strong>url scheme</strong> 的形式进行。</p>
-<ul>
-<li>首先验证应用来源URL的 <strong>url scheme</strong></li>
-<li>其次验证应用来源Info.plist文件的 <strong>CFBundleURLSchemes</strong></li>
-</ul>
-<p>感觉微信就是这么搞的（猜测😄）</p>
-<h3 id="参数传递-1"><a href="#参数传递-1" class="headerlink" title="参数传递"></a>参数传递</h3><p>复制粘贴板 -（淘宝😄）</p>
+        <p>当某个应用无法查看/编辑某个文件时，可能会考虑使用其他应用打开。但是iOS沙盒机制前提下，我们对文件操作变得比较麻烦，本文介绍如何注册系统，打开其他应用分析的文件。</p>
+<p><img src="/post/note/share_file_20180823.png" alt=""></p>
+<p>如何分享，可参照之前的文章。附上<a href="https://liangtongdev.github.io/2018/08/01/ios_node_share_to_app_20180801/">链接</a></p>
+ <a id="more"></a>
+<h3 id="配置程序plist文件"><a href="#配置程序plist文件" class="headerlink" title="配置程序plist文件"></a>配置程序plist文件</h3><p> 添加如下以下项</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;key&gt;CFBundleDocumentTypes&lt;/key&gt;</span><br><span class="line">&lt;array&gt;</span><br><span class="line">    &lt;dict&gt;</span><br><span class="line">        &lt;key&gt;CFBundleTypeName&lt;/key&gt;</span><br><span class="line">        &lt;string&gt;Office&lt;/string&gt;</span><br><span class="line">        &lt;key&gt;LSItemContentTypes&lt;/key&gt;</span><br><span class="line">        &lt;array&gt;</span><br><span class="line">            &lt;string&gt;public.item&lt;/string&gt;</span><br><span class="line">            &lt;string&gt;public.content&lt;/string&gt;</span><br><span class="line">            &lt;string&gt;public.text&lt;/string&gt;</span><br><span class="line">        &lt;/array&gt;</span><br><span class="line">    &lt;/dict&gt;</span><br><span class="line">&lt;/array&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="实现协议回调"><a href="#实现协议回调" class="headerlink" title="实现协议回调"></a>实现协议回调</h3><p>  实现 <strong>AppDelegate</strong> 的方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary&lt;UIApplicationOpenURLOptionsKey, id&gt; *)options&#123;</span><br><span class="line">    if (self.window) &#123;</span><br><span class="line">        if (url) </span><br><span class="line">            // path 比如：file:///private/var/mobile/Containers/Data/Application/xxx/Documents/Inbox/xxx.pdf</span><br><span class="line">            NSString *path = url.absoluteString; // 完整的url字符串</span><br><span class="line">//            NSString* decodePath = [path stringByRemovingPercentEncoding];</span><br><span class="line">            if ([path hasPrefix:@&quot;file://&quot;]) &#123; // 通过前缀来判断是文件</span><br><span class="line">                /**</span><br><span class="line">                 * 处理文件，比如保存，展示等</span><br><span class="line">                 **/</span><br><span class="line">                </span><br><span class="line">                return YES;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -502,8 +485,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/13/ios_note_other_20180713/" rel="next" title="iOS程序目录结构">
-                <i class="fa fa-chevron-left"></i> iOS程序目录结构
+              <a href="/2018/08/23/ios_gcd_semaphore_20180823/" rel="next" title="semaphore的使用">
+                <i class="fa fa-chevron-left"></i> semaphore的使用
               </a>
             
           </div>
@@ -511,10 +494,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/13/wx_node_miniprogram_weather_20180813/" rel="prev" title="微信小程序之天气预报">
-                微信小程序之天气预报 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -592,7 +571,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -726,7 +705,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#约定"><span class="nav-number">1.</span> <span class="nav-text">约定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用A"><span class="nav-number">2.</span> <span class="nav-text">应用A</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置程序"><span class="nav-number">2.1.</span> <span class="nav-text">配置程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#打开方法"><span class="nav-number">2.2.</span> <span class="nav-text">打开方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数传递"><span class="nav-number">2.3.</span> <span class="nav-text">参数传递</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用B"><span class="nav-number">3.</span> <span class="nav-text">应用B</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置程序-1"><span class="nav-number">3.1.</span> <span class="nav-text">配置程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理请求"><span class="nav-number">3.2.</span> <span class="nav-text">处理请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#验证"><span class="nav-number">3.3.</span> <span class="nav-text">验证</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数传递-1"><span class="nav-number">4.</span> <span class="nav-text">参数传递</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置程序plist文件"><span class="nav-number">1.</span> <span class="nav-text">配置程序plist文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现协议回调"><span class="nav-number">2.</span> <span class="nav-text">实现协议回调</span></a></li></ol></div>
             
 
           </div>

@@ -315,6 +315,195 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liangtongdev.github.io/2018/05/30/ios_node_privacy_location_20180530/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="liangtong">
+      <meta itemprop="description" content="想了想，还是 Hello World 吧！">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liangtong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/30/ios_node_privacy_location_20180530/" itemprop="url">
+                  位置服务授权适配
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-30 00:00:00" itemprop="dateCreated datePublished" datetime="2018-05-30T00:00:00+08:00">2018-05-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-06-26 10:50:04" itemprop="dateModified" datetime="2018-06-26T10:50:04+08:00">2018-06-26</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>iOS11系统针对位置服务授权字段描述进行了变更。iOS11之后如果不进行配置，则在使用位置时会提示如下信息</p>
+<p> 使用iBeacon技术，在程序不打开的情况下对区域进行监听时，需要将位置使用方式设置为Always。控制台出现以下log信息：</p>
+<blockquote>
+<p>This app has attempted to access privacy-sensitive data without a usage description. The app’s Info.plist must contain both NSLocationAlwaysAndWhenInUseUsageDescription and NSLocationWhenInUseUsageDescription keys with string values explaining to the user how the app uses this data</p>
+</blockquote>
+<p>意思是说在plist中需要设置请求位置服务的描述信息。字段名已经提供，只需要将info.plist中响应的字段修改下就可以了。</p>
+<p>若需要适配多个系统，则需要在info.plist中有针对性的添加如下信息：</p>
+<ul>
+<li><p>iOS11及之后系统</p>
+<ul>
+<li>NSLocationAlwaysAndWhenInUseUsageDescription</li>
+</ul>
+</li>
+<li><p>iOS11之前系统</p>
+<ul>
+<li>NSLocationAlwaysUsageDescription - 「始终」</li>
+<li>NSLocationWhenInUseUsageDescription - 「使用应用期间」</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://liangtongdev.github.io/2018/05/21/ios_note_algorithm_astar_20180521/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -655,189 +844,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liangtongdev.github.io/2017/10/16/share_usage_pod_20171016/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="liangtong">
-      <meta itemprop="description" content="想了想，还是 Hello World 吧！">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="liangtong">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/16/share_usage_pod_20171016/" itemprop="url">
-                  CocoaPods个人代码组件管理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-10-16 14:25:19" itemprop="dateCreated datePublished" datetime="2017-10-16T14:25:19+08:00">2017-10-16</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-06-26 10:50:04" itemprop="dateModified" datetime="2018-06-26T10:50:04+08:00">2018-06-26</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/share/" itemprop="url" rel="index"><span itemprop="name">share</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><a href="https://cocoapods.org/" target="_blank" rel="noopener">Cocoapods</a>是非常好用的一个iOS依赖管理工具，使用它可以方便的管理和更新项目中所使用到的第三方库，本节介绍如何将自己的组件代码交由它去管理。</p>
-<h3 id="创建Git仓库"><a href="#创建Git仓库" class="headerlink" title="创建Git仓库"></a>创建Git仓库</h3><p>  根据GitHub提示操作即可，建立自己的Git仓库。 </p>
-<h3 id="创建podspec文件"><a href="#创建podspec文件" class="headerlink" title="创建podspec文件"></a>创建podspec文件</h3><p>  终端直接执行以下命令，创建Pod项目工程文件，例如要创建一个叫做 <strong>LTChat</strong> 的Pod工程，命令执行成功后，会看到一个叫做 <strong>LTChat.podspec</strong> 的文件。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod spec create "LTChat"</span><br></pre></td></tr></table></figure>
-<p><img src="/post/share/github_pod_create_1.png" alt=""></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/10/16/share_usage_pod_20171016/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -884,7 +895,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
