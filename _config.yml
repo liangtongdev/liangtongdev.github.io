@@ -83,6 +83,13 @@ limit: 10000
 ## theme: landscape
 theme: next-6_x
 
+
+# sitemap
+Plugins:
+- hexo-generator-sitemap
+sitemap:
+  path: sitemap.xml
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
