@@ -95,6 +95,8 @@ baidusitemap:
 
 google_site_verification: 9KXTTa8tuuse9iILjkzFWzLNiBo3w3GtZtjUHQTf6C8
 
+baidu_analytics: 0403c36751ff449187ad333607a9b98f
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
