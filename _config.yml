@@ -90,6 +90,11 @@ Plugins:
 sitemap:
   path: sitemap.xml
 
+baidusitemap:
+  path: baidusitemap.xml
+
+google_site_verification: 9KXTTa8tuuse9iILjkzFWzLNiBo3w3GtZtjUHQTf6C8
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
