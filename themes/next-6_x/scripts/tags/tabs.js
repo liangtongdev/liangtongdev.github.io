@@ -33,15 +33,15 @@ function postTabs(args, content) {
     var tabIcon       = tabParameters[1] || '';
     var tabHref       = '';
 
-    postContent = hexo.render.renderSync({text: postContent, engine: 'markdown'});
+    postContent = hexo.render.renderSync({text: postContent, engine: 'markdown'}).trim();
 
     tabId += 1;
     tabHref = (tabName + ' ' + tabId).toLowerCase().split(' ').join('-');
 
     ((tabCaption.length === 0) && (tabIcon.length === 0)) && (tabCaption = tabName + ' ' + tabId);
 
-    var isOnlyicon = tabIcon.length > 0 && tabCaption.length === 0 ? 'style="text-align: center;' : '';
-    tabIcon.length > 0 && (tabIcon = '<i class="fa fa-' + tabIcon.trim() + '"' + isOnlyicon + '"></i>');
+    var isOnlyicon = tabIcon.length > 0 && tabCaption.length === 0 ? ' style="text-align: center;"' : '';
+    tabIcon.length > 0 && (tabIcon = '<i class="fa fa-' + tabIcon.trim() + '"' + isOnlyicon + '></i>');
 
     var isActive = (tabActive > 0 && tabActive === tabId) || (tabActive === 0 && tabId === 1) ? ' active' : '';
     tabNav += '<li class="tab' + isActive + '"><a href="#' + tabHref + '">' + tabIcon + tabCaption.trim() + '</a></li>';
@@ -55,3 +55,5 @@ function postTabs(args, content) {
 }
 
 hexo.extend.tag.register('tabs', postTabs, {ends: true});
+hexo.extend.tag.register('subtabs', postTabs, {ends: true});
+hexo.extend.tag.register('subsubtabs', postTabs, {ends: true});
