@@ -10,9 +10,6 @@
 
   <div id="posts" class="posts-expand">
     {{ post_template.render(page) }}
-
-    {% include '_custom/google_ad.swig' %}
-    
   </div>
 
 {% endblock %}

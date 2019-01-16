@@ -20,8 +20,4 @@
 
 {% block sidebar %}
   {{ sidebar_template.render(false) }}
-
-    <div>
-    {% include '_custom/google_ad.swig' %}
-  </div>
 {% endblock %}
