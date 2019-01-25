@@ -20,6 +20,10 @@ Objetive-C的消息发送，是通过objc_msgSend来实现的，具体执行过�
 
 
 
+ <!-- more -->
+
+
+
 ----
 
 
