@@ -6,6 +6,7 @@ author:     liangtong
 catalog: true
 categories: iOS
 tags: note
+cover: /img/objc.jpeg
 
 ---
 
