@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Runtime之@dynamic关键字
+title:      Objective-C对象的分类
 date:       2019-01-26 13:50:12
 author:     liangtong
 catalog: true
