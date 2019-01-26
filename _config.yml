@@ -13,7 +13,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://liangtongdev.github.io
+url: http://www.liangtong.site
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -50,7 +50,7 @@ highlight:
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
   path: ''
-  per_page: 3
+  per_page: 6
   order_by: -date
   
 # Category & Tag
@@ -81,7 +81,7 @@ limit: 10000
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 ## theme: landscape
-theme: next-6_x
+theme: diaspora
 
 
 # sitemap

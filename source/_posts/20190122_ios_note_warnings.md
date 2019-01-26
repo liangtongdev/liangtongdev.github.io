@@ -5,7 +5,8 @@ date:       2019-01-22 10:50:12
 author:     liangtong
 catalog: true
 categories: iOS
-tags: note
+tags: note 
+cover: /img/objc.jpeg
 
 ---
 
