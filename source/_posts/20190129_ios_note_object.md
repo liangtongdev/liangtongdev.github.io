@@ -16,6 +16,10 @@ tags: note
 
 
 
+ <!-- more -->
+ 
+
+
 #### 源码
 
 我们知道，`Objective-C`中，通常情况下，我们新建类都会继承于`NSObject`。那么，我们就从NSObject开始吧。
