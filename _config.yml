@@ -81,7 +81,7 @@ limit: 10000
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 ## theme: landscape
-theme: next-6_x
+theme: maupassant
 
 
 # sitemap
