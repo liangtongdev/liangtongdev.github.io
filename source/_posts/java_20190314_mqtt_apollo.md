@@ -71,6 +71,6 @@ create mybroker之后会在bin目录下生成mybroker文件夹。
 ![login-success.png](https://upload-images.jianshu.io/upload_images/16014538-f6de6840682fb6ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/840)
 
 
-OK，搞定。下一篇介绍SpringBoot集成MQTT消息推送功能！
+OK，搞定。下一篇介绍SpringBoot集成MQTT消息发布功能！
 
 
