@@ -13,6 +13,11 @@ tags: mqtt
 实现MQTT协议的中间件，目前使用的是Apache-Apollo服务器。
 接上篇，本文介绍如何在SpringBoot上集成MQTT消息订阅功能。
 
+
+ <!-- more -->
+
+
+
 #### SpringBoot
 
 使用`idea`新建`Spring Initializr`工程，过程省略，使用`Maven`对项目依赖进行管理，配置过程省略。
@@ -63,9 +68,6 @@ spring:
 ```
 
 在配置文件中，我们设置两个订阅主题`hello`和`world`
-
- <!-- more -->
-
 
 
 #### SpringBoot配置类
