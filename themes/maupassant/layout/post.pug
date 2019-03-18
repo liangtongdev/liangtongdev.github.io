@@ -12,11 +12,6 @@ block content
         span.category
           for category in page.categories.toArray()
             a(href=url_for(category.path))= category.name
-      if theme.busuanzi == true
-        script(async='', src='//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js')
-        span#busuanzi_container_site_pv  | 本站总访问量
-        span#busuanzi_value_site_pv  | 次
-          span= ' ' + __('Hits')
       if theme.wordcount == true
         include _partial/wordcount.pug
     if theme.disqus
