@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:       I/O 重定向
-date:       2019-03-20 12:00:00
+date:       2019-03-20 08:00:00
 author:     liangtong
 catalog: true
 categories: 操作系统

@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      常用命令
-date:       2019-03-19 13:51:43
+date:       2019-03-19 21:51:43
 author:     liangtong
 catalog: true
 categories: 操作系统
@@ -9,9 +9,7 @@ tags: shell
 
 ---
 
-  
 
-常用命令
 
 + ls cp 复制文件或目录
 + file mv 移动/重命名文件和目录

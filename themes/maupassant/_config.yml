@@ -72,6 +72,9 @@ menu:
   - page: about
     directory: about/
     icon: fa-user
+  - page: history
+    directory: history/
+    icon: fa-history
   - page: rss
     directory: atom.xml
     icon: fa-rss
@@ -92,11 +95,11 @@ links:
 
 timeline:
   - num: 1
-    word: 2014/06/12-Start
+    word: 2015/09/20-开始使用Jekyll做博客
   - num: 2
-    word: 2014/11/29-XXX
+    word: 2017/08/04-使用Hexo模版
   - num: 3
-    word: 2015/02/18-DDD
+    word: 2019/01/25-注册域名:http://www.liangtong.site
   - num: 4
     word: More
 
