@@ -72,9 +72,6 @@ menu:
   - page: about
     directory: about/
     icon: fa-user
-  # - page: history
-  #   directory: history/
-  #   icon: fa-history
   - page: rss
     directory: atom.xml
     icon: fa-rss
