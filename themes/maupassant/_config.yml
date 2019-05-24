@@ -17,17 +17,17 @@ gitalk:
   client_secret:  ## GitHub client secret, e.g. ec2fb9054972c891289640354993b662f4cccc50
   admin:  ## Github repo owner and collaborators, only these guys can initialize github issues.
 valine: ## https://valine.js.org
-  enable: false ## If you want to use Valine comment system, please set the value to true.
-  appid: ## Your LeanCloud application App ID, e.g. pRBBL2JR4N7kLEGojrF0MsSs-gzGzoHsz
-  appkey: ## Your LeanCloud application App Key, e.g. tjczHpDfhjYDSYddzymYK1JJ
+  enable: true ## If you want to use Valine comment system, please set the value to true.
+  appid: b4NoTNpM7bWgldECesJq4Lyc-gzGzoHsz ## Your LeanCloud application App ID, e.g. pRBBL2JR4N7kLEGojrF0MsSs-gzGzoHsz
+  appkey: KXoQP7VEFXlssuenNaq2F470 ## Your LeanCloud application App Key, e.g. tjczHpDfhjYDSYddzymYK1JJ
   notify: false ## Mail notifier, see https://github.com/xCss/Valine/wiki/Valine-评论系统中的邮件提醒设置
   verify: false ## Validation code.
-  placeholder: Just so so ## Comment box placeholders.
+  placeholder: 评论区... ## Comment box placeholders.
   avatar: 'mm' ## Gravatar type, see https://github.com/xCss/Valine/wiki/avatar-setting-for-valine
   pageSize: 10 ## Number of comments per page.
-  guest_info: nick,mail,link ## Attributes of reviewers.
+  guest_info: nick,mail ##,link ## Attributes of reviewers.
 
-show_ad_post: true  ##设置为 true
+show_ad_post: false  ##设置为 true
 
 google_search: true ## Use Google search, true/false.
 baidu_search: false ## Use Baidu search, true/false.
@@ -72,9 +72,9 @@ menu:
   - page: about
     directory: about/
     icon: fa-user
-  - page: history
-    directory: history/
-    icon: fa-history
+  # - page: history
+  #   directory: history/
+  #   icon: fa-history
   - page: rss
     directory: atom.xml
     icon: fa-rss
@@ -93,15 +93,15 @@ links:
   - title: 简书
     url: https://www.jianshu.com/u/39237a8a7121
 
-timeline:
-  - num: 1
-    word: 2015/09/20-开始使用Jekyll做博客
-  - num: 2
-    word: 2017/08/04-使用Hexo模版
-  - num: 3
-    word: 2019/01/25-注册域名:http://www.liangtong.site
-  - num: 4
-    word: More
+# timeline:
+#   - num: 1
+#     word: 2015/09/20-开始使用Jekyll做博客
+#   - num: 2
+#     word: 2017/08/04-使用Hexo模版
+#   - num: 3
+#     word: 2019/01/25-注册域名:http://www.liangtong.site
+#   - num: 4
+#     word: More
 
 # Static files
 js: js
