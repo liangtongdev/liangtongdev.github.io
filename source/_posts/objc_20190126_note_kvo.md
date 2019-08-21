@@ -280,7 +280,7 @@ context为监听上下文，由add方法回传
   + `didChangeValueForKey:`
   + 最终触发`observeValueForKeyPath:ofObject:change:context:`
 
-![断点.png](https://upload-images.jianshu.io/upload_images/16014538-0129cd6f93af2985.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/540)
+![断点.png](/post/oc/20190126/断点.png)
 
 当我们重写`automaticallyNotifiesObserversForKey:`方法，对name`的相关自动调用`willChangeValueForKey:`和`didChangeValueForKey:`方法返回**NO**时，KVO未触发，表明直接修改成员变量的值不会触发KVO。
 

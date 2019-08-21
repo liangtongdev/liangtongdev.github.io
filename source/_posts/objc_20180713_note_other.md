@@ -23,41 +23,59 @@ tags: objc
 #### View
 
 + View
- > 业务相关自定义View
+
+  业务相关自定义View
+
 + Storyboard
- > Storyboard文件
+
+  Storyboard文件
+
 + Common
- > 共通的部分，比如消息相关
+
+  共通的部分，比如消息相关
 
 #### Container
 
 + Controller
- > 业务页面容器
+
+  业务页面容器
+
 + Base
- > 基类
+
+  基类
+
 + Common
- > 共同部分，比如文件、网页容器等
+
+  共同部分，比如文件、网页容器等
 
 #### ViewModel
 
 + Util
- > 比如错误码处理
+
+  比如错误码处理
+
 + ViewModel
- > 各业务对应的ViewModel
+
+  各业务对应的ViewModel
+
 + Common
- > 网络访问，数据解析等
+
+  网络访问，数据解析等
 
 #### Model
 
 + Database
- > 数据库所有操作
+
+  数据库所有操作
+
 + FileManager
- > 沙盒操作
+
+  沙盒操作
 
 #### Verdor
 
- > 除pod外的第三方代码，优先使用pod维护
+​	除pod外的第三方代码，优先使用pod维护
 
 #### Resources
 
- > 资源文件
+​	资源文件

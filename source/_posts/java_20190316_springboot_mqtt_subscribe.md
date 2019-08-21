@@ -210,11 +210,11 @@ public interface MqttGateway {
 使用`Postman`发送一条`topic`为`test`的消息和一条`topic`为`hello`的消息。
 控制台中，打印出以下info
 
-![console.png](https://upload-images.jianshu.io/upload_images/16014538-fef38f0ff2548c40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/840)
+![console.png](/post/java/20190316/console.png)
 
 `Apollo`后台，我们可以看到以下记录
 
-![apollo.png](https://upload-images.jianshu.io/upload_images/16014538-84a7abe4813c9a7e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/840)
+![apollo.png](/post/java/20190316/apollo.png)
 
 
 
@@ -222,11 +222,11 @@ public interface MqttGateway {
 将`SpringBoot`项目打成`jar`包，然后运行。
 之后使用`Postman`发送一条`topic`为`hello`的消息。可以看到两个订阅端都收到了消息
 
-![multi-client-console.png](https://upload-images.jianshu.io/upload_images/16014538-4da86f22c6f16b39.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/840)
+![multi-client-console.png](/post/java/20190316/multi-client-apollo.png)
 
 `Apollo`后台，我们可以看到consumer的数量已经变更为2
 
-![multi-client-apollo.png](https://upload-images.jianshu.io/upload_images/16014538-91b1fa6bbfffc938.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/840)
+![multi-client-apollo.png](/post/java/20190316/multi-client-console.png)
 
 
 

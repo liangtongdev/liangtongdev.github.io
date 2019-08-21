@@ -10,7 +10,7 @@ tags: objc
 ---
 
 
-![分类.png](https://upload-images.jianshu.io/upload_images/16014538-e948362d0a9cc983.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![分类.png](/post/oc/20190126/分类.png)
 
 #### Ojbective-C对象
 
@@ -40,7 +40,7 @@ tags: objc
 
 ---
 
-![流程.png](https://upload-images.jianshu.io/upload_images/16014538-a22965a574e53a67.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/840)
+![流程.png](/post/oc/20190126/流程.png)
 
 
 #### isa指针

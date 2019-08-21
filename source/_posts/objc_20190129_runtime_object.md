@@ -24,7 +24,7 @@ tags: runtime
 
 我们知道，`Objective-C`中，通常情况下，我们新建类都会继承于`NSObject`。那么，我们就从NSObject开始吧。
 
-![NSObject.png](https://upload-images.jianshu.io/upload_images/16014538-80e58f2fc9f3ce8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/640)
+![NSObject.png](/post/oc/20190129/NSObject.png)
 
 
 
@@ -34,12 +34,12 @@ tags: runtime
 
 接上图，然后我们点击能进入查看`Class`的定义。发现她是一结构体`objc_class`指针。
 
-![Class.png](https://upload-images.jianshu.io/upload_images/16014538-22bddedaa8f6f332.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/640)
+![Class.png](/post/oc/20190129/Class.png)
 
 
 同时，我们也看到了我们常用的`id`其实是一个叫`objc_object`的结构体指针。继续，查看`objc_class`的实现
 
-![objc_class.png](https://upload-images.jianshu.io/upload_images/16014538-e87d21a6da6c8b97.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/640)
+![objc_class.png](/post/oc/20190129/objc_class.png)
 
 我们看到，`objc_class`继承于`objc_object`，而且还包含了其他一些信息，稍后再详细介绍这些字段具体作用。
 
@@ -51,7 +51,7 @@ tags: runtime
 
 继续，查看`objc_object`信息。
 
-![objc_object.png](https://upload-images.jianshu.io/upload_images/16014538-6c63d74798c11808.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/640)
+![objc_object.png](/post/oc/20190129/objc_object.png)
 
 我们在`objc_object`中看到了一个`isa_t`类别的成员变量，终于找到了传说中的`isa`（**异常兴奋！**）
 
@@ -59,12 +59,12 @@ tags: runtime
 
 那么，`isa_t`具体是什么类型呢，继续我们发现，她原来是一个`union 共用体`，不仅可以用来存储类的指针信息，还可以用来表示`位域`（或者`位段`，可以用来存储更多的信息）。
 
-![isa_t-1.png](https://upload-images.jianshu.io/upload_images/16014538-cac74cdac7caf670.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/640)
+![isa_t-1.png](/post/oc/20190129/isa_t-1.png)
 
 
 `位域`详情定义如下：
 
-![isa_t-2.png](https://upload-images.jianshu.io/upload_images/16014538-54fc7ec8b2f6c85c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/640)
+![isa_t-2.png](/post/oc/20190129/isa_t-2.png)
 
 
 这里介绍下各个位的作用
@@ -162,7 +162,7 @@ tags: runtime
 首先，占用空间大小比较优势很明显；其次，`位域`使用的`位运算`对处理器来说，效率是很高的
 
 
-![bit_field.png](https://upload-images.jianshu.io/upload_images/16014538-a977d3c48ef471ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/640)
+![bit_field.png](/post/oc/20190129/bit_field.png)
 
 ##### isa_t的Class(objc_class)
 
@@ -181,9 +181,9 @@ tags: runtime
 
 
 
-![class_rw_t.png](https://upload-images.jianshu.io/upload_images/16014538-00ce0e9217be04f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/640)
+![class_rw_t.png](/post/oc/20190129/class_rw_t.png)
 
-![class_ro_t.png](https://upload-images.jianshu.io/upload_images/16014538-91d1dd77e9089774.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/640)
+![class_ro_t.png](/post/oc/20190129/class_ro_t.png)
 
 
 + ISA指针

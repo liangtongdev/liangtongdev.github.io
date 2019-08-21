@@ -203,16 +203,16 @@ public class MessageApiController {
 启动`SpringBootApplication` 。
 使用`Postman`发送一条`topic`为`test-topic`的消息。
 
-![postman.png](https://upload-images.jianshu.io/upload_images/16014538-49dd89bb3382e856.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/840)
+![postman.png](/post/java/20190315/postman.png)
 
 
 控制台中，打印出以下info
 
-![console.png](https://upload-images.jianshu.io/upload_images/16014538-8e19edd38be6e5aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/840)
+![console.png](/post/java/20190315/console.png)
 
 `Apollo`后台，我们可以看到一个主题为`test-topic`的记录
 
-![apollo.png](https://upload-images.jianshu.io/upload_images/16014538-f6322bc593274eff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/840)
+![apollo.png](/post/java/20190315/apollo.png)
 
 
 
