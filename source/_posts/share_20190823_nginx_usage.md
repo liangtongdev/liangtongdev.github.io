@@ -56,6 +56,7 @@ upstream还可以为每个设备设置状态值
 
 #### 轮询（默认）
 
+```nginx config
 upstream kanbanser  {
   server 127.0.0.1:8080;
   server 127.0.0.1:8090;
@@ -73,21 +74,26 @@ server {
             proxy_set_header Host $host:$server_port;
         }
     }
+```
 
 #### 权重
 
+```nginx config
 upstream kanbanser  {
   server 127.0.0.1:8080 weight=2;
   server 127.0.0.1:8090 weight=1;
 }
+```
 
 #### ip_hash
 
+```nginx config
 upstream kanbanser  {
   ip_hash; 
   server 127.0.0.1:8080;
   server 127.0.0.1:8090;
 }
+```
 
 
 ### HTTP服务器（包含动静分离）
