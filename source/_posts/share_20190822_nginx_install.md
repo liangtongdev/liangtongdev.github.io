@@ -26,9 +26,7 @@ sudo make install
 
 #### 修改配置
 
-默认编译后路径/usr⁩/local⁩/nginx⁩，可以将文件夹copy到其他路径中
-
-/usr⁩/local⁩/nginx⁩/⁨conf⁩/nginx.config 
+默认编译后路径/usr⁩/local⁩/nginx⁩，配置文件路径： /usr⁩/local⁩/nginx⁩/⁨conf⁩/nginx.config 
 
 ```config
     server {
