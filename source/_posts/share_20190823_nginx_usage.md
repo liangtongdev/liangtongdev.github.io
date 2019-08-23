@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Nginx的用法
+title:      nginx的主要功能及用法
 date:       2019-08-23 11:40:27
 author:     liangtong
 catalog: true
@@ -13,17 +13,15 @@ Nginx主要功能：1、反向代理 2、负载均衡 3、HTTP服务器（包含
 
 ### 反向代理
 
-反向代理应该是 Nginx 做的最多的一件事了，什么是反向代理呢，以下是百度百科的说法：反向代理（Reverse Proxy）方式是指以代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给 internet 上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器。简单来说就是真实的服务器不能直接被外部网络访问，所以需要一台代理服务器，而代理服务器能被外部网络访问的同时又跟真实服务器在同一个网络环境，当然也可能是同一台服务器，端口不同而已。 
-
 例如以下配置，本地监听9090端口，接收到请求http://localhost:9090/kanban时，转向localhost:8080服务，一个服务器不同端口代理。
 
 ```nginx config
 server {
         listen       9090;
         server_name  localhost;
-        autoindex	on;
-        autoindex_exact_size	on;
-        autoindex_localtime	on;
+        autoindex on;
+        autoindex_exact_size  on;
+        autoindex_localtime on;
         #charset utf-8;
         #access_log  logs/host.access.log  main;
         location /kanban {
@@ -32,6 +30,9 @@ server {
         }
     }
 ```
+
+反向代理应该是 Nginx 做的最多的一件事了，什么是反向代理呢，以下是百度百科的说法：反向代理（Reverse Proxy）方式是指以代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给 internet 上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器。简单来说就是真实的服务器不能直接被外部网络访问，所以需要一台代理服务器，而代理服务器能被外部网络访问的同时又跟真实服务器在同一个网络环境，当然也可能是同一台服务器，端口不同而已。 
+
 
 ### 负载均衡
 
