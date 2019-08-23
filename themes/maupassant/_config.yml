@@ -20,8 +20,8 @@ valine: ## https://valine.js.org
   enable: true ## If you want to use Valine comment system, please set the value to true.
   appid: b4NoTNpM7bWgldECesJq4Lyc-gzGzoHsz ## Your LeanCloud application App ID, e.g. pRBBL2JR4N7kLEGojrF0MsSs-gzGzoHsz
   appkey: KXoQP7VEFXlssuenNaq2F470 ## Your LeanCloud application App Key, e.g. tjczHpDfhjYDSYddzymYK1JJ
-  notify: false ## Mail notifier, see https://github.com/xCss/Valine/wiki/Valine-评论系统中的邮件提醒设置
-  verify: false ## Validation code.
+  notify: true ## Mail notifier, see https://github.com/xCss/Valine/wiki/Valine-评论系统中的邮件提醒设置
+  verify: true ## Validation code.
   placeholder: 评论区... ## Comment box placeholders.
   avatar: 'mm' ## Gravatar type, see https://github.com/xCss/Valine/wiki/avatar-setting-for-valine
   pageSize: 10 ## Number of comments per page.
