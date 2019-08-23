@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Mysql blocked
+title:      MYSQL blocked
 date:       2019-08-23 09:07:43
 author:     liangtong
 catalog: true
