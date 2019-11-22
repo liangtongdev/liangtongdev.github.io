@@ -27,7 +27,7 @@ valine: ## https://valine.js.org
   pageSize: 10 ## Number of comments per page.
   guest_info: nick,mail ##,link ## Attributes of reviewers.
 
-show_ad_post: false  ##设置为 true
+show_ad_post: true  ##设置为 true
 
 google_search: true ## Use Google search, true/false.
 baidu_search: false ## Use Baidu search, true/false.
