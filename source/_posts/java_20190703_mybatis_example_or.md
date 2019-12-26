@@ -50,3 +50,9 @@ tags: mybatis
         example.or(criteria2);
 ```
 
+```Java
+
+        KanbanDeviceAuthorizeExample example = new KanbanDeviceAuthorizeExample();
+        example.or().andNameLike("%11%").andandMacEqualTo("22");
+        example.or().andMacLike("%11%").andandMacEqualTo("44");
+```
