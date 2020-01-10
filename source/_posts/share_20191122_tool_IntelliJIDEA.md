@@ -28,12 +28,12 @@ tags: tool
 -javaagent:/xxxx/jetbrains-agent.jar # xxxx为具体的路径
 ```
 
-> **注：jetbrains-agent.jar路径一定要填写正确**
+**注：jetbrains-agent.jar路径一定要填写正确**
 
  * 打开工具**IntelliJ IDEA**，然后在弹框中依次选择 **Configure -> Manage License...** （也可通过其他路径，总之是打开license认证窗口）
  * 选择 **Activation code** 选项，然后输入框中输入具体License即可
 
-> 具体License内容请参照文件，需要注意的是，如果之前已经有license，请先点击移除然后重新认证
+**具体License内容请参照文件，需要注意的是，如果之前已经有license，请先点击移除然后重新认证**
 
 + 点击OK，见证奇迹的时刻！
 
