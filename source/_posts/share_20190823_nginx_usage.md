@@ -9,11 +9,14 @@ tags: nginx
 
 ---
 
+
+
+
 Nginx主要功能：1、反向代理 2、负载均衡 3、HTTP服务器（包含动静分离） 4、正向代理 。
 
 ### 反向代理
 
-例如以下配置，本地监听9090端口，接收到请求http://localhost:9090/kanban时，转向localhost:8080服务，一个服务器不同端口代理。
+例如以下配置，本地监听9090端口，接收到请求`http://localhost:9090/kanban`时，转向localhost:8080服务，一个服务器不同端口代理。
 
 ```nginx config
 server {
@@ -100,7 +103,7 @@ upstream kanbanser  {
 
 Nginx本身也是一个静态资源的服务器，当只有静态资源的时候，就可以使用Nginx来做服务器，同时现在也很流行动静分离，就可以通过Nginx来实现，首先看看Nginx做静态资源服务器。
 
-比如以下配置，将http://localhost:9090的以「htm|html」结尾的请求静态资源，从html文件夹下查找。
+比如以下配置，将 `http://localhost:9090` 的以「htm|html」结尾的请求静态资源，从html文件夹下查找。
 
 
 ```nginx config
