@@ -1,0 +1,180 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="个人博客"><title>网络是如何通信的 - 3.从网线到网络设备（探索集线器、交换机和路由器） | 技术小屋</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create','UA-146373511-1','auto');ga('send','pageview');
+</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = 'https://hm.baidu.com/hm.js?' + '6e30653711aac2cc552b0ecb94df5e77';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.0.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">网络是如何通信的 - 3.从网线到网络设备（探索集线器、交换机和路由器）</h1><a id="logo" href="/.">技术小屋</a><p class="description">积水成渊、 积土成山</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">网络是如何通信的 - 3.从网线到网络设备（探索集线器、交换机和路由器）</h1><div class="post-meta">2020-01-03<span> | </span><span class="category"><a href="/categories/xx%E6%98%AF%E5%A6%82%E4%BD%95xx%E7%9A%84/">xx是如何xx的</a></span></div><a class="disqus-comment-count" href="/2020/01/03/network_20200103_note_3_%E4%BB%8E%E7%BD%91%E7%BA%BF%E5%88%B0%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87%EF%BC%88%E6%8E%A2%E7%B4%A2%E9%9B%86%E7%BA%BF%E5%99%A8%E3%80%81%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%92%8C%E8%B7%AF%E7%94%B1%E5%99%A8%EF%BC%89/#vcomment"><span class="valine-comment-count" data-xid="/2020/01/03/network_20200103_note_3_%E4%BB%8E%E7%BD%91%E7%BA%BF%E5%88%B0%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87%EF%BC%88%E6%8E%A2%E7%B4%A2%E9%9B%86%E7%BA%BF%E5%99%A8%E3%80%81%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%92%8C%E8%B7%AF%E7%94%B1%E5%99%A8%EF%BC%89/"></span><span> 条评论</span></a><div class="post-content"><h3 id="信号在网线和集线器中传输"><a href="#信号在网线和集线器中传输" class="headerlink" title="信号在网线和集线器中传输"></a>信号在网线和集线器中传输</h3><p><strong>每个包都是独立传输</strong>。网络包从客户端计算机发出后，要经过集线器、交换机和路由器最终进入互联网。实际上家用的路由器已经集成了集线器和交换机的功能。</p>
+<p>网卡中的PHY（MAU）模块负责将包转换成电信号，通过RJ-45接口进入双绞线。以太网信号的本质是正负变换的电压。</p>
+<p>信号从RJ-45接口的1号和2号针脚流入网线，通过网线到达集线器接口；</p>
+<p>信号达到集线器时，出现衰减（信号干扰，能量损失等），一般网线越长，信号衰减越严重。电信号的频率越高，能量的损失率越大（高频信号会释放更多的电磁波，这些电磁波会带走一部分能量，就造成了能量的损失）。</p>
+<p>局域网中使用双绞线（两根网线一组缠绕在一起），<strong>双绞的设计是为了抑制噪声的影响</strong>。</p>
+<blockquote>
+<p>噪声的产生的原因是网线周围的电磁波，当电磁波接触到金属等导体时，在其中会产生电流。因此如果网线周围存在电磁波，就会在网线中产生于原本信号不同的电流。由于信号本身也是一种带有电压变化的电流，其本质和噪音产生的电流是一样的所以信号和噪声的电流就会混杂在一起，导致信号的波形发生失真，这就是噪声的影响</p>
+</blockquote>
+<p>影响网线的电磁波分2种，一种是由电机、荧光灯、CRT显示器等设备泄漏出来的电磁波，这种电磁波来自网线之外的其他设备。</p>
+<blockquote>
+<p>信号线是用金属做成的，当电磁波接触到信号线时，会沿电磁波传播的右旋方向产生电流，这种电流会导致波形失真。如果将信号线缠绕在一起，信号就变成了螺旋形，两根信号线中产生的噪声电流就会相反，从而使得噪声电流互相抵消，噪声就得到了抑制（噪声被消弱）。</p>
+</blockquote>
+<p>另一种电磁波是从网线中相邻的信号线泄漏出来的，由于传输的信号本身就是一种电流，当电流流过时候会对周围产生电磁场，这些电磁波对于其他信号来说就成了噪音，这种内部产生的噪音成为串扰。这种噪声的强度并不高，<strong>距离发生源越远，电磁波就会因扩散变得越弱</strong>。但问题是噪声源太近了，这些电磁源也能够在相邻的信号线中产生感应电流。</p>
+<blockquote>
+<p>抑制这种噪声，关键在于双绞线的缠绕方式。在一根网线中，每对信号线的纽绞间距都有一定的差异，这使得某些地方正信号线距离近，某些地方负信号距离近。由于政府信号产生的噪声影响是相反的，两者就会相互抵消。从网线整体来看，正负的分布保持平衡，能笑若噪声的影响。</p>
+</blockquote>
+<blockquote>
+<p>另外从工艺上也能帮助提升性能，例如在信号线之间加入搁板保持距离，以及在外边包裹可以阻挡电磁波的金属屏蔽网等</p>
+</blockquote>
+<h4 id="集线器将信号发往所有线路"><a href="#集线器将信号发往所有线路" class="headerlink" title="集线器将信号发往所有线路"></a>集线器将信号发往所有线路</h4><p><strong>当信号到达集线器后，会被广播到整个网络中的所有设备</strong>。然后由设备根据接收方MAC地址判断是否接收包。</p>
+<p>集线器的每个接口的后边装有和网卡种的PHY（MAU）功能相同的模块，如果他们像网卡段一样采用直连接方式，是无法正常接收信号的。要接收信号，必须将“发送线路”和“接收线路”连接起来，采用交叉接线的方式连接。</p>
+<p><strong>集线器接口中有一个MDI/MDI-X切换开关。</strong></p>
+<p><strong>MDI就是对RJ-45接口和信号收发模块进行直连接线，MDI-X则是交叉接线。</strong>集线器的接口一般都是MDI-X模式，要将两台集线器相连时，就需要将其中一台改成MDI模式；如果集线器上没有MDI切换开关，所有接口均为MDI-X时，可以用交叉网线连接两台集线器。</p>
+<p><strong>使用交叉线可以将一侧的发送信号和另一次的接收信号连接起来。这样可以不使用集线器就能将两台计算机连接</strong></p>
+<blockquote>
+<p>1 - 2 - 3 - 4 -5 - 6 - 7 - 8</p>
+<p>3 -6 - 1 - 7 - 8 - 2 - 4 - 5</p>
+</blockquote>
+<p>信号到达集线器的PHY（MAU）模块后，会进入中继电路。中继电路的基本功能就是将输入的信号广播到集线器上的所有端口上。信号从所有的端口流出，到达连接在集线器上的所有设备。然后这些设备根据MAC头部的接收方MAC地址判断是不是发给自己的。这样网络包就能够到达指定MAC地址的接收方了。</p>
+<blockquote>
+<p>这个过程适用于客户端、服务器、路由器等所有具有收发以太网网络包设备功能等设备。</p>
+</blockquote>
+<h3 id="交换机的包转发操作"><a href="#交换机的包转发操作" class="headerlink" title="交换机的包转发操作"></a>交换机的包转发操作</h3><p><strong>交换机等设计是将网络包原样转发到目的地</strong>。交换机内部有一张MAC地址和网线端口的对应表。当接收到包时，会将响应的端口号和发送方MAC地址写入表中，这样就可以根据地址判断出该设备连接在哪个端口上了。交换机就是根据这些信息判断应该把包转发到哪里</p>
+<p><strong>交换机工作原理</strong></p>
+<ul>
+<li>信号到达网络接口，由PHY（MAU）模块进行接收。（MDI-X模式进行连接）</li>
+<li>PHY（MAU）将网线中的信号转换成通用格式，然后传递给MAC模块（注：交换机MAC模块不具备MAC地址）</li>
+<li>MAC模块将信号转换为数字信息，然后通过尾部的FCS校验错误，没有错误的话放入缓冲区</li>
+<li>查询这个包的接收方MAC地址是否存在于MAC地址表中<ul>
+<li>MAC地址表主要包含两个信息，一个是设备的MAC地址，另一个是该设备连接在交换机的哪个端口上</li>
+</ul>
+</li>
+<li>当网络包通过交换机到达发送端口时，端口中的MAC模块和PHY（MAU）模块会执行响应的发送操作，将信号发送到网线中</li>
+</ul>
+<p><strong>MAC地址表的维护</strong></p>
+<p>交换机在转发包的过程中，还需要对MAC地址表的内容进行维护。</p>
+<p>收到包时写入，将发送方MAC地址及交换机接收的端口号写入MAC地址表中。</p>
+<p>删除地址表中的记录。只要在一段时间不使用（几分钟），就自动删除</p>
+<p><strong>特殊操作</strong></p>
+<ul>
+<li>交换机接收到包后，查询地址表之后发现目标端口和这个包的源端口是同一个端口，则直接丢弃</li>
+<li>地址表中找不到指定的MAC地址。将包转发到除了源端口之外的所有端口</li>
+<li>如果接收方MAC地址是一个广播地址（MAC:FF:FF:FF:FF:FF:FF 和 IP:255:255:255:255），将包转发到除源端口之外的所有端口</li>
+</ul>
+<p><strong>全双工模式可以同时进行发送和接收</strong></p>
+<p>同时进行收发操作，是交换机特有的工作模式。使用双绞线时，发送和接收信号线各自独立，不会发生信号碰撞</p>
+<p><strong>自动协商：确定最优的传输速率</strong></p>
+<p>在以太网中，当没有数据在传输时，网络中会填充一种被称为连接脉冲的脉冲信号。从而能够检测对方是否正常工作。以太网设备的网线接口周围有个绿色的LED指示灯，表示是否检测到正常的脉冲信号。如果灯亮，说明PHY（MAU）模块以及网线连接正常。</p>
+<p>假设连接双方：一方支持所有速率和工作模式，交换机只支持100 Mbit/s 全双工模式。当两台设备通电并完成硬件初始化之后，就会利用脉冲信号发送自己支持的速率和工作模式。对方接收到信号之后会通过读取脉冲信号的排列来判断对方支持的模式，然后看看双方都支持的模式有哪些，根据优先级选择最优的模式100 Mbit/s 全双工</p>
+<p><strong>交换机可同时执行多个转发操作</strong>，因此从整体能力来看，高于集线器</p>
+<h3 id="路由器的包转发操作"><a href="#路由器的包转发操作" class="headerlink" title="路由器的包转发操作"></a>路由器的包转发操作</h3><p>网络包经过集线器和交换机之后，到达路由器。并在此被转发到下一个路由器。</p>
+<p><strong>转发模块：负责判断包的转发目的地；端口模块：负责包的收发操作，例如ADSL、FTTH、无线局域网等</strong></p>
+<p>端口模块会根据相应通信技术的规范来执行包收发操作，这意味着端口模块是以实际的发送方或者接收方的身份来收发网络包的。</p>
+<p>以以太网端口为例，路由器的端口具有MAC地址，因此它就能够成为以太网发送方和接收方。端口还有IP地址，从这个意义上来说，他和计算机的网卡是一样的。当转发包时，首先路由器端口会接收发送给自己的以太网包，然后查询转发目标，再由相应的端口作为发送方将以太网包发送出去。<strong>这一点是和交换机不同的，交换机只进行包的转发，并不称为发送方或者接收方</strong></p>
+<p><strong>路由表中的信息</strong></p>
+<p>和交换机的大题思路类似，交换机通过MAC地址头部的接收方MAC地址来判断转发目标，而路由器则是根据IP地址头部的IP地址来判断的，由于使用的IP地址不同，记录转发目标的表的内容也会不同。</p>
+<p><strong>路由器根据“IP地址”判断转发目标。</strong></p>
+<p><strong>路由表的主要信息包括以下</strong>：</p>
+<ul>
+<li>目标地址 和子网掩码  - <strong>路由器在转发匹配的时候，会忽略主机号，只匹配网络号</strong></li>
+<li>网关 和 接口 - 路由器将网络包交给匹配记录对应的网络接口（即端口），并转发到网关列中指定的IP地址</li>
+<li>跃点：表示目标IP地址的距离是远还是近，数字越小表示越近。</li>
+</ul>
+<p>路由表记录维护的方式和交换机也有所不同，<strong>交换机中对MAC地址表的维护是包转发操作中的一个步骤，而路由器中对路由表的维护是与包转发操作相互独立的。</strong>大体上分为两类：</p>
+<ul>
+<li>人手动维护路由表</li>
+<li>根据路由协议机制（比如RIP、OSPC、BGP等），通过路由器之间的信息交换自行维护路由表的记录</li>
+</ul>
+<h4 id="路由器的包接收操作"><a href="#路由器的包接收操作" class="headerlink" title="路由器的包接收操作"></a>路由器的包接收操作</h4><p>这里介绍以太网端口是如何接收包的，以太网端口的结构和计算机的网卡基本相同，接收包并存放到缓冲区中的过程和网卡几乎没有区别。</p>
+<p>首先信号到达网线接口部分，其中的PHY（MAU）模块和MAC模块会将信号转换为数字信号，然后通过包末尾的FCS进行校验。没有问题则检查MAC头部接收方的MAC地址，看是不是发给自己的包。<strong>路由器的端口都具备MAC地址，只接收与自身地址匹配的包，遇到不匹配的包则直接丢弃。</strong></p>
+<h4 id="查询路由表确定输出端口"><a href="#查询路由表确定输出端口" class="headerlink" title="查询路由表确定输出端口"></a>查询路由表确定输出端口</h4><p>完成包接收后，路由器会丢弃包开头的MAC头部。<strong>MAC头部的作用是将包送到路由器，其中接收方的MAC地址就是路由器端口的MAC地址。因此，包到达路由器之后，MAC头部的任务就完成了</strong>。</p>
+<p>接下来，路由器会根据MAC头部后方的IP头部中的内容进行包的转发操作。</p>
+<ul>
+<li>根据目标IP，匹配路由表中对应的网络号记录。<ul>
+<li>如果找到多条记录，路由器会首先寻找网络号比特比较长的一条记录。网络号越长意味着主机号越短，也就意味着该子网中可分配的主机数量越少，目标范围越明确。</li>
+<li>有时候路由表中会存在网络号长度相同的多条记录，例如考虑路由器或网线故障的情况设置的备用路由。此时需要根据跃点树来进行判断，选值小点记录</li>
+<li>如果路由表中无法找到匹配的记录，路由器会丢弃这个包，并通过ICMP消息告诉发送方。</li>
+</ul>
+</li>
+</ul>
+<p><strong>找不到匹配路由时选择默认路由</strong></p>
+<p><strong>路由表中记录子网掩码为0.0.0.0</strong> ， 意思是网络包接收方IP地址和路由表中目标地址的匹配中需要匹配的比特数为0，也就是说<strong>不需要匹配就可以看匹配成功</strong>。在这条记录的网关列写入互联网路由器的地址，当匹配不到其他的路由时，网络包就会被转发到互联网路由器，<strong>因此这条记录被称为默认路由，这行配置的网关被称为默认网关</strong></p>
+<p>这样以来，无论目标地址是一个子网还是某个设备，都可以通过相同的方式查找出转发目标。</p>
+<p><strong>包的有效期</strong></p>
+<p>从路由表中找到转发目标之后，网络包就会被转交给输出端口，并最终发送出去。在此之前，路由器还有一些工作要完成。<strong>更新IP头部的TTL字段，防止包在一个地方陷入死循环</strong></p>
+<p><strong>通过分片功能拆分大网络包</strong></p>
+<p>路由器的端口并不只有以太网一种，也可以支持其他局域网或专线通信技术，不同的线路和局域网类型各自能传输的最大包长度也不同。因此输出端口的最大包长度可能会小于输入端口。</p>
+<p>遇到这种情况，使用IP协议中定义的分片功能对包进行拆分，缩短每个包的长度。<strong>这里的分片和TCP对数据的分片机制是不同的，TCP拆分数据的操作实在将数据装进包之前进行的，IP分片是对一个完整的包在进行拆分的过程。</strong></p>
+<p>路由器的分片过程：</p>
+<ul>
+<li>首先需要知道输出端口的MTU，看这个包能不能不分片直接发送<ul>
+<li>最大包长度是有端口类型决定的，用这个最大长度减去头部长度就是MTU</li>
+</ul>
+</li>
+<li>拆分之前，查看IP头部的标志字段，看是否可以分片<ul>
+<li>如果标记字段发现不能分片，则只能丢弃这个包，并通过ICMP消息告之发送方</li>
+</ul>
+</li>
+<li>分片中，TCP头部及以后的数据都是可以分片的数据，尽管TCP头部不属于用户数据，但从IP来看，也是传输数据的一部分</li>
+<li>数据被拆分后，每一份数据前边会加上IP头部，其大部分内容和原来的IP头部一模一样，其中有部分字段需要更新，这些字段用于记录分片相关的信息</li>
+</ul>
+<p><strong>路由器的发送操作</strong></p>
+<p>发送操作取决于输出端口的类型。如果是以太网端口，则按照以太网规则将包转换成电信号发出去；如果是ADSL则按照ADSL规则来转换；以此类推。</p>
+<p>这里我们假设路由器位于公司等局域网内部，及输出端口是以太网。</p>
+<p>以太网的包发送操作是根据以太网规则进行的，其基本过程和协议栈中IP模块发送包的过程相同，即在包的前边加上MAC头部，设置其中的一些字段，然后将完成的包转换成电信号发送出去。</p>
+<ul>
+<li>MAC头部的MAC地址，根据路由表的网关列判断对方的地址，<ul>
+<li>如果网关是一个IP地址，则这个IP地址就是需要转发的IP地址</li>
+<li>如果网关为空，则IP头部的接收方IP地址就是要转发的目标地址</li>
+</ul>
+</li>
+<li>通过ARP根据IP地址查询MAC地址</li>
+<li>将查询结果作为接收方MAC地址。另外路由器也有ARP缓存，先查缓存，找不到再发ARP查询请求</li>
+<li>发送方MAC地址字段，填写输出端口的MAC地址</li>
+<li>以太网类型填写0080（十六进制）</li>
+</ul>
+<p>网络包完成后，接下来会将其转换成电信号并通过端口发出去，这个过程和计算机也是相同的。</p>
+<h4 id="路由器和交换机的关系"><a href="#路由器和交换机的关系" class="headerlink" title="路由器和交换机的关系"></a>路由器和交换机的关系</h4><p>路由器在转发网络包时，都需要在前面加上MAC头部。</p>
+<p>路由器是基于IP设计的，交换机是基于以太网设计的。</p>
+<p>IP并不是委托以太网将包传输到最终目的地，而是传输到下一个路由器。</p>
+<p><strong>IP（路由器）负责将包送达通信对象这一整体过程，二其中包传输到下一个路由器的过程是由以太网（交换机）负责的</strong></p>
+<h3 id="路由器的附加功能"><a href="#路由器的附加功能" class="headerlink" title="路由器的附加功能"></a>路由器的附加功能</h3><p><strong>通过地址转换有效利用IP地址</strong>,内网中可用于私有地址的范围</p>
+<blockquote>
+<p>10.0.0.0 ~ 10.255.255.255</p>
+<p>172.16.0.0 ~ 172.31.255.255</p>
+<p>192.168.0.0 ~ 192.168.255.255</p>
+</blockquote>
+<p><strong>地址转换的基本原理</strong> 是在转发网络包时对IP头部中的IP地址和端口号进行修改。</p>
+<ul>
+<li>TCP连接的第一个包被转发到互联网时，会将发送方IP地址从私有地址转换成共有地址，使用的公有地址是路由（或防火墙等地址转换设备）的互联网接入端口的地址。同时端口号也进行相应的修改。<strong>会作为一组相对应的记录保存在地址转换设备内部的一张表中</strong>。对外只有一个公有地址的情况下，可以使用不同的端口号来区别内网中不同的设备。</li>
+<li>改写发送方IP和端口号之，包就被发往互联网，最终到达服务器，然后服务器会返回一个包。</li>
+<li>包到达地址转换器（路由）</li>
+<li>地址转换设备从地址表中通过公有地址和端口号找到相应的私有地址和端口号，并改写接收方信息，然后将包发往公司内网，这样包就能到达原始发送方了</li>
+<li>在后面的包收发过程中，地址转换设备需要根据对应的表查找私有地址和公有地址的对应关系，改写地址和端口号之后进行转发。</li>
+<li>进入断开阶段，访问互联网的操作全部完成后，对应表的记录会被删除</li>
+</ul>
+<p><strong>改写端口号的原因</strong>，为了解决局域网内设备过多的问题。修改后一个公有地址可以对应几万个私有地址，提高公有地址的利用率</p>
+<p>对于从公司内网访问互联网的包，即使其发送方私有地址和端口没有保存到对应表中也是可以正常转发的，因为用来改写的公有地址就是地址转换设备的地址，而端口号只是随便选的一个空闲端口号而已。然而<strong>对于从互联网访问公司内网的包，如果对应表中没有记录就无法正常转发。</strong>因为没有对应表记录，无法判断公有地址和私有地址的对应关系，也就是说，对于没有访问互联网的内部设备，是无法从互联网向其发送网络包的。这种机制具有防止非法入侵的效果。<strong>如果想要从互联网访问公司内网，需要在地址转换设备中的表中添加一些设置（添加关联记录）</strong></p>
+<p><strong>路由器的包过滤</strong>，就是对包进行转发时，根据MAC头部、IP头部、TCP头部的内容，按照事先设置的规则决定是转发还是丢弃这个包（防火墙设备或软件就是利用这一机制来防止非法入侵的）。</p>
+</div><div class="post-copyright"><script type="text/javascript" src="/js/copyright.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copyright.css"><p><span>本文标题：</span>网络是如何通信的 - 3.从网线到网络设备（探索集线器、交换机和路由器）</p><p><span>文章作者：</span>梁通</p><p><span>发布时间：</span>2020-01-03</p><p><span>最后更新：</span>2020-08-03</p><p><span>原始链接：</span><a href="/2020/01/03/network_20200103_note_3_从网线到网络设备（探索集线器、交换机和路由器）/">http://www.liangtong.site/2020/01/03/network_20200103_note_3_%E4%BB%8E%E7%BD%91%E7%BA%BF%E5%88%B0%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87%EF%BC%88%E6%8E%A2%E7%B4%A2%E9%9B%86%E7%BA%BF%E5%99%A8%E3%80%81%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%92%8C%E8%B7%AF%E7%94%B1%E5%99%A8%EF%BC%89/</a><span class="copy-path"><i class="fa fa-clipboard" data-clipboard-text="http://www.liangtong.site/2020/01/03/network_20200103_note_3_%E4%BB%8E%E7%BD%91%E7%BA%BF%E5%88%B0%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87%EF%BC%88%E6%8E%A2%E7%B4%A2%E9%9B%86%E7%BA%BF%E5%99%A8%E3%80%81%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%92%8C%E8%B7%AF%E7%94%B1%E5%99%A8%EF%BC%89/"></i></span></p><p><span>版权声明：</span>Copyright© 2016-2020 liangtong 版权所有</p></div><br><div class="tags"><a href="/tags/%E7%BD%91%E7%BB%9C%E6%98%AF%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%E7%9A%84/"><i class="fa fa-tag"></i>网络是如何通信的</a></div><div class="post-nav"><a class="pre" href="/2020/01/04/network_20200104_note_4_%E9%80%9A%E8%BF%87%E6%8E%A5%E5%85%A5%E7%BD%91%E8%BF%9B%E5%85%A5%E4%BA%92%E8%81%94%E7%BD%91%E5%86%85%E9%83%A8%EF%BC%88%E6%8E%A2%E7%B4%A2%E6%8E%A5%E5%85%A5%E7%BD%91%E5%92%8C%E7%BD%91%E7%BB%9C%E8%BF%90%E8%90%A5%E5%95%86%EF%BC%89/">网络是如何通信的 - 4.通过接入网进入互联网内部（探索接入网和网络运营商）</a><a class="next" href="/2020/01/02/network_20200102_note_2_%E4%BD%BF%E7%94%A8%E7%94%B5%E4%BF%A1%E5%8F%B7%E4%BC%A0%E8%BE%93TCP:IP%E6%95%B0%E6%8D%AE%EF%BC%88%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%92%8C%E7%BD%91%E5%8D%A1%EF%BC%89/">网络是如何通信的 - 2.使用电或光信号传输TCP/IP数据（协议栈和网卡）</a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script><script>var notify = 'true' == 'true' ? true : false;
+var verify = 'true' == 'true' ? true : false;
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  appId:'b4NoTNpM7bWgldECesJq4Lyc-gzGzoHsz',
+  appKey:'KXoQP7VEFXlssuenNaq2F470',
+  placeholder:'评论区...',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10'
+})
+</script></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://www.liangtong.site"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/share/">share</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/xx%E6%98%AF%E5%A6%82%E4%BD%95xx%E7%9A%84/">xx是如何xx的</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E4%BA%AB/">分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%BB%E7%BB%93/">总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 15px;">排序</a> <a href="/tags/%E6%90%9C%E7%B4%A2/" style="font-size: 15px;">搜索</a> <a href="/tags/%E7%AE%97%E8%B7%AF/" style="font-size: 15px;">算路</a> <a href="/tags/sqlite3/" style="font-size: 15px;">sqlite3</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/environment/" style="font-size: 15px;">environment</a> <a href="/tags/module/" style="font-size: 15px;">module</a> <a href="/tags/mqtt/" style="font-size: 15px;">mqtt</a> <a href="/tags/mybatis/" style="font-size: 15px;">mybatis</a> <a href="/tags/note/" style="font-size: 15px;">note</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%98%AF%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%E7%9A%84/" style="font-size: 15px;">网络是如何通信的</a> <a href="/tags/searchBar/" style="font-size: 15px;">searchBar</a> <a href="/tags/bluetooth/" style="font-size: 15px;">bluetooth</a> <a href="/tags/objc/" style="font-size: 15px;">objc</a> <a href="/tags/gcd/" style="font-size: 15px;">gcd</a> <a href="/tags/runtime/" style="font-size: 15px;">runtime</a> <a href="/tags/tableView/" style="font-size: 15px;">tableView</a> <a href="/tags/shell/" style="font-size: 15px;">shell</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/CocoaPods/" style="font-size: 15px;">CocoaPods</a> <a href="/tags/tool/" style="font-size: 15px;">tool</a> <a href="/tags/nginx/" style="font-size: 15px;">nginx</a> <a href="/tags/redis/" style="font-size: 15px;">redis</a> <a href="/tags/objc-summary/" style="font-size: 15px;">objc-summary</a> <a href="/tags/SwiftUI/" style="font-size: 15px;">SwiftUI</a> <a href="/tags/miniprogram/" style="font-size: 15px;">miniprogram</a> <a href="/tags/go/" style="font-size: 15px;">go</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/08/14/java_20200814_note_IoC/">Spring IoC</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/08/java_20200808_note_string/">String、StringBuffer和StringBuilder之间的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/02/objc_20200302_note_enterprise_app_crash/">iOS企业级应用打开闪退原因总结及发布注意点</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/06/network_20200106_note_6_%E8%AF%B7%E6%B1%82%E5%88%B0%E8%BE%BEWeb%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E5%93%8D%E5%BA%94%E8%BF%94%E5%9B%9E%E6%B5%8F%E8%A7%88%E5%99%A8-%E7%9F%AD%E7%9F%AD%E5%87%A0%E7%A7%92%E5%88%B0%E2%80%9C%E6%BC%AB%E9%95%BF%E6%97%85%E7%A8%8B%E2%80%9D%E8%BF%8E%E6%9D%A5%E7%BB%88%E7%82%B9/">网络是如何通信的 - 6.请求到达Web服务器，响应返回浏览器-短短几秒到“漫长旅程”迎来终点</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/05/network_20200105_note_5_%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%9A%84%E5%B1%80%E5%9F%9F%E7%BD%91%E6%9C%89%E4%BB%80%E4%B9%88%E7%8E%84%E6%9C%BA/">网络是如何通信的 - 5.服务器端的局域网有什么玄机</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/04/network_20200104_note_4_%E9%80%9A%E8%BF%87%E6%8E%A5%E5%85%A5%E7%BD%91%E8%BF%9B%E5%85%A5%E4%BA%92%E8%81%94%E7%BD%91%E5%86%85%E9%83%A8%EF%BC%88%E6%8E%A2%E7%B4%A2%E6%8E%A5%E5%85%A5%E7%BD%91%E5%92%8C%E7%BD%91%E7%BB%9C%E8%BF%90%E8%90%A5%E5%95%86%EF%BC%89/">网络是如何通信的 - 4.通过接入网进入互联网内部（探索接入网和网络运营商）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/03/network_20200103_note_3_%E4%BB%8E%E7%BD%91%E7%BA%BF%E5%88%B0%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87%EF%BC%88%E6%8E%A2%E7%B4%A2%E9%9B%86%E7%BA%BF%E5%99%A8%E3%80%81%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%92%8C%E8%B7%AF%E7%94%B1%E5%99%A8%EF%BC%89/">网络是如何通信的 - 3.从网线到网络设备（探索集线器、交换机和路由器）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/02/network_20200102_note_2_%E4%BD%BF%E7%94%A8%E7%94%B5%E4%BF%A1%E5%8F%B7%E4%BC%A0%E8%BE%93TCP:IP%E6%95%B0%E6%8D%AE%EF%BC%88%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%92%8C%E7%BD%91%E5%8D%A1%EF%BC%89/">网络是如何通信的 - 2.使用电或光信号传输TCP/IP数据（协议栈和网卡）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/01/network_20200101_note_1_%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%9F%E6%88%90%E6%B6%88%E6%81%AF/">网络是如何通信的 - 1.浏览器生成消息</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/26/share_20191226_hexo_maupassant_googleads/">Hexo Blog 添加 Google Adsense</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://github.com/liangtongdev" title="github" target="_blank">github</a><ul></ul><a href="https://www.jianshu.com/u/39237a8a7121" title="简书" target="_blank">简书</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright© 2016-2019  liangtong . All Rights Reserved</div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

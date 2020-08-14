@@ -1,0 +1,382 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="个人博客"><title>网络是如何通信的 - 2.使用电或光信号传输TCP/IP数据（协议栈和网卡） | 技术小屋</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create','UA-146373511-1','auto');ga('send','pageview');
+</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = 'https://hm.baidu.com/hm.js?' + '6e30653711aac2cc552b0ecb94df5e77';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.0.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">网络是如何通信的 - 2.使用电或光信号传输TCP/IP数据（协议栈和网卡）</h1><a id="logo" href="/.">技术小屋</a><p class="description">积水成渊、 积土成山</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">网络是如何通信的 - 2.使用电或光信号传输TCP/IP数据（协议栈和网卡）</h1><div class="post-meta">2020-01-02<span> | </span><span class="category"><a href="/categories/xx%E6%98%AF%E5%A6%82%E4%BD%95xx%E7%9A%84/">xx是如何xx的</a></span></div><a class="disqus-comment-count" href="/2020/01/02/network_20200102_note_2_%E4%BD%BF%E7%94%A8%E7%94%B5%E4%BF%A1%E5%8F%B7%E4%BC%A0%E8%BE%93TCP:IP%E6%95%B0%E6%8D%AE%EF%BC%88%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%92%8C%E7%BD%91%E5%8D%A1%EF%BC%89/#vcomment"><span class="valine-comment-count" data-xid="/2020/01/02/network_20200102_note_2_%E4%BD%BF%E7%94%A8%E7%94%B5%E4%BF%A1%E5%8F%B7%E4%BC%A0%E8%BE%93TCP:IP%E6%95%B0%E6%8D%AE%EF%BC%88%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%92%8C%E7%BD%91%E5%8D%A1%EF%BC%89/"></span><span> 条评论</span></a><div class="post-content"><h3 id="使用电或光信号传输TCP-IP数据"><a href="#使用电或光信号传输TCP-IP数据" class="headerlink" title="使用电或光信号传输TCP/IP数据"></a>使用电或光信号传输TCP/IP数据</h3><p>TCP/IP软件分层结构</p>
+<ul>
+<li>应用程序 -&gt; Socket库(解析器) </li>
+<li>操作系统协议栈<ul>
+<li>TCP （需要连接） ｜ UDP （不需要连接）</li>
+<li>IP（传输网络包、确定路由）<ul>
+<li>ICMP  ARP<ul>
+<li>驱动程序 - 网卡驱动</li>
+<li>硬件 - 网卡</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;应用程序：获取IP地址</span><br><span class="line">&lt;内存地址&gt; &#x3D; gethostbyname(...);&#x2F;&#x2F;Socket库</span><br><span class="line">&#x2F;&#x2F;协议栈： UDP模块 - IP模块 - DNS服务器</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;应用程序：创建套接字</span><br><span class="line">&lt;描述符&gt;&#x3D;socket(使用ipv4,使用tcp...)&#x2F;&#x2F;Socket库</span><br><span class="line">&#x2F;&#x2F;协议栈：TCP模块创建套接字返回</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;应用程序： 连接</span><br><span class="line">connect(&lt;描述符&gt;,&lt;服务器IP和端口号&gt;,...)&#x2F;&#x2F;套接字连接</span><br><span class="line">&#x2F;&#x2F;协议栈：TCP模块 - IP模块 - web服务器</span><br><span class="line">&#x2F;&#x2F;连接成功</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;应用程序：写数据</span><br><span class="line">.write(xxx)</span><br><span class="line">&#x2F;&#x2F;协议栈：TCP模块-IP模块-Web服务器</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;应用程序：读入套接字数据至缓存</span><br><span class="line">&lt;接收数据长度&gt;&#x3D;read(xxx)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;应用程序：断开</span><br><span class="line">close(&lt;描述符&gt;)</span><br><span class="line">&#x2F;&#x2F;协议栈：TCP模块 - IP模块 - web服务器 &lt;断开&gt; - IP模块 - TCP模块 &lt;断开&gt; &lt;删除套接字&gt; - 应用程序 </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="TCP-模块"><a href="#TCP-模块" class="headerlink" title="TCP 模块"></a>TCP 模块</h3><h4 id="创建套接字"><a href="#创建套接字" class="headerlink" title="创建套接字"></a>创建套接字</h4><h5 id="套接字实体"><a href="#套接字实体" class="headerlink" title="套接字实体"></a>套接字实体</h5><p>协议栈内部的内存空间，记录通信操作的控制信息，例如IP、端口、通信操作状态、时间等。</p>
+<p><strong>通过 <code>netstat</code>命令显示套接字</strong></p>
+<h5 id="调用socket程序组件时的操作"><a href="#调用socket程序组件时的操作" class="headerlink" title="调用socket程序组件时的操作"></a>调用socket程序组件时的操作</h5><ul>
+<li>应用程序调用Socket库中的socket组件时，（操作系统内存管理）在协议栈内存中创建套接字（分配空间，写入初始状态），返回套接字描述符。</li>
+<li>应用程序收到描述符，因为套接字中记录了通信双发的信息及状态等信息。后续操作就可以通过这个描述符进行。</li>
+</ul>
+<h4 id="连接服务器"><a href="#连接服务器" class="headerlink" title="连接服务器"></a>连接服务器</h4><p>套接字刚刚创建完成时，里边并没有存放任何数据。连接实际上是通信双方交换控制信息（比如客户端的IP和端口），在套接字中记录这些必要信息并准备数据收发的一系列操作。</p>
+<p><strong>TCP头部格式（20个字节）</strong></p>
+<ul>
+<li>发送方端口 16bit</li>
+<li>接收方端口 16bit</li>
+<li>序号（发送数据的顺序编号） 32bit 随机数</li>
+<li>ACK号（接受数据的顺序号）32bit 接收方告知发送方已经收到了所有数据的第几个字节</li>
+<li>数据偏移 4bit 数据部分的起始位置</li>
+<li>保留 6bit</li>
+<li><strong>控制位 6bit</strong></li>
+<li>窗口16bit 接收方告知发送方窗口大小</li>
+<li>校验和 16bit 检查数据是否正确</li>
+<li>紧急指针 16bit 紧急处理的数据位置</li>
+<li>可选字段 可变长度 长度可变 很少使用</li>
+</ul>
+<h5 id="控制信息分类"><a href="#控制信息分类" class="headerlink" title="控制信息分类"></a>控制信息分类</h5><ul>
+<li>TCP头部中 记录的信息，客户端和服务器相互联络时交换的控制信息<ul>
+<li>内容在TCP协议中进行定义。在连接，收发，断开各阶段都需要<ul>
+<li>发送方/接收方端口号，<strong>序号（发送数据的顺序编号），ack号（接收数据的顺序编号），数据偏移量，保留位，控制位（URG-紧急指针有效、ACK-数据接收有效、PSH-通过flush操作发送数据、RST-强制断开连接、SYN-连接操作、FIN-断开连接）、窗口、校验和-检查是否出错、紧急指针、可选字段</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>套接字中记录等信息，依赖控制协议栈操作的信息<ul>
+<li>应用程序传递来的信息以及从通信对象接收到的信息</li>
+<li>收发数据操作的执行状态等信息</li>
+</ul>
+</li>
+</ul>
+<h5 id="连接的过程"><a href="#连接的过程" class="headerlink" title="连接的过程"></a>连接的过程</h5><p>从调用Socket库的connect开始</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">connect(&lt;套接字描述符&gt;,&lt;服务器IP地址和端口号&gt;,...)</span><br></pre></td></tr></table></figure>
+
+<p>这些信息会传递给协议栈的TCP模块，然后TCP模块会与该IP地址对应的服务器的TCP模块交换控制信息。</p>
+<p>所谓的 <strong>3次握手</strong></p>
+<ul>
+<li>在TCP模块处创建表示连接控制信息的头部，通过TCP头部的发送方和接收方的端口号可以找到要连接的套接字。随机生成序号<strong>seq = x</strong>，控制位syn=1</li>
+<li>TCP头创建成功后，传递给IP模块并委托它发送</li>
+<li>IP模块执行网络包发送后，网络包通过网络到达服务器</li>
+<li>服务器的IP模块将接收到的网络包传递给TCP模块</li>
+<li>服务器的TCP模块根据TCP的头部信息找到端口号对应的套接字</li>
+<li>在套接字中写入相应的信息，将状态改为正在连接</li>
+<li>服务器的TCP模块响应，在TCP头部写上发送方和接收方的端口号以及控制位syn=1，<strong>ack=x+1</strong>，<strong>seq=y</strong>表示接收到网络包</li>
+<li>服务器TCP模块将TCP头部传递给IP模块并委托IP模块向客户端返回响应</li>
+<li>网络包到达客户端，通过IP模块到达TCP模块</li>
+<li>客户端通过TCP头部信息确认连接服务器操作是否成功<ul>
+<li>如果SYN为1表示连接成功</li>
+</ul>
+</li>
+<li>连接成功时，会<strong>向套接字中写入服务器的IP地址，端口等信息</strong>；同时将连接状态改为连接完毕</li>
+<li>客户端将ACK设置为1，<strong>ack=y+1</strong>并返回服务器，告诉服务器响应包收到。</li>
+<li>服务器将状态改为连接完毕，操作完成。流程控制被交回到应用程序。</li>
+</ul>
+<h4 id="收发数据"><a href="#收发数据" class="headerlink" title="收发数据"></a>收发数据</h4><p>控制流程从connect回到应用程序后，就进入数据收发阶段了。</p>
+<ul>
+<li>协议栈不关心应用程序传来的数据是什么内容。应用程序在调用write时会指定数据长度。</li>
+<li>协议栈并不是一收到数据就马上发送出去，而是先将数据放入内部的发送缓冲区中，并等待应用程序的下一段数据。<ul>
+<li>不同程序实现不同，有些可能一次性传递所有数据，有些则会逐字节或逐行传递数据。</li>
+</ul>
+</li>
+</ul>
+<p>缓存区积累多少数据发送，不同系统有所不同，通过以下几个要素来判断</p>
+<ul>
+<li>MTU ：每个网络包能容纳的数据长度，协议栈会根据一个叫做MTU的参数进行判断。<strong>MTU表示一个网络包的最大长度，在以太网中一般是1500字节。MTU是包含头部的总长度，因此需要从MTU减去头部的长度，然后得到的长度就是网络包所能容纳的最大数据长度，这个长度叫做MSS（最大分段大小）</strong></li>
+<li>时间：当应用程序发送数据的频率不高的时候，如果每次都等到长度接近MSS时再发送，可能会因为等待时间太长而造成发送延迟，协议栈内部有一个定时器，经过一定的时间（以毫秒为单位计算）之后，网络包会发送出去。</li>
+</ul>
+<p><strong>如果仅靠协议栈来判断发送时机可能会带来一些问题，因此 协议栈也给应用程序保留了控制发送时机的余地。应用程序在发送数据时可以指定一些选项，比如不使用缓存区直接发送</strong></p>
+<p>对较大数据进行拆分发送。</p>
+<p><strong>使用序号和ACK号确认网络包已收到</strong>。</p>
+<p>例如应用程序数据较大，分3段进行发送，MSS 1460字节。</p>
+<p>注意：示例中控制位ACK = 1，还有个环节服务端的seq，客户端的ack号没有写。客户端单向通信。</p>
+<table>
+<thead>
+<tr>
+<th>第一段</th>
+<th>第二段</th>
+<th>第三段</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1～1460</td>
+<td>1461 ~ 2920</td>
+<td>2921 ~ 3000</td>
+</tr>
+</tbody></table>
+<ul>
+<li>第一段<ul>
+<li>客户端 ： seq = x ，mss=1460</li>
+<li>服务端： ack = x + 1460 （x‘） </li>
+</ul>
+</li>
+<li>第二段<ul>
+<li>客户端：seq = x‘，mss=1460 ack </li>
+<li>服务端：ack=x’ + 1460 （x‘’）</li>
+</ul>
+</li>
+<li>第三段<ul>
+<li>客户端：seq = x‘’ mss= 1460</li>
+<li>服务端：ack = x‘’ + 1460</li>
+</ul>
+</li>
+</ul>
+<p>TCP采用这种方式确认对方是否收到了数据，在得到对方确认之前，数据会保存在发送缓冲区，如果对方没有返回某些包的ack号，那么就重新发送这些包，尝试几次之后强制结束通信，并向应用程序报错</p>
+<p>实际上网络的错误检查和补偿机制非常复杂。</p>
+<p>返回ACK号的等待时间（超时时间）：当网络传输繁忙时会发生阻塞，ACK号的返回就会变慢。将等待时间设置得稍微长些。<strong>TCP采用动态调整等待时间的方法</strong></p>
+<p>使用窗口有效管理ACK号</p>
+<p>等待ACK号时，TCP采用滑动窗口方式来管理数据发送和ACK号的 操作。即：发送一个包后，不用等待ACK号返回，直接发送后续的一系列包。<strong>接收方将自己能接收的数量（窗口大小）告诉发送方，发送方不会发送过多的数据</strong></p>
+<p>接收方会缓存。多个ACK号发送时，更新窗口大小在最后一个包里即可，发最后一个即可。中间可以省略</p>
+<h4 id="断开连接"><a href="#断开连接" class="headerlink" title="断开连接"></a>断开连接</h4><p>以服务端为例，4次挥手</p>
+<ul>
+<li>服务端应用程序调用Socket库中的close程序，服务器协议栈生成包含断开信息的TCP头部，控制位的FIN=1，同时服务器的套接字也会<strong>记录下断开操作</strong>的相关信息，发送客户端 （1）</li>
+<li>客户端接收到FIN=1的TCP信息时候，客户端协议栈会将自己的套接字标记为<strong>进入断开状态</strong>，返回给服务器一个ACK号 （2）</li>
+<li>完成以上操作时，应用程序会调用read读取数据。协议栈告诉应用程序服务器的数据已全部收到</li>
+<li>客户端调用close结束数据收发，此时协议栈同服务器一样。会产生一个控制位的FIN = 1 包，然后委托IP模块发送给服务器 （3）</li>
+<li>服务器返回ACK号。此时客户端和服务端的通信就全部结束了 (4)</li>
+</ul>
+<p><strong>删除套接字</strong></p>
+<p>服务器的通道结束之后，套接字就不使用了。不过套接字不会马上被删除，而是等待一段时间之后再删除。这样是防止误操作。比如以下顺序</p>
+<p>（1）客户端发送FIN</p>
+<p>（2）服务器返回ACK号</p>
+<p>（3）服务器发起FIN</p>
+<p>（4）客户端返回ACK号</p>
+<p>误操作原因：如果第（4）步的客户端返回ACK号丢失了，服务端没有收到ACK号，需要客户端重发一次。但是客户端套接字已经删除了。信息也消失，端口释放。。碰巧别的程序使用了同一个端口创建套接字，这时候重发的FIN信息会错误的跑到新的套接字里。</p>
+<p>删除套接字的等待时间和包重传的操作方式有关。通常等待几分钟。</p>
+<h3 id="IP与以太网的包收发操作"><a href="#IP与以太网的包收发操作" class="headerlink" title="IP与以太网的包收发操作"></a>IP与以太网的包收发操作</h3><h4 id="包"><a href="#包" class="headerlink" title="包"></a>包</h4><h5 id="包的基础知识"><a href="#包的基础知识" class="headerlink" title="包的基础知识"></a>包的基础知识</h5><p>TCP模块在执行连接、收发、断开等各阶段操作时，都需要委托IP模块将数据封装成包发送给通信对象。</p>
+<p>包是由头部和数据两部分构成，头部包含目的地址等控制信息</p>
+<p><strong>TCP / IP包</strong></p>
+<table>
+<thead>
+<tr>
+<th>MAC头部</th>
+<th>IP头部</th>
+<th>TCP头部</th>
+<th>数据包</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>以太网控制信息</td>
+<td>IP 控制信息</td>
+<td>TCP头部和数据块加起来就是包的内容</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>包的内容</td>
+<td>包的内容</td>
+</tr>
+<tr>
+<td></td>
+<td>IP 包</td>
+<td>IP 包</td>
+<td>IP 包</td>
+</tr>
+<tr>
+<td>以太网包</td>
+<td>以太网包</td>
+<td>以太网包</td>
+<td>以太网包</td>
+</tr>
+</tbody></table>
+<h5 id="包的收发操作"><a href="#包的收发操作" class="headerlink" title="包的收发操作"></a>包的收发操作</h5><ul>
+<li><p>包收发操作的起点是TCP模块委托IP模块发送包的操作，TCP模块会指定通信对象的IP地址。</p>
+</li>
+<li><p>收到委托后，IP模块会将包的内容当作一整块数据，在前边加上包含控制信息的头部：IP头部和MAC头部</p>
+<ul>
+<li>IP头部包含IP协议规定的、根据IP地址将包发往目的地所需的控制信息</li>
+<li>MAC头部包含通过以太网的局域网将包传输至最近的路由器所需的控制信息</li>
+</ul>
+</li>
+<li><p>封装好的包会被交给网络硬件，例如以太网、无限局域网，统称网卡。传递给网卡的包由0和1组成的数字信息，网卡将这些数字信息转换成电信号或光信号，并通过网线发出去</p>
+</li>
+<li><p>信息到达集线器、路由器，再由设备一步一步地送达接收方</p>
+</li>
+<li><p>包送达对方之后，对方作出响应。返回的包也会通过转发设备发送回来，然后我们接受这个包，过程是相反的。</p>
+</li>
+<li><p>由网卡将其转换为数字信息并传递给IP模块，IP模块将TCP头部加上数据块，传递给TCP模块</p>
+<blockquote>
+<p>IP模块的包收发操作都是相同，并不关心TCP头部信息和数据内容，只负责接收和发送</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="生产包含IP地址的IP头部"><a href="#生产包含IP地址的IP头部" class="headerlink" title="生产包含IP地址的IP头部"></a>生产包含IP地址的IP头部</h4><p>IP模块接受TCP模块的委托负责包的收发工作，他会生成IP头部控制信息并添加在TCP头部前边。</p>
+<p>IP头部包含的接收方IP地址，是由TCP模块告知的，而TCP是执行套接字连接时由应用程序那里获知的，因此该地址最初来源于应用程序</p>
+<h5 id="IP头部格式-（20个字节）"><a href="#IP头部格式-（20个字节）" class="headerlink" title="IP头部格式 （20个字节）"></a><strong>IP头部格式 （20个字节）</strong></h5><ul>
+<li>版本号 4bit 目前版本是4</li>
+<li>头部长度IHL 4bit 可选字段导致长度变化，这里需要指定头部长度</li>
+<li>服务类型ToS 8bit 表示包传输优先级。</li>
+<li>总长度 16bit 表示IP消息的总长度</li>
+<li>ID号 16bit 用于识别包的编号，一般是包的序列号。如果一个包被IP分片，则所有分片都有相投的ID号</li>
+<li>标志Flag 3bit  2个bit有效，分别表示是否允许分片以及当前包是否为分片包</li>
+<li>分片偏移量 13bit 表示当前包的内容为整个IP消息的第几个字节开始的内容</li>
+<li>生存时间TTL 8bit 表示包的生存时间，为了避免网络回环时包在网络中打转，每经过一个路由器这个值就会减1，直到为0时，包被丢弃</li>
+<li><strong>协议号 8bit  16进制：TCP 06 ｜ UDP 11 ｜ ICMP 01</strong></li>
+<li>头部校验和 16bit 用于检查错误，现在不使用</li>
+<li><strong>发送方IP地址 32bit 网络包发送方的IP地址</strong></li>
+<li>接收方IP地址 32bit 网络包接收方的IP地址</li>
+<li>可选字段 长度可变 可选字段，一般不用</li>
+</ul>
+<h5 id="发送方IP"><a href="#发送方IP" class="headerlink" title="发送方IP"></a><strong>发送方IP</strong></h5><p>协议栈的IP模块与路由器中负责包收发的部分都是根据IP协议规则来进行收发操作的。 “IP表”叫<strong>路由表</strong>。</p>
+<ul>
+<li>对套接字中记录的目的地IP地址与路由表的目的地栏进行比较，找到匹配行</li>
+<li>匹配行中，Interface列表示网卡的网络接口，Gateway表示路由器的IP地址</li>
+</ul>
+<p>这样我们就能判断出应该使用哪块网卡来发送包了，然后可以在IP头部的发送方IP地址中填上这块网卡对应的IP地址</p>
+<h5 id="协议号"><a href="#协议号" class="headerlink" title="协议号"></a><strong>协议号</strong></h5><p>协议号表示包的内容来自哪个模块，例如：TCP模块委托内容，则设置为06 （十六进制）</p>
+<h4 id="生产以太网用的MAC头部"><a href="#生产以太网用的MAC头部" class="headerlink" title="生产以太网用的MAC头部"></a>生产以太网用的MAC头部</h4><p>生产IP头部之后，接下来IP模块还需要在IP头部之前添加MAC头部。</p>
+<p>IP头部中的接收方IP地址表示网络包的目的地，通过这个地址我们可以判断包要发到哪里。但在以太网中，采用匹配的方式将包发往目的地，MAC头部就是干这个的</p>
+<h5 id="MAC头部字段-（14字节）"><a href="#MAC头部字段-（14字节）" class="headerlink" title="MAC头部字段 （14字节）"></a>MAC头部字段 （14字节）</h5><ul>
+<li>接收方MAC地址  48bit  网络包接收方的MAC地址，在局域网中使用这一地址来传输网络包</li>
+<li>发送方MAC地址  48bit  网络包发送方的MAC地址，接收方通过他来判断是谁发送了这个包</li>
+<li>以太类型  16bit   常用（十六进制）：IP协议 0800 ｜ ARP协议 0806 ｜ IPv6 86DD </li>
+</ul>
+<h5 id="发送方MAC"><a href="#发送方MAC" class="headerlink" title="发送方MAC"></a>发送方MAC</h5><p>多网卡的情况下，在获取发送方IP时候，可以找到网卡，此处将对应网卡的mac写入即可</p>
+<h5 id="接收方MAC"><a href="#接收方MAC" class="headerlink" title="接收方MAC"></a>接收方MAC</h5><p>搞清楚把包发给谁，需要查路由表。在路由表中找到相匹配的条目，然后把包发给对应Gateway路由就可以了。现在只需要将路由的MAC填上就可以了。</p>
+<h5 id="通过ARP查询目标路由器的MAC地址"><a href="#通过ARP查询目标路由器的MAC地址" class="headerlink" title="通过ARP查询目标路由器的MAC地址"></a>通过ARP查询目标路由器的MAC地址</h5><p>ARP利用广播的形式，将包发给连在同一个以太网的所有设备。</p>
+<p>查询结果会放在一个叫做<strong>ARP缓存</strong>的内存空间中，发ARP广播时，先查缓存，如果找到了对应的MAC，直接使用。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">arp -a # 显示所有ARP缓存</span><br><span class="line">arp -d ip #删除某个缓存</span><br></pre></td></tr></table></figure>
+
+<p>ARP缓存的删除，一般经过几分钟，简单粗暴。不管ARP缓存的内容是否有效。将MAC头部加载IP头部的前边，整个包就完成了。<strong>打包的工作由IP模块负责</strong>。</p>
+<h3 id="网卡"><a href="#网卡" class="headerlink" title="网卡"></a>网卡</h3><h4 id="将IP包转换成电-光信号发送出去"><a href="#将IP包转换成电-光信号发送出去" class="headerlink" title="将IP包转换成电/光信号发送出去"></a>将IP包转换成电/光信号发送出去</h4><p>IP模块生成的网络包知识存放在内存中的一串数字信息，需要转换成电或光信号才能在网上传输。</p>
+<p>负责这个操作的就是网卡 + 驱动程序。</p>
+<p>系统启动时，网卡驱动程序对硬件进行初始化操作。然后硬件才进入可试用状态。这些初始化操作包括：</p>
+<ul>
+<li>硬件错误检查</li>
+<li>初始化设置等步骤</li>
+<li>MAC模块中设置MAC地址</li>
+</ul>
+<p>网卡的ROM中保存着唯一MAC地址，这是生产网卡时写入的。也有些特殊的方法，比如从命令或者配置文件读取MAC地址并分配给MAC模块，此时网卡会忽略ROM中的MAC地址</p>
+<h4 id="给网络包添加3个控制数据"><a href="#给网络包添加3个控制数据" class="headerlink" title="给网络包添加3个控制数据"></a>给网络包添加3个控制数据</h4><p>网卡驱动从IP模块获取包之后，</p>
+<ul>
+<li>会将其复制到网卡内的缓冲区中，然后向MAC模块发 发送包 的命令。</li>
+<li>接下来MAC模块工作<ul>
+<li>将包从缓冲区取出</li>
+<li>在开头加上报头和起始帧分隔符SFD，在末尾加上用于检查错误的帧校验序列FCS</li>
+</ul>
+</li>
+</ul>
+<p>报头是一串010001类似出现的比特序列，<strong>长度为56bit</strong>。作用是确定包的读取时机。这些比特序列会转换成特定的 波形，接收方收到信号时，遇到这种波形就可以判断读取数据的时机。</p>
+<p><strong>通过时钟信号与数据信号的叠加读取信号</strong></p>
+<p>在报头添加用来测量时钟信号的特殊信号，起始帧分隔符用来表示包起始位置。FCS用来检查包传输过程中因噪声导致的波形紊乱、数据错误。采用CRC 循环冗余校验 码。</p>
+<h4 id="向集线器发送网络包"><a href="#向集线器发送网络包" class="headerlink" title="向集线器发送网络包"></a>向集线器发送网络包</h4><p>网卡加上以上3个控制数据后，就通过 <strong>集线器的半双工模式，交换机的全双工模式</strong> 可以将包发出去了。</p>
+<p><strong>发送和接收同时并行的方式叫全双工，某一个时刻只能进行发送或接收一种操作的叫半双工</strong></p>
+<p>在半双工模式下，为了避免信号碰撞，首先判断网络中是否存在设备发送信号。如果有，则等待该信号传输完成。当没有信号传输的情况下，才开始发送信号。</p>
+<p><strong>网卡的MAC模块生成通用信号，然后由PHY（MAU）模块转换成可在网线中传输的格式，并通过网线发送出去</strong>。PHY（MAU）的指责不仅是将MAC模块的信号通过网线发送出去，还监控接受线路中有没有信号进来。<strong>以太网不会确认发送的信号对方有没有收到。万一发生错误，协议栈的TCP回负责搞定。</strong></p>
+<h4 id="接收返回包"><a href="#接收返回包" class="headerlink" title="接收返回包"></a>接收返回包</h4><p>以太网的包接收和发送一样，和设备类型、TCP的工作阶段以及应用程序的种类无关，是共通的</p>
+<p>半双工模式下，一台设备发送的信号会到达连接在集线器上的所有设备。</p>
+<ul>
+<li><p>信号的开头是报头，通过报头的波形同步时钟</p>
+</li>
+<li><p>然后遇到起始帧分隔符开始将后边的信号转化成数字信息。</p>
+</li>
+<li><p>网卡</p>
+<ul>
+<li><p>PHY（MAU）模块先开始工作，将信号转换成通用格式转给MAC模块</p>
+</li>
+<li><p>然后MAC模块再从头开始将信号转化成数字信号，并放入缓冲区</p>
+</li>
+<li><p>信号到达末尾时，检查FCS</p>
+<ul>
+<li>绝大多数情况是正确的</li>
+<li>错误的情况下，包被丢弃</li>
+</ul>
+</li>
+<li><p>MAC头部中接收方的MAC地址与网卡的MAC地址是否相同</p>
+<ul>
+<li>相同，则将包放入缓冲区中</li>
+<li>不同，不是自己的，直接丢弃</li>
+</ul>
+</li>
+<li><p>通过中断机制，通知计算机</p>
+<ul>
+<li>网卡向扩展总线中的中断信号发送信号</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>该信号通过计算机的中断控制程序连接到CPU</p>
+</li>
+<li><p>CPU暂时挂起正在处理的任务，切换到操作系统中的中断处理程序</p>
+</li>
+<li><p>中断处理程序调用网卡驱动，控制网卡执行响应的接收操作</p>
+</li>
+<li><p>网卡驱动被中断程序调用后，会从网卡的缓冲区中取到数据，并通过MAC头部的一台类型字段判断协议类型</p>
+</li>
+<li><p>如果使用的是TCP/IP。网卡驱动就会把这些包交给TCP/IP协议栈</p>
+<ul>
+<li>如果不存在协议栈，则视为错误，丢弃</li>
+<li>协议栈会判断这个包交给哪个应用程序</li>
+</ul>
+</li>
+</ul>
+<h4 id="将服务器的响应包从IP传递给TCP"><a href="#将服务器的响应包从IP传递给TCP" class="headerlink" title="将服务器的响应包从IP传递给TCP"></a>将服务器的响应包从IP传递给TCP</h4><p>假设web服务器返回了一个网络包，服务器返回的包的以太类型应该是0800，因此网卡驱动将其交给TCP/IP协议栈来处理。</p>
+<ul>
+<li>IP模块工作<ul>
+<li>检查IP头部，确认格式是否正确</li>
+<li>检查接收方IP地址<ul>
+<li>如果接收方的IP地址与网卡的IP地址一致，则可以接收该包</li>
+<li>如果接收方IP地址不是自己的地址，IP模块会通过ICMP消息告知发送方</li>
+</ul>
+</li>
+<li>IP协议中一个叫分片的功能，将他们还原成原始包</li>
+<li>IP模块工作结束，交给TCP模块</li>
+</ul>
+</li>
+<li>TCP模块<ul>
+<li>根据IP头部的接收方和发送方IP（IP模块附加参数），以及TCP头部的接收方和发送方端口号来查找响应的套接字</li>
+<li>找到套接字之后，根据套接字中记录的通信状态，执行响应的操作<ul>
+<li>如果包的内容是应用程序数据，则返回确认接收的包，并将包放入缓冲区等待应用程序读取</li>
+<li>如果是建立/断开连接的控制包，则返回响应的响应，并告知应用程序建立和断开连接的操作状态</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="UDP协议的收发操作"><a href="#UDP协议的收发操作" class="headerlink" title="UDP协议的收发操作"></a>UDP协议的收发操作</h3><p>不需要重发的数据，使用UDP更高效。</p>
+<p>控制用的端数据，适合使用UDP。像DNS查询等交换控制信息基本上可以在一个包的大小范围内解决，这种情况使用UDP较合理。不需要接收确认，窗口等机制。直接加上UDP头部就可以发送了。接收也简单，只要根据IP头部的接收方和发送方的IP地址，以及UDP头部的接收方和发送方端口号，就可以找到响应的套接字，并将数据交给应用程序就可以了。</p>
+<p><strong>UDP头部的控制信息 （8字节）</strong></p>
+<ul>
+<li>发送方端口号 16bit </li>
+<li>接收方端口号 16bit</li>
+<li>数据长度 16bit  udp头部后面数据的长度</li>
+<li>校验和  16bit 用于校验错误</li>
+</ul>
+<h4 id="音频和视频数据"><a href="#音频和视频数据" class="headerlink" title="音频和视频数据"></a>音频和视频数据</h4><p>实际场景，如果音频/视频在规定的时间不能送达，就会错过播放时机，导致声音图像的卡顿。如果像TCP那样确认响应检查错误并重发会消耗一定的时间，一旦错过了播放时机，重发是没用的。音视频中少了某些包只会造成一些失真或卡顿，也是可以接受的。因此使用UDP发送数据的效率更高</p>
+<p><strong>UDP经常被防火墙阻拦</strong></p>
+</div><div class="post-copyright"><script type="text/javascript" src="/js/copyright.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copyright.css"><p><span>本文标题：</span>网络是如何通信的 - 2.使用电或光信号传输TCP/IP数据（协议栈和网卡）</p><p><span>文章作者：</span>梁通</p><p><span>发布时间：</span>2020-01-02</p><p><span>最后更新：</span>2020-08-03</p><p><span>原始链接：</span><a href="/2020/01/02/network_20200102_note_2_使用电信号传输TCP:IP数据（协议栈和网卡）/">http://www.liangtong.site/2020/01/02/network_20200102_note_2_%E4%BD%BF%E7%94%A8%E7%94%B5%E4%BF%A1%E5%8F%B7%E4%BC%A0%E8%BE%93TCP:IP%E6%95%B0%E6%8D%AE%EF%BC%88%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%92%8C%E7%BD%91%E5%8D%A1%EF%BC%89/</a><span class="copy-path"><i class="fa fa-clipboard" data-clipboard-text="http://www.liangtong.site/2020/01/02/network_20200102_note_2_%E4%BD%BF%E7%94%A8%E7%94%B5%E4%BF%A1%E5%8F%B7%E4%BC%A0%E8%BE%93TCP:IP%E6%95%B0%E6%8D%AE%EF%BC%88%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%92%8C%E7%BD%91%E5%8D%A1%EF%BC%89/"></i></span></p><p><span>版权声明：</span>Copyright© 2016-2020 liangtong 版权所有</p></div><br><div class="tags"><a href="/tags/%E7%BD%91%E7%BB%9C%E6%98%AF%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%E7%9A%84/"><i class="fa fa-tag"></i>网络是如何通信的</a></div><div class="post-nav"><a class="pre" href="/2020/01/03/network_20200103_note_3_%E4%BB%8E%E7%BD%91%E7%BA%BF%E5%88%B0%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87%EF%BC%88%E6%8E%A2%E7%B4%A2%E9%9B%86%E7%BA%BF%E5%99%A8%E3%80%81%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%92%8C%E8%B7%AF%E7%94%B1%E5%99%A8%EF%BC%89/">网络是如何通信的 - 3.从网线到网络设备（探索集线器、交换机和路由器）</a><a class="next" href="/2020/01/01/network_20200101_note_1_%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%9F%E6%88%90%E6%B6%88%E6%81%AF/">网络是如何通信的 - 1.浏览器生成消息</a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script><script>var notify = 'true' == 'true' ? true : false;
+var verify = 'true' == 'true' ? true : false;
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  appId:'b4NoTNpM7bWgldECesJq4Lyc-gzGzoHsz',
+  appKey:'KXoQP7VEFXlssuenNaq2F470',
+  placeholder:'评论区...',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10'
+})
+</script></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://www.liangtong.site"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/share/">share</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/xx%E6%98%AF%E5%A6%82%E4%BD%95xx%E7%9A%84/">xx是如何xx的</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E4%BA%AB/">分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%BB%E7%BB%93/">总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 15px;">排序</a> <a href="/tags/%E6%90%9C%E7%B4%A2/" style="font-size: 15px;">搜索</a> <a href="/tags/%E7%AE%97%E8%B7%AF/" style="font-size: 15px;">算路</a> <a href="/tags/sqlite3/" style="font-size: 15px;">sqlite3</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/environment/" style="font-size: 15px;">environment</a> <a href="/tags/module/" style="font-size: 15px;">module</a> <a href="/tags/mqtt/" style="font-size: 15px;">mqtt</a> <a href="/tags/mybatis/" style="font-size: 15px;">mybatis</a> <a href="/tags/note/" style="font-size: 15px;">note</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%98%AF%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%E7%9A%84/" style="font-size: 15px;">网络是如何通信的</a> <a href="/tags/searchBar/" style="font-size: 15px;">searchBar</a> <a href="/tags/bluetooth/" style="font-size: 15px;">bluetooth</a> <a href="/tags/objc/" style="font-size: 15px;">objc</a> <a href="/tags/gcd/" style="font-size: 15px;">gcd</a> <a href="/tags/runtime/" style="font-size: 15px;">runtime</a> <a href="/tags/tableView/" style="font-size: 15px;">tableView</a> <a href="/tags/shell/" style="font-size: 15px;">shell</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/CocoaPods/" style="font-size: 15px;">CocoaPods</a> <a href="/tags/tool/" style="font-size: 15px;">tool</a> <a href="/tags/nginx/" style="font-size: 15px;">nginx</a> <a href="/tags/redis/" style="font-size: 15px;">redis</a> <a href="/tags/objc-summary/" style="font-size: 15px;">objc-summary</a> <a href="/tags/SwiftUI/" style="font-size: 15px;">SwiftUI</a> <a href="/tags/miniprogram/" style="font-size: 15px;">miniprogram</a> <a href="/tags/go/" style="font-size: 15px;">go</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/08/14/java_20200814_note_IoC/">Spring IoC</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/08/java_20200808_note_string/">String、StringBuffer和StringBuilder之间的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/02/objc_20200302_note_enterprise_app_crash/">iOS企业级应用打开闪退原因总结及发布注意点</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/06/network_20200106_note_6_%E8%AF%B7%E6%B1%82%E5%88%B0%E8%BE%BEWeb%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E5%93%8D%E5%BA%94%E8%BF%94%E5%9B%9E%E6%B5%8F%E8%A7%88%E5%99%A8-%E7%9F%AD%E7%9F%AD%E5%87%A0%E7%A7%92%E5%88%B0%E2%80%9C%E6%BC%AB%E9%95%BF%E6%97%85%E7%A8%8B%E2%80%9D%E8%BF%8E%E6%9D%A5%E7%BB%88%E7%82%B9/">网络是如何通信的 - 6.请求到达Web服务器，响应返回浏览器-短短几秒到“漫长旅程”迎来终点</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/05/network_20200105_note_5_%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%9A%84%E5%B1%80%E5%9F%9F%E7%BD%91%E6%9C%89%E4%BB%80%E4%B9%88%E7%8E%84%E6%9C%BA/">网络是如何通信的 - 5.服务器端的局域网有什么玄机</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/04/network_20200104_note_4_%E9%80%9A%E8%BF%87%E6%8E%A5%E5%85%A5%E7%BD%91%E8%BF%9B%E5%85%A5%E4%BA%92%E8%81%94%E7%BD%91%E5%86%85%E9%83%A8%EF%BC%88%E6%8E%A2%E7%B4%A2%E6%8E%A5%E5%85%A5%E7%BD%91%E5%92%8C%E7%BD%91%E7%BB%9C%E8%BF%90%E8%90%A5%E5%95%86%EF%BC%89/">网络是如何通信的 - 4.通过接入网进入互联网内部（探索接入网和网络运营商）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/03/network_20200103_note_3_%E4%BB%8E%E7%BD%91%E7%BA%BF%E5%88%B0%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87%EF%BC%88%E6%8E%A2%E7%B4%A2%E9%9B%86%E7%BA%BF%E5%99%A8%E3%80%81%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%92%8C%E8%B7%AF%E7%94%B1%E5%99%A8%EF%BC%89/">网络是如何通信的 - 3.从网线到网络设备（探索集线器、交换机和路由器）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/02/network_20200102_note_2_%E4%BD%BF%E7%94%A8%E7%94%B5%E4%BF%A1%E5%8F%B7%E4%BC%A0%E8%BE%93TCP:IP%E6%95%B0%E6%8D%AE%EF%BC%88%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%92%8C%E7%BD%91%E5%8D%A1%EF%BC%89/">网络是如何通信的 - 2.使用电或光信号传输TCP/IP数据（协议栈和网卡）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/01/network_20200101_note_1_%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%9F%E6%88%90%E6%B6%88%E6%81%AF/">网络是如何通信的 - 1.浏览器生成消息</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/26/share_20191226_hexo_maupassant_googleads/">Hexo Blog 添加 Google Adsense</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://github.com/liangtongdev" title="github" target="_blank">github</a><ul></ul><a href="https://www.jianshu.com/u/39237a8a7121" title="简书" target="_blank">简书</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright© 2016-2019  liangtong . All Rights Reserved</div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

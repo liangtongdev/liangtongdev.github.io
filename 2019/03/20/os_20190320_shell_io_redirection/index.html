@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="个人博客"><title>I/O 重定向 | 技术小屋</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create','UA-146373511-1','auto');ga('send','pageview');
+</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = 'https://hm.baidu.com/hm.js?' + '6e30653711aac2cc552b0ecb94df5e77';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.0.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">I/O 重定向</h1><a id="logo" href="/.">技术小屋</a><p class="description">积水成渊、 积土成山</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">I/O 重定向</h1><div class="post-meta">2019-03-20<span> | </span><span class="category"><a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span></div><a class="disqus-comment-count" href="/2019/03/20/os_20190320_shell_io_redirection/#vcomment"><span class="valine-comment-count" data-xid="/2019/03/20/os_20190320_shell_io_redirection/"></span><span> 条评论</span></a><div class="post-content"><ul>
+<li><code>cat</code>  连接文件</li>
+<li><code>sort</code>  排序文本行</li>
+<li><code>uniq</code>   报道或省略重复行</li>
+<li><code>grep</code> 打印匹配行</li>
+<li><code>wc</code>  打印文件中换行符，字，和字节个数</li>
+<li><code>head</code> 输出文件第一部分</li>
+<li><code>tail</code> 输出文件最后一部分</li>
+<li><code>tee</code> 从标准输入读取数据，并同时写到标准输出和文件</li>
+</ul>
+<h4 id="标准输入、输出和错误"><a href="#标准输入、输出和错误" class="headerlink" title="标准输入、输出和错误"></a>标准输入、输出和错误</h4><p>程序输出包括两个类别</p>
+<ul>
+<li>程序运行结果</li>
+<li>运行过程中的状态和错误信息</li>
+</ul>
+<p><strong>万物皆文件</strong>，默认情况下</p>
+<ul>
+<li>标准输出和标准错误的文件都连接到屏幕</li>
+<li>标准输入连接到键盘</li>
+</ul>
+<h4 id="标准输出重定向"><a href="#标准输出重定向" class="headerlink" title="标准输出重定向"></a>标准输出重定向</h4><p>使用 <code>&gt;</code>重定向符，可以将标准输出重定向到屏幕以外的文件。例如</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">liangdeiMac:draft liangtong$ ls /usr/bin/ &gt; output.txt</span><br><span class="line">liangdeiMac:draft liangtong$ </span><br></pre></td></tr></table></figure>
+
+<h4 id="标准错误重定向"><a href="#标准错误重定向" class="headerlink" title="标准错误重定向"></a>标准错误重定向</h4><p>文件内容清除与追加。</p>
+<p>假如我们使用一个不存在的目录，默认会产生一个标准错误。而标准错误默认连接的是屏幕</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">liangdeiMac:draft liangtong$ ls /usr/liangtong &gt; output.txt</span><br><span class="line">ls: /usr/liangtong: No such file or directory</span><br><span class="line">liangdeiMac:draft liangtong$ </span><br></pre></td></tr></table></figure>
+
+<p>我们打开重定向生成的output.txt文件：空白，大小为0</p>
+<p><strong>小技巧：我们可以使用<code>&gt; output.txt</code>这种重定向命令清空文件</strong></p>
+<p><strong>文件内容追加使用<code>&gt;&gt;</code>重定向符</strong></p>
+<p><strong>对于文件流的前 三个称作标准输入、输出和错误，shell 内部分别将其称为文件描述符0、1和2</strong>，即</p>
+<ul>
+<li>0 标准输入</li>
+<li>1 标准输出</li>
+<li>2 标准错误</li>
+</ul>
+<p>我们可以用以下语法来重定向标准错误</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">liangdeiMac:draft liangtong$ ls /usr/liangtong 2&gt; output.txt</span><br><span class="line">liangdeiMac:draft liangtong$ </span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="重定向标准输出和错误到同一个文件"><a href="#重定向标准输出和错误到同一个文件" class="headerlink" title="重定向标准输出和错误到同一个文件"></a>重定向标准输出和错误到同一个文件</h4><p>可能有这种情况，我们希望捕捉一个命令的所有输出到一个文件。为了完成这个，我们 必须同时重定向标准输出和标准错误。有两种方法来完成任务。第一个，传统的方法， 在旧版本 shell 中也有效：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /usr/liangtong &gt; output.txt 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+
+<p>注意重定向的顺序安排非常重要。标准错误的重定向必须总是出现在标准输出 重定向之后，要不然它不起作用。</p>
+<p>现在的 bash 版本提供了第二种方法，更精简合理的方法来执行这种联合的重定向。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">liangdeiMac:draft liangtong$ ls /usr/liangtong &amp;&gt; output.txt</span><br><span class="line">liangdeiMac:draft liangtong$ </span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="不需要的输出-dev-null"><a href="#不需要的输出-dev-null" class="headerlink" title="不需要的输出 /dev/null"></a>不需要的输出 /dev/null</h4><h5 id="dev-null"><a href="#dev-null" class="headerlink" title="/dev/null"></a>/dev/null</h5><p>/dev/null是一个垃圾箱，是一个无底洞，表示的含义为不显示。直接丢弃。<br>比如以下命令效果一样，对标准输入、标准错误输出均丢弃</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">liangtongdeiMac:playground liangtong$ ls -l not_exist.txt a.txt 1&gt;/dev/null 2&gt;/dev/null</span><br><span class="line">liangtongdeiMac:playground liangtong$ ls -l not_exist.txt a.txt 1&gt;/dev/null 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-gt-amp-1-1-gt-dev-null"><a href="#2-gt-amp-1-1-gt-dev-null" class="headerlink" title="2&gt;&amp;1 1&gt;/dev/null"></a>2&gt;&amp;1 1&gt;/dev/null</h5><p>将标准错误输出在屏幕上（标准输出）表示，将标准输出丢弃，此时屏幕上只输出标准错误日志。</p>
+<h5 id="1-gt-dev-null-2-gt-amp-1"><a href="#1-gt-dev-null-2-gt-amp-1" class="headerlink" title="1&gt;/dev/null 2&gt;&amp;1"></a>1&gt;/dev/null 2&gt;&amp;1</h5><p>将标准输出丢弃，将标准错误重定向到标准输出，此时无任何输出(均被丢弃)。</p>
+<h4 id="cat-连接文件"><a href="#cat-连接文件" class="headerlink" title="cat -  连接文件"></a>cat -  连接文件</h4><p>使用<code>&lt;</code>重定向符，我们可以把标准输入从键盘改到其他文件。例如</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">liangdeiMac:draft liangtong$ cat &lt; output.txt </span><br><span class="line">ls: /usr/liangtong: No such file or directory</span><br><span class="line">liangdeiMac:draft liangtong$ </span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="管道线"><a href="#管道线" class="headerlink" title="管道线"></a>管道线</h4><p>命令从标准输入读取数据并输送到标准输出的能力被一个称为管道线的 shell 特性所利用。使用管道操作符**<code>|</code>**（竖杠），一个命令的标准输出可以通过管道送至另一个命令的标准输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">command1 | command2</span><br></pre></td></tr></table></figure>
+
+<p>例如</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">liangdeiMac:draft liangtong$ cat &lt; output.txt | less</span><br><span class="line">liangdeiMac:draft liangtong$ </span><br></pre></td></tr></table></figure>
+
+<p>管道线经常用来对数据完成复杂的操作。有可能会把几个命令放在一起组成一个管道线。 通常，以这种方式使用的命令被称为<strong>过滤器</strong>。过滤器接受输入，以某种方式改变它，然后 输出它。</p>
+<p>把目录/bin 和/usr/bin 中 的可执行程序都联合在一起，再把它们排序，然后浏览执行结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">liangdeiMac:draft liangtong$ ls /bin /usr/bin | sort | less</span><br><span class="line">liangdeiMac:draft liangtong$ </span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="uniq-报道或忽略重复行"><a href="#uniq-报道或忽略重复行" class="headerlink" title="uniq - 报道或忽略重复行"></a>uniq - 报道或忽略重复行</h4><p>uniq 命令经常和 sort 命令结合在一起使用。uniq 从标准输入或单个文件名参数接受数据有序 列表（详情查看 uniq 手册页），默认情况下，从数据列表中删除任何重复行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">liangdeiMac:draft liangtong$ ls /bin /usr/bin | sort | uniq | less</span><br><span class="line">liangdeiMac:draft liangtong$ </span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="wc-－-打印行数、字数和字节数"><a href="#wc-－-打印行数、字数和字节数" class="headerlink" title="wc － 打印行数、字数和字节数"></a>wc － 打印行数、字数和字节数</h4><p>除了打印出行数、单词数和字节数，我们还可以通过添加<code>-l</code> 参数，只打印出行数。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">liangdeiMac:draft liangtong$ ls /bin /usr/bin | sort | uniq | less | wc</span><br><span class="line">    1007    1006    8278</span><br><span class="line">liangdeiMac:draft liangtong$ ls /bin /usr/bin | sort | uniq | less | wc -l</span><br><span class="line">    1007</span><br><span class="line">liangdeiMac:draft liangtong$ </span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="grep-－-打印匹配行"><a href="#grep-－-打印匹配行" class="headerlink" title="grep － 打印匹配行"></a>grep － 打印匹配行</h4><p>grep 是个很强大的程序，用来找到文件中的匹配文本。这样使用 grep 命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep pattern [file...]</span><br></pre></td></tr></table></figure>
+
+<p>简单操作例如</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">liangdeiMac:draft liangtong$ ls /bin /usr/bin | sort | uniq | grep zip</span><br><span class="line">bunzip2</span><br><span class="line">bzip2</span><br><span class="line">bzip2recover</span><br><span class="line">funzip</span><br><span class="line">gunzip</span><br><span class="line">gzip</span><br><span class="line">unzip</span><br><span class="line">unzipsfx</span><br><span class="line">zip</span><br><span class="line">zipcloak</span><br><span class="line">zipdetails</span><br><span class="line">zipdetails5.18</span><br><span class="line">zipgrep</span><br><span class="line">zipinfo</span><br><span class="line">zipnote</span><br><span class="line">zipsplit</span><br><span class="line">liangdeiMac:draft liangtong$ </span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="head-tail-－-打印文件开头部分-结尾部分"><a href="#head-tail-－-打印文件开头部分-结尾部分" class="headerlink" title="head / tail － 打印文件开头部分/结尾部分"></a>head / tail － 打印文件开头部分/结尾部分</h4><p>有时候你不需要一个命令的所有输出。可能你只想要前几行或者后几行的输出内容。 head 命令打印文件的前十行，而 tail 命令打印文件的后十行。默认情况下，两个命令 都打印十行文本，但是可以通过”-n”选项来调整命令打印的行数。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">liangdeiMac:draft liangtong$ head -n 3 os_20190319_shell_io_redirection.md </span><br><span class="line">---</span><br><span class="line">layout:     post</span><br><span class="line">title:       I/O 重定向</span><br><span class="line">liangdeiMac:draft liangtong$ tail -n 3 os_20190319_shell_io_redirection.md </span><br><span class="line"></span><br><span class="line"><span class="comment">#### head / tail － 打印文件开头部分/结尾部分</span></span><br><span class="line"></span><br><span class="line">liangdeiMac:draft liangtong$ </span><br></pre></td></tr></table></figure>
+
+
+
+<p>也可以结合管道使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">liangdeiMac:draft liangtong$ ls /bin /usr/bin | sort | uniq | grep zip | head -n 4</span><br><span class="line">bunzip2</span><br><span class="line">bzip2</span><br><span class="line">bzip2recover</span><br><span class="line">funzip</span><br><span class="line">liangdeiMac:draft liangtong$ </span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="tee-－-从-Stdin-读取数据，并同时输出到-Stdout-和文件"><a href="#tee-－-从-Stdin-读取数据，并同时输出到-Stdout-和文件" class="headerlink" title="tee － 从 Stdin 读取数据，并同时输出到 Stdout 和文件"></a>tee － 从 Stdin 读取数据，并同时输出到 Stdout 和文件</h4><p>为了和我们的管道隐喻保持一致，Linux 提供了一个叫做 tee 的命令，这个命令制造了 一个”tee”，安装到我们的管道上。tee 程序从标准输入读入数据，并且同时复制数据 到标准输出（允许数据继续随着管道线流动）和一个或多个文件。当在某个中间处理 阶段来捕捉一个管道线的内容时，这很有帮助。</p>
+</div><div class="post-copyright"><script type="text/javascript" src="/js/copyright.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copyright.css"><p><span>本文标题：</span>I/O 重定向</p><p><span>文章作者：</span>梁通</p><p><span>发布时间：</span>2019-03-20</p><p><span>最后更新：</span>2020-08-03</p><p><span>原始链接：</span><a href="/2019/03/20/os_20190320_shell_io_redirection/">http://www.liangtong.site/2019/03/20/os_20190320_shell_io_redirection/</a><span class="copy-path"><i class="fa fa-clipboard" data-clipboard-text="http://www.liangtong.site/2019/03/20/os_20190320_shell_io_redirection/"></i></span></p><p><span>版权声明：</span>Copyright© 2016-2020 liangtong 版权所有</p></div><br><div class="tags"><a href="/tags/shell/"><i class="fa fa-tag"></i>shell</a></div><div class="post-nav"><a class="pre" href="/2019/07/03/java_20190706_mybatis_select/">Mybatis常用的查询写法</a><a class="next" href="/2019/03/19/os_20190319_shell_usage/">常用命令</a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script><script>var notify = 'true' == 'true' ? true : false;
+var verify = 'true' == 'true' ? true : false;
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  appId:'b4NoTNpM7bWgldECesJq4Lyc-gzGzoHsz',
+  appKey:'KXoQP7VEFXlssuenNaq2F470',
+  placeholder:'评论区...',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10'
+})
+</script></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://www.liangtong.site"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/share/">share</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/xx%E6%98%AF%E5%A6%82%E4%BD%95xx%E7%9A%84/">xx是如何xx的</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E4%BA%AB/">分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%BB%E7%BB%93/">总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 15px;">排序</a> <a href="/tags/%E6%90%9C%E7%B4%A2/" style="font-size: 15px;">搜索</a> <a href="/tags/%E7%AE%97%E8%B7%AF/" style="font-size: 15px;">算路</a> <a href="/tags/sqlite3/" style="font-size: 15px;">sqlite3</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/environment/" style="font-size: 15px;">environment</a> <a href="/tags/module/" style="font-size: 15px;">module</a> <a href="/tags/mqtt/" style="font-size: 15px;">mqtt</a> <a href="/tags/mybatis/" style="font-size: 15px;">mybatis</a> <a href="/tags/note/" style="font-size: 15px;">note</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%98%AF%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%E7%9A%84/" style="font-size: 15px;">网络是如何通信的</a> <a href="/tags/searchBar/" style="font-size: 15px;">searchBar</a> <a href="/tags/bluetooth/" style="font-size: 15px;">bluetooth</a> <a href="/tags/objc/" style="font-size: 15px;">objc</a> <a href="/tags/gcd/" style="font-size: 15px;">gcd</a> <a href="/tags/runtime/" style="font-size: 15px;">runtime</a> <a href="/tags/tableView/" style="font-size: 15px;">tableView</a> <a href="/tags/shell/" style="font-size: 15px;">shell</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/CocoaPods/" style="font-size: 15px;">CocoaPods</a> <a href="/tags/tool/" style="font-size: 15px;">tool</a> <a href="/tags/nginx/" style="font-size: 15px;">nginx</a> <a href="/tags/redis/" style="font-size: 15px;">redis</a> <a href="/tags/objc-summary/" style="font-size: 15px;">objc-summary</a> <a href="/tags/SwiftUI/" style="font-size: 15px;">SwiftUI</a> <a href="/tags/miniprogram/" style="font-size: 15px;">miniprogram</a> <a href="/tags/go/" style="font-size: 15px;">go</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/08/14/java_20200814_note_IoC/">Spring IoC</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/08/java_20200808_note_string/">String、StringBuffer和StringBuilder之间的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/02/objc_20200302_note_enterprise_app_crash/">iOS企业级应用打开闪退原因总结及发布注意点</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/06/network_20200106_note_6_%E8%AF%B7%E6%B1%82%E5%88%B0%E8%BE%BEWeb%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E5%93%8D%E5%BA%94%E8%BF%94%E5%9B%9E%E6%B5%8F%E8%A7%88%E5%99%A8-%E7%9F%AD%E7%9F%AD%E5%87%A0%E7%A7%92%E5%88%B0%E2%80%9C%E6%BC%AB%E9%95%BF%E6%97%85%E7%A8%8B%E2%80%9D%E8%BF%8E%E6%9D%A5%E7%BB%88%E7%82%B9/">网络是如何通信的 - 6.请求到达Web服务器，响应返回浏览器-短短几秒到“漫长旅程”迎来终点</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/05/network_20200105_note_5_%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%9A%84%E5%B1%80%E5%9F%9F%E7%BD%91%E6%9C%89%E4%BB%80%E4%B9%88%E7%8E%84%E6%9C%BA/">网络是如何通信的 - 5.服务器端的局域网有什么玄机</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/04/network_20200104_note_4_%E9%80%9A%E8%BF%87%E6%8E%A5%E5%85%A5%E7%BD%91%E8%BF%9B%E5%85%A5%E4%BA%92%E8%81%94%E7%BD%91%E5%86%85%E9%83%A8%EF%BC%88%E6%8E%A2%E7%B4%A2%E6%8E%A5%E5%85%A5%E7%BD%91%E5%92%8C%E7%BD%91%E7%BB%9C%E8%BF%90%E8%90%A5%E5%95%86%EF%BC%89/">网络是如何通信的 - 4.通过接入网进入互联网内部（探索接入网和网络运营商）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/03/network_20200103_note_3_%E4%BB%8E%E7%BD%91%E7%BA%BF%E5%88%B0%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87%EF%BC%88%E6%8E%A2%E7%B4%A2%E9%9B%86%E7%BA%BF%E5%99%A8%E3%80%81%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%92%8C%E8%B7%AF%E7%94%B1%E5%99%A8%EF%BC%89/">网络是如何通信的 - 3.从网线到网络设备（探索集线器、交换机和路由器）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/02/network_20200102_note_2_%E4%BD%BF%E7%94%A8%E7%94%B5%E4%BF%A1%E5%8F%B7%E4%BC%A0%E8%BE%93TCP:IP%E6%95%B0%E6%8D%AE%EF%BC%88%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%92%8C%E7%BD%91%E5%8D%A1%EF%BC%89/">网络是如何通信的 - 2.使用电或光信号传输TCP/IP数据（协议栈和网卡）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/01/network_20200101_note_1_%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%9F%E6%88%90%E6%B6%88%E6%81%AF/">网络是如何通信的 - 1.浏览器生成消息</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/26/share_20191226_hexo_maupassant_googleads/">Hexo Blog 添加 Google Adsense</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://github.com/liangtongdev" title="github" target="_blank">github</a><ul></ul><a href="https://www.jianshu.com/u/39237a8a7121" title="简书" target="_blank">简书</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright© 2016-2019  liangtong . All Rights Reserved</div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

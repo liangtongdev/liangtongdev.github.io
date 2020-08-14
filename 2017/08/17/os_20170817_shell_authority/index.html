@@ -1,0 +1,281 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="个人博客"><title>chmod修改权限 | 技术小屋</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create','UA-146373511-1','auto');ga('send','pageview');
+</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = 'https://hm.baidu.com/hm.js?' + '6e30653711aac2cc552b0ecb94df5e77';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.0.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">chmod修改权限</h1><a id="logo" href="/.">技术小屋</a><p class="description">积水成渊、 积土成山</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">chmod修改权限</h1><div class="post-meta">2017-08-17<span> | </span><span class="category"><a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span></div><a class="disqus-comment-count" href="/2017/08/17/os_20170817_shell_authority/#vcomment"><span class="valine-comment-count" data-xid="/2017/08/17/os_20170817_shell_authority/"></span><span> 条评论</span></a><div class="post-content"><p>  Unix是多任务、多用户的操作系统，这以为着多个用户可以在同一时间使用同一台计算机。用户拥有文件或目录，则该用户对这个文件或目录的访问权限具有控制权。而用户又属于一个用户组(可以包含一个或多个用户)，用户组成员由文件或目录的所有者授予对文件或目录的访问权限。除了对用户组授权外，文件所有者可以给每个人一些权限。<br>    在Unix系统中，可以通过shell中输入命令 id 来查看身份信息，系统中每个用户的uid是不同的。    </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">liangtongdeiMac:~ liangtong$ id</span><br><span class="line">uid=501(liangtong) gid=20(staff) groups=20(staff),701(com.apple.sharepoint.group.1),12(everyone),61(localaccounts),79(_appserverusr),80(admin),81(_appserveradm),98(_lpadmin),33(_appstore),100(_lpoperator),204(_developer),395(com.apple.access_ftp),398(com.apple.access_screensharing),399(com.apple.access_ssh)</span><br><span class="line">liangtongdeiMac:~ liangtong$ </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h3 id="文件的读写与执行"><a href="#文件的读写与执行" class="headerlink" title="文件的读写与执行"></a>文件的读写与执行</h3><p>对于文件的读写与执行，首先通过一下命令查看输出的结果：   </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">liangtongdeiMac:playground liangtong$ mkdir test_authority</span><br><span class="line">liangtongdeiMac:playground liangtong$ cd test_authority/</span><br><span class="line">liangtongdeiMac:test_authority liangtong$ &gt; authority_test.txt</span><br><span class="line">liangtongdeiMac:test_authority liangtong$ ls -l authority_test.txt </span><br><span class="line">-rw-r--r--  1 liangtong  staff  0  8 16 18:43 authority_test.txt</span><br><span class="line">liangtongdeiMac:test_authority liangtong$ </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这里创建了一个目录test_authority，并在目录中创建了一个文件authority_test.txt。之后查看文件线索。这里我们主要说前十个字符 *-rw-r–r–*。</p>
+<ul>
+<li>第一个代表的是文件类型。<ul>
+<li><em>-</em> 表示普通文件</li>
+<li><em>d</em> 表示目录</li>
+<li>其他，比如 <em>l</em> 符号链接、 <em>c</em> 字符设备文件，比如终端机或者调制解调器、 <em>b</em> 块设备文件比如硬盘，CD-ROM盘</li>
+</ul>
+</li>
+<li>剩下的九个字符叫做文件模式，代表文件所有者，文件组所有者，其他人的读、写、执行权限  </li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">Owner</th>
+<th align="center">Group</th>
+<th align="center">World</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">rwx</td>
+<td align="center">rwx</td>
+<td align="center">rwx</td>
+</tr>
+</tbody></table>
+<p>当设置文件模式后，r、w、x模式属性对文件和目录产生以下影响：</p>
+<table>
+<thead>
+<tr>
+<th align="center">属性</th>
+<th align="left">文件</th>
+<th align="left">目录</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">r</td>
+<td align="left">读取文件的内容</td>
+<td align="left">允许列出目录内容，前提是目录必须可执行</td>
+</tr>
+<tr>
+<td align="center">w</td>
+<td align="left">写入文件内容，但不允许重命名或删除</td>
+<td align="left">可以在目录下新增、修改、重命名，前提是目录必须可执行</td>
+</tr>
+<tr>
+<td align="center">x</td>
+<td align="left">允许文件作为程序来执行，前提必须置为可读</td>
+<td align="left">允许进入目录，例如 cd xx</td>
+</tr>
+</tbody></table>
+<p>以下举几个例子：</p>
+<table>
+<thead>
+<tr>
+<th align="center">文件属性</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-rwx——</td>
+<td align="left">普通文件，文件所有者可读可写可执行，其他人无任何权限</td>
+</tr>
+<tr>
+<td align="center">-rw——-</td>
+<td align="left">普通文件，文件所有者可读可写，其他人无任何权限</td>
+</tr>
+<tr>
+<td align="center">-rw-r–r–</td>
+<td align="left">普通文件，文件所有者可读可写，文件所有者所在组可读，其他人可读</td>
+</tr>
+<tr>
+<td align="center">-rwxr-xr-x</td>
+<td align="left">普通文件，文件所有者可读可写可执行，文件所有者所在组可读可执行，其他人可读可执行</td>
+</tr>
+<tr>
+<td align="center">drwxrwx—</td>
+<td align="left">目录，目录所有者及所有者所在的分组可以访问目录，在目录中新建、修改、删除文件，其他人无权限</td>
+</tr>
+<tr>
+<td align="center">drwxr-x—</td>
+<td align="left">目录，目录所有者可以访问目录，在目录中新建、修改、删除文件；文件所有者所在分组可以访问目录，其他人无权限</td>
+</tr>
+</tbody></table>
+<h3 id="chmod-修改文件模式"><a href="#chmod-修改文件模式" class="headerlink" title="chmod 修改文件模式"></a>chmod 修改文件模式</h3><p>文件／目录的所有者或者超级管理员可以用 <em>chmod</em> 命令来更改文件或者目录的权限。<br>chmod命令支持两种不同的方式来更改文件模式：   </p>
+<ul>
+<li>八进制数字表示法<ul>
+<li>每个八进制数字代表了3个二进制数字。</li>
+<li>可以使用命令 <em>chmod 600 authority_test.txt</em> 将文件模式修改为可读可写</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">十进制</th>
+<th align="center">二进制</th>
+<th align="center">文件模式</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">000</td>
+<td align="center">—</td>
+<td align="left">无权限</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">001</td>
+<td align="center">–x</td>
+<td align="left">执行</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">010</td>
+<td align="center">-w-</td>
+<td align="left">写</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">011</td>
+<td align="center">-wx</td>
+<td align="left">写、执行</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">100</td>
+<td align="center">r–</td>
+<td align="left">读</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">101</td>
+<td align="center">r-x</td>
+<td align="left">读、执行</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="center">110</td>
+<td align="center">rw-</td>
+<td align="left">读、写</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td align="center">111</td>
+<td align="center">rwx</td>
+<td align="left">读、写、执行</td>
+</tr>
+</tbody></table>
+<ul>
+<li>符号表示法<ul>
+<li>由3部分组成。<ul>
+<li>会影响谁，包括 <em>u</em> 、  <em>g</em> 、  <em>o</em> 、  <em>a</em> </li>
+<li>具体操作，包括 <em>+</em> 、  <em>-</em>  、  <em>=</em> </li>
+<li>设置的权限，由 r 、 w 、 x 进行组合，例如 <em>x</em> 、  <em>rw</em>  、 <em>rwx</em> 等</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">影响谁</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">u</td>
+<td align="left">“user”的简写，意思是文件或目录的所有者。</td>
+</tr>
+<tr>
+<td align="center">g</td>
+<td align="left">用户组</td>
+</tr>
+<tr>
+<td align="center">o</td>
+<td align="left">“others”的简写，意思是其他所有的人</td>
+</tr>
+<tr>
+<td align="center">a</td>
+<td align="left">“all”的简写，是”u”, “g”和“o”三者的联合</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">如果没有指定字符，则假定使用”all”</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center">具体操作</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">+</td>
+<td align="left">加上一个权限</td>
+</tr>
+<tr>
+<td align="center">-</td>
+<td align="left">删掉一个权限</td>
+</tr>
+<tr>
+<td align="center">=</td>
+<td align="left">只有指定的权限可用，其它所有的权限被删除</td>
+</tr>
+<tr>
+<td align="center">​</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="center">以下举几个例子：</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center">符号表示</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">u+x</td>
+<td align="left">为文件所有者添加可执行权限</td>
+</tr>
+<tr>
+<td align="center">+x</td>
+<td align="left">为文件所有者，用户组，和其他所有人添加可执行权限。 等价于 a+x。</td>
+</tr>
+<tr>
+<td align="center">o-rw</td>
+<td align="left">除了文件所有者和用户组，删除其他人的读权限和写权限</td>
+</tr>
+<tr>
+<td align="center">go=rw</td>
+<td align="left">给群组的主人和任意文件拥有者的人读写权限。如果群组的主人或全局之前已经有了执行的权限，他们将被移除。</td>
+</tr>
+<tr>
+<td align="center">u+x,go=rw</td>
+<td align="left">给文件拥有者执行权限并给组和其他人限定读和执行的权限。多种设定可以用逗号分开。</td>
+</tr>
+</tbody></table>
+</div><div class="post-copyright"><script type="text/javascript" src="/js/copyright.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copyright.css"><p><span>本文标题：</span>chmod修改权限</p><p><span>文章作者：</span>梁通</p><p><span>发布时间：</span>2017-08-17</p><p><span>最后更新：</span>2020-08-03</p><p><span>原始链接：</span><a href="/2017/08/17/os_20170817_shell_authority/">http://www.liangtong.site/2017/08/17/os_20170817_shell_authority/</a><span class="copy-path"><i class="fa fa-clipboard" data-clipboard-text="http://www.liangtong.site/2017/08/17/os_20170817_shell_authority/"></i></span></p><p><span>版权声明：</span>Copyright© 2016-2020 liangtong 版权所有</p></div><br><div class="tags"><a href="/tags/shell/"><i class="fa fa-tag"></i>shell</a></div><div class="post-nav"><a class="pre" href="/2017/08/24/objc_20170824_bluetooth/">蓝牙Central模式 - 水准仪蓝牙交互</a><a class="next" href="/2017/08/16/os_20170816_shell_usage/">常用命令</a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script><script>var notify = 'true' == 'true' ? true : false;
+var verify = 'true' == 'true' ? true : false;
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  appId:'b4NoTNpM7bWgldECesJq4Lyc-gzGzoHsz',
+  appKey:'KXoQP7VEFXlssuenNaq2F470',
+  placeholder:'评论区...',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10'
+})
+</script></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://www.liangtong.site"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/share/">share</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/xx%E6%98%AF%E5%A6%82%E4%BD%95xx%E7%9A%84/">xx是如何xx的</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E4%BA%AB/">分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%BB%E7%BB%93/">总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 15px;">排序</a> <a href="/tags/%E6%90%9C%E7%B4%A2/" style="font-size: 15px;">搜索</a> <a href="/tags/%E7%AE%97%E8%B7%AF/" style="font-size: 15px;">算路</a> <a href="/tags/sqlite3/" style="font-size: 15px;">sqlite3</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/environment/" style="font-size: 15px;">environment</a> <a href="/tags/module/" style="font-size: 15px;">module</a> <a href="/tags/mqtt/" style="font-size: 15px;">mqtt</a> <a href="/tags/mybatis/" style="font-size: 15px;">mybatis</a> <a href="/tags/note/" style="font-size: 15px;">note</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%98%AF%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%E7%9A%84/" style="font-size: 15px;">网络是如何通信的</a> <a href="/tags/searchBar/" style="font-size: 15px;">searchBar</a> <a href="/tags/bluetooth/" style="font-size: 15px;">bluetooth</a> <a href="/tags/objc/" style="font-size: 15px;">objc</a> <a href="/tags/gcd/" style="font-size: 15px;">gcd</a> <a href="/tags/runtime/" style="font-size: 15px;">runtime</a> <a href="/tags/tableView/" style="font-size: 15px;">tableView</a> <a href="/tags/shell/" style="font-size: 15px;">shell</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/CocoaPods/" style="font-size: 15px;">CocoaPods</a> <a href="/tags/tool/" style="font-size: 15px;">tool</a> <a href="/tags/nginx/" style="font-size: 15px;">nginx</a> <a href="/tags/redis/" style="font-size: 15px;">redis</a> <a href="/tags/objc-summary/" style="font-size: 15px;">objc-summary</a> <a href="/tags/SwiftUI/" style="font-size: 15px;">SwiftUI</a> <a href="/tags/miniprogram/" style="font-size: 15px;">miniprogram</a> <a href="/tags/go/" style="font-size: 15px;">go</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/08/14/java_20200814_note_IoC/">Spring IoC</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/08/java_20200808_note_string/">String、StringBuffer和StringBuilder之间的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/02/objc_20200302_note_enterprise_app_crash/">iOS企业级应用打开闪退原因总结及发布注意点</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/06/network_20200106_note_6_%E8%AF%B7%E6%B1%82%E5%88%B0%E8%BE%BEWeb%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E5%93%8D%E5%BA%94%E8%BF%94%E5%9B%9E%E6%B5%8F%E8%A7%88%E5%99%A8-%E7%9F%AD%E7%9F%AD%E5%87%A0%E7%A7%92%E5%88%B0%E2%80%9C%E6%BC%AB%E9%95%BF%E6%97%85%E7%A8%8B%E2%80%9D%E8%BF%8E%E6%9D%A5%E7%BB%88%E7%82%B9/">网络是如何通信的 - 6.请求到达Web服务器，响应返回浏览器-短短几秒到“漫长旅程”迎来终点</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/05/network_20200105_note_5_%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%9A%84%E5%B1%80%E5%9F%9F%E7%BD%91%E6%9C%89%E4%BB%80%E4%B9%88%E7%8E%84%E6%9C%BA/">网络是如何通信的 - 5.服务器端的局域网有什么玄机</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/04/network_20200104_note_4_%E9%80%9A%E8%BF%87%E6%8E%A5%E5%85%A5%E7%BD%91%E8%BF%9B%E5%85%A5%E4%BA%92%E8%81%94%E7%BD%91%E5%86%85%E9%83%A8%EF%BC%88%E6%8E%A2%E7%B4%A2%E6%8E%A5%E5%85%A5%E7%BD%91%E5%92%8C%E7%BD%91%E7%BB%9C%E8%BF%90%E8%90%A5%E5%95%86%EF%BC%89/">网络是如何通信的 - 4.通过接入网进入互联网内部（探索接入网和网络运营商）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/03/network_20200103_note_3_%E4%BB%8E%E7%BD%91%E7%BA%BF%E5%88%B0%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87%EF%BC%88%E6%8E%A2%E7%B4%A2%E9%9B%86%E7%BA%BF%E5%99%A8%E3%80%81%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%92%8C%E8%B7%AF%E7%94%B1%E5%99%A8%EF%BC%89/">网络是如何通信的 - 3.从网线到网络设备（探索集线器、交换机和路由器）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/02/network_20200102_note_2_%E4%BD%BF%E7%94%A8%E7%94%B5%E4%BF%A1%E5%8F%B7%E4%BC%A0%E8%BE%93TCP:IP%E6%95%B0%E6%8D%AE%EF%BC%88%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%92%8C%E7%BD%91%E5%8D%A1%EF%BC%89/">网络是如何通信的 - 2.使用电或光信号传输TCP/IP数据（协议栈和网卡）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/01/network_20200101_note_1_%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%9F%E6%88%90%E6%B6%88%E6%81%AF/">网络是如何通信的 - 1.浏览器生成消息</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/26/share_20191226_hexo_maupassant_googleads/">Hexo Blog 添加 Google Adsense</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://github.com/liangtongdev" title="github" target="_blank">github</a><ul></ul><a href="https://www.jianshu.com/u/39237a8a7121" title="简书" target="_blank">简书</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright© 2016-2019  liangtong . All Rights Reserved</div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
