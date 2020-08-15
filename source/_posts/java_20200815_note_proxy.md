@@ -98,7 +98,7 @@ tags: note
 
 ```Java
     @Test
-    public void  test_stringProxy1(){
+    public void  test_listProxy1(){
         List<String> list = new ArrayList<>();
         try{
             //1.1 通过创建代理Class对象
@@ -124,15 +124,15 @@ tags: note
 运行结果如下：
 
 ```bash
-[INFO ] 2020-08-15 16:00:35 [main] siirisoft.ime.service.StringApiTest - invoke method public abstract boolean java.util.List.add(java.lang.Object)
-[INFO ] 2020-08-15 16:00:35 [main] siirisoft.ime.service.StringApiTest - [ insert into list]
+[INFO ] 2020-08-15 16:00:35 [main] xxx.xx.xxxxx.xxxxxx - invoke method public abstract boolean java.util.List.add(java.lang.Object)
+[INFO ] 2020-08-15 16:00:35 [main] xxx.xx.xxxxx.xxxxxx - [ insert into list]
 ```
 
 + 通过代理对象实例、接口直接创建代理对象实例。
 
 ```Java
     @Test
-    public void test_stringProxy2() {
+    public void test_listProxy2() {
         List<String> list = new ArrayList<>();
         try {
             //2.1 通过创建代理Class对象实例
@@ -157,8 +157,8 @@ tags: note
 运行结果如下：
 
 ```bash
-[INFO ] 2020-08-15 16:06:12 [main] siirisoft.ime.service.StringApiTest - invoke method public abstract boolean java.util.List.add(java.lang.Object)
-[INFO ] 2020-08-15 16:06:12 [main] siirisoft.ime.service.StringApiTest - [ insert into list]
+[INFO ] 2020-08-15 16:06:12 [main] xxx.xx.xxxxx.xxxxxx - invoke method public abstract boolean java.util.List.add(java.lang.Object)
+[INFO ] 2020-08-15 16:06:12 [main] xxx.xx.xxxxx.xxxxxx - [ insert into list]
 ```
 
 最后总结下JDK动态代理的几个关键步骤
