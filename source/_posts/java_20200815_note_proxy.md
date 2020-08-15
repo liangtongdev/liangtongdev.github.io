@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      Java 动态代理
-date:       2020-08-14 20:14:13
+date:       2020-08-15 17:14:13
 author:     liangtong
 catalog: true
 categories: Java
