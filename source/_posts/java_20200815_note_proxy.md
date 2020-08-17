@@ -190,13 +190,13 @@ CGLIB是针对类实现的代理，主要是制定的类生成一个子类，覆
             @Override
             public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
                 log.info("invoke method " + method);
-                return method.invoke(list, objects);
-//                return methodProxy.invokeSuper(o, objects);
+//                return method.invoke(list, objects);
+                return methodProxy.invokeSuper(o, objects);
             }
         });
         List listCGLibProxy = (List) enhancer.create();
         listCGLibProxy.add("insert into list");
-        log.info(list.toString());
+        log.info(listCGLibProxy.toString());
     }
 ```
 
