@@ -178,6 +178,39 @@ tags: note
 
 CGLIB是针对类实现的代理，主要是制定的类生成一个子类，覆盖其中的方法。
 
+同JDK动态代理一样，我们只需要实现`org.springframework.cglib.proxy.MethodInterceptor`接口，然后设置`Enhancer`的callback对象，即可通过`enhancer.create()`生成动态代理类。
+
+```Java
+    @Test
+    public void test_listCGLib(){
+        List<String> list = new ArrayList<>();
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(list.getClass());
+        enhancer.setCallback(new MethodInterceptor() {
+            @Override
+            public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+                log.info("invoke method " + method);
+                return method.invoke(list, objects);
+//                return methodProxy.invokeSuper(o, objects);
+            }
+        });
+        List listCGLibProxy = (List) enhancer.create();
+        listCGLibProxy.add("insert into list");
+        log.info(list.toString());
+    }
+```
+
+程序运行结果
+
+```bash
+[INFO ] 2020-08-17 13:55:52 [main] xxx.xx.xxxxx.xxxxxx - invoke method public boolean java.util.ArrayList.add(java.lang.Object)
+[INFO ] 2020-08-17 13:55:52 [main] xxx.xx.xxxxx.xxxxxx - [insert into list]
+```
+
+
+
+
+
 #### Spring 选择使用动态代理方式？
 
   当Bean实现接口时，Spring会使用JDK动态代理；没有实现接口的话，在使用CGLib类实现。
