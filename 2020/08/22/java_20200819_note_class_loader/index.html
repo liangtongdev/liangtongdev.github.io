@@ -1,0 +1,156 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="个人博客"><title>类加载器 | 技术小屋</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create','UA-146373511-1','auto');ga('send','pageview');
+</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = 'https://hm.baidu.com/hm.js?' + '6e30653711aac2cc552b0ecb94df5e77';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script data-ad-client="ca-pub-2920624860740745" async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.0.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">类加载器</h1><a id="logo" href="/.">技术小屋</a><p class="description">积水成渊、 积土成山</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">类加载器</h1><div class="post-meta">2020-08-22<span> | </span><span class="category"><a href="/categories/Java/">Java</a></span></div><a class="disqus-comment-count" href="/2020/08/22/java_20200819_note_class_loader/#vcomment"><span class="valine-comment-count" data-xid="/2020/08/22/java_20200819_note_class_loader/"></span><span> 条评论</span></a><div class="post-content"><p>JVM 把描述类数据从Class文件加载到内存，然后经过校验、转换解析和初始化，最终形成能被JVM直接使用的Java类型，这就是JVM的类加载机制。</p>
+<p>一般类从加载到内存 到 卸载出内存到整个过程分为 7 个阶段 ： <code>加载、 验证、 准备、 解析、 初始化、 使用 和 卸载</code>。</p>
+<h3 id="加载过程"><a href="#加载过程" class="headerlink" title="加载过程"></a>加载过程</h3><p> 类加载全过程包括<code>加载、 验证、 准备、 解析、 初始化</code> ，其中 <code>验证、准备、解析</code> 统称为 <code>连接</code>。</p>
+<h4 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h4><p>加载指到是将类的Class文件加载到内存中，并将这些数据转换成方法中的运行数据（静态变量、静态代码块、常量池等），在堆中生成一个Class类对象，作为方法区类数据的访问入口。</p>
+<blockquote>
+<p>注：Java虚拟机并没有明确要求一定要存储在堆区中，只是hotspot选择将Class对戏那个存储在方法区中。</p>
+</blockquote>
+<p>加载过程分为三步：</p>
+<ul>
+<li>通过一个类的全限定名来获取定义此类的二进制字节流。</li>
+<li>将这个字节流代表的静态存储结构转化为方法区的运行时数据结构。</li>
+<li>在内存中生成这个类的Class类对象，作为方法区这个类的数据访问入口。</li>
+</ul>
+<p>Class文件的来源：</p>
+<ul>
+<li>从本地磁盘中直接加载</li>
+<li>通过网络下载.class文件</li>
+<li>从zip、 jar 等归档文件中加载.class文件</li>
+<li>从数据库中</li>
+<li>其他文件生成（jsp）</li>
+</ul>
+<h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><p>验证是连接阶段的第一步，重要而非必要。主要作用是确保被加载类的正确性。</p>
+<p>验证内容包括格式验证、语义分析（比如final类是否被继承）、操作验证（私有方法访问等）等。</p>
+<p>验证的目的确保class文件的字节流信息符合JVM要求，不会危害虚拟机的安全。</p>
+<h4 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h4><p><strong>为类中的所有静态变量分配内存空间，并为其设置一个初始值。</strong></p>
+<ul>
+<li>类变量（static）会分配内存，但实例变量不会。</li>
+<li>这里的初始值是数据类型默认值，而不是代码中被显式赋予的值。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在准备阶段之后，value值为0，而不是1。赋值为1的动作发生在初始化阶段。</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> value = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//例外情况：在准备阶段之后，value值即为1.</span></span><br><span class="line"><span class="comment">//如果变量被 static 和 final 同时修饰，则准备阶段直接赋值为指定值。</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">finally</span> <span class="keyword">static</span> <span class="keyword">int</span> value = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h4><p><strong>符号引用 -&gt; 直接引用</strong>，将常量池中的符号引用转为直接引用，这个可以在初始化之后再执行。</p>
+<h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>这是类加载机制的最后一步，在这个阶段，java程序代码才开始真正执行。</p>
+<p>JVM初始化一个类一般包括以下几个步骤：</p>
+<ul>
+<li>如果这个类还没有被加载和连接，则程序先加载并连接该类。</li>
+<li>如果这个类的直接父类还没有被初始化，则先初始化其直接父类。</li>
+<li>如果类中有初始化语句，系统依次执行这些初始化语句。</li>
+</ul>
+<p>类的初始化时机：</p>
+<ul>
+<li>创建类的实例，也就是new的方式</li>
+<li>访问类的静态变量</li>
+<li>调用类的静态方法</li>
+<li>反射</li>
+<li>初始化类的时候，其父类也会被初始化</li>
+</ul>
+<p>Java程序的初始化顺序：</p>
+<ul>
+<li>静态变量/代码块<ul>
+<li>父类的静态变量</li>
+<li>父类的静态代码块</li>
+<li>子类的静态变量</li>
+<li>子类的静态代码块</li>
+</ul>
+</li>
+<li>父类<ul>
+<li>非静态变量</li>
+<li>非静态代码块</li>
+<li>构造函数</li>
+</ul>
+</li>
+<li>子类<ul>
+<li>非静态变量</li>
+<li>非静态代码块</li>
+<li>构造函数</li>
+</ul>
+</li>
+</ul>
+<h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h3><p>虚拟机设计团队把加载动作放到JVM外部实现，以便让应用程序决定如何获取所需的类。程序调用时，JVM会初始化，初始化的过程中会生成多个类加载器，JVM调用指定的类加载器去加载类即可。</p>
+<h4 id="类缓存"><a href="#类缓存" class="headerlink" title="类缓存"></a>类缓存</h4><p>标准的Java SE类加载器可以按要求查找类，一旦某个类被加载到类加载器中，它将维持加载（缓存）一段时间。不过，JVM垃圾收集器可以回收这些Class对象。</p>
+<h4 id="类加载器分类"><a href="#类加载器分类" class="headerlink" title="类加载器分类"></a>类加载器分类</h4><p>系统提供有3个类加载器：</p>
+<ul>
+<li>引导类加载器（Bootstrap ClassLoader）： 最顶层的加载器，主要加载核心类库。负责加载　<code>JAVA_HOME/lib</code> 下的jar包和class文件</li>
+<li>扩展类加载器（extensions class loader）：负责加载　<code>JAVA_HOME/lib/ext</code> 下的jar包和class文件</li>
+<li>应用程序类加载器（application class loader）：加载当前应用的classpath的所有类。一般来说，Java应用的类都由他来加载完成的。</li>
+</ul>
+<p>用户自定义类加载器</p>
+<p>可以继承<code>java.lang.ClassLoader</code>的方式实现自己的类加载器。</p>
+<p>类加载器的顺序（自上而下） ： <strong>启动类加载器 &gt; 扩展类加载器 &gt; 应用类加载器 &gt; 自定义类加载器</strong></p>
+<p>ClassLoader的常用方法：</p>
+<ul>
+<li><strong>getParent</strong>() ： 返回该类加载器的父类加载器。</li>
+<li>loadClass(String name) ：表示根据类名进行双亲委托模型进行类加载并返回类对象。<strong>此方法负责加载指定名字的类，首先会从已加载的类中去寻找，如果没有找到；从parent ClassLoader[ExtClassLoader]中加载；如果没有加载到，则从Bootstrap ClassLoader中尝试加载(findBootstrapClassOrNull方法), 如果还是加载失败，则自己加载。如果还不能加载，则抛出异常ClassNotFoundException。</strong></li>
+<li><strong>findClass</strong>(String name) ：查找名称为 name的类，返回的结果是java.lang.Class类的实例。</li>
+<li><strong>findLoadedClass</strong>(String name)： 查找名称为 name的已经被加载过的类，返回的结果是 java.lang.Class类的实例。</li>
+<li><strong>defineClass</strong>(String name, byte[] b, int off, int len) 把字节数组 b中的内容转换成 Java 类，返回的结果是java.lang.Class类的实例。这个方法被声明为 final的。</li>
+</ul>
+<h4 id="双亲委派模式"><a href="#双亲委派模式" class="headerlink" title="双亲委派模式"></a>双亲委派模式</h4><p><strong>自底而上的检查类是否被加载，然后自顶而下的尝试加载类</strong>。</p>
+<p>某个特定的类加载器接收到类加载的请求时，会将加载任务委托给自己的父类，直到最高级父类<strong>引导类加载器（bootstrap class loader）</strong>，如果父类能够加载就加载，不能加载则返回到子类进行加载。如果都不能加载则报错。<strong>ClassNotFoundException</strong></p>
+<blockquote>
+<p>注：它们之间的父子关系并不是通过继承关系来实现的，而是使用组合关系来复用父加载器中的代码。</p>
+</blockquote>
+<p>双亲委托机制是为了保证 Java 核心库的类型安全。这种机制保证不会出现用户自己能定义java.lang.Object类等的情况。例如，用户定义了java.lang.String，那么加载这个类时最高级父类会首先加载，发现核心类中也有这个类，那么就加载了核心类库，而自定义的永远都不会加载。</p>
+<ul>
+<li>可以避免重复加载，父类已经加载了，子类就不需要再次加载。</li>
+<li>更加安全，很好的解决了各个类加载器的基础类的统一问题。</li>
+</ul>
+<h4 id="自定义类加载器"><a href="#自定义类加载器" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h4><p>自定义类加载器主要有两种方式：</p>
+<ul>
+<li>继承ClassLoader， 重写 findClass 方法 - 遵守双亲委派模型</li>
+<li>继承ClassLoader， 重写 loadClass 方法 - 破坏双亲委派模型</li>
+</ul>
+<p>推荐使用第一种，最大程度上遵循双亲委派模式，流程如下：</p>
+<ul>
+<li>首先检查请求的类型是否已经被这个类装载器装载到命名空间中了，如果已经装载，直接返回。</li>
+<li>委派类加载请求给父类加载器，如果父类加载器能够完成，则返回父类加载器加载的Class实例。</li>
+<li>调用本类加载器的findClass（…）方法，试图获取对应的字节码，如果获取的到，则调用defineClass（…）导入类型到方法区；如果获取不到对应的字节码或者其他原因失败，返回异常给loadClass（…）， loadClass（…）转抛异常，终止加载过程。</li>
+</ul>
+<p>为方便理解，截取网上自定义类加载器代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@ClassName</span> FileSystemClassLoader</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span> 自定义文件类加载器</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span> xwd</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2018/10/24 9:23</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileSystemClassLoader</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String rootDir;<span class="comment">//根目录</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FileSystemClassLoader</span><span class="params">(String rootDir)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.rootDir = rootDir;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@MethodName</span> findClass</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Descrition</span> 加载类</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Param</span> [name]</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> java.lang.Class&lt;?&gt;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> Class&lt;?&gt; findClass(String name) <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">        Class&lt;?&gt; loadedClass = findLoadedClass(name);<span class="comment">//查询该类是否已经被加载过</span></span><br><span class="line">        <span class="keyword">if</span>(loadedClass != <span class="keyword">null</span>)&#123;  <span class="comment">//该类已经被加载过了,直接返回</span></span><br><span class="line">            <span class="keyword">return</span> loadedClass;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;  <span class="comment">//该类还没有被加载过</span></span><br><span class="line">            ClassLoader classLoader = <span class="keyword">this</span>.getParent();<span class="comment">//委派给父类加载</span></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                loadedClass = classLoader.loadClass(name);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line"><span class="comment">//                e.printStackTrace();</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(loadedClass != <span class="keyword">null</span>)&#123;  <span class="comment">//父类加载成功,返回</span></span><br><span class="line">                <span class="keyword">return</span> loadedClass;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">byte</span>[] classData = getClassData(name);</span><br><span class="line">                <span class="keyword">if</span>(classData == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> ClassNotFoundException();</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    loadedClass = defineClass(getName(),classData,<span class="number">0</span>,classData.length);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> loadedClass;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@MethodName</span> getClassData</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Descrition</span> 根据类名获得对应的字节数组</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Param</span> [name]</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> byte[]</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] getClassData(String name) &#123;</span><br><span class="line">        <span class="comment">//pri.xiaowd.test.A  --&gt;  D:/myjava/pei/xiaowd/test/A.class</span></span><br><span class="line">        String path = rootDir + <span class="string">&quot;/&quot;</span> + name.replace(<span class="string">&#x27;.&#x27;</span>,<span class="string">&#x27;/&#x27;</span>) + <span class="string">&quot;.class&quot;</span>;</span><br><span class="line"><span class="comment">//        System.out.println(path);</span></span><br><span class="line">        InputStream is = <span class="keyword">null</span>;</span><br><span class="line">        ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            is = <span class="keyword">new</span> FileInputStream(path);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">            <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span>((temp = is.read(bytes)) != -<span class="number">1</span>)&#123;</span><br><span class="line">                baos.write(bytes,<span class="number">0</span>,temp);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> baos.toByteArray();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span>(baos != <span class="keyword">null</span>)&#123;</span><br><span class="line">                    baos.close();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(is != <span class="keyword">null</span>)&#123;</span><br><span class="line">                    is.close();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+</div><div class="post-copyright"><script type="text/javascript" src="/js/copyright.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copyright.css"><p><span>本文标题：</span>类加载器</p><p><span>文章作者：</span>梁通</p><p><span>发布时间：</span>2020-08-22</p><p><span>最后更新：</span>2020-08-24</p><p><span>原始链接：</span><a href="/2020/08/22/java_20200819_note_class_loader/">http://www.liangtong.site/2020/08/22/java_20200819_note_class_loader/</a><span class="copy-path"><i class="fa fa-clipboard" data-clipboard-text="http://www.liangtong.site/2020/08/22/java_20200819_note_class_loader/"></i></span></p><p><span>版权声明：</span>Copyright© 2016-2020 liangtong 版权所有</p></div><br><div class="tags"><a href="/tags/%E7%AC%94%E8%AE%B0/"><i class="fa fa-tag"></i>笔记</a></div><div class="post-nav"><a class="next" href="/2020/08/18/java_20200818_spring_aop/">Spring AOP 简单实践</a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script><script>var notify = 'true' == 'true' ? true : false;
+var verify = 'true' == 'true' ? true : false;
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  appId:'b4NoTNpM7bWgldECesJq4Lyc-gzGzoHsz',
+  appKey:'KXoQP7VEFXlssuenNaq2F470',
+  placeholder:'评论区...',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10'
+})
+</script></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://www.liangtong.site"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GoLang/">GoLang</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/xx%E6%98%AF%E5%A6%82%E4%BD%95xx%E7%9A%84/">xx是如何xx的</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E4%BA%AB/">分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E6%9E%90/">分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%BB%E7%BB%93/">总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 15px;">排序</a> <a href="/tags/%E6%90%9C%E7%B4%A2/" style="font-size: 15px;">搜索</a> <a href="/tags/%E7%AE%97%E8%B7%AF/" style="font-size: 15px;">算路</a> <a href="/tags/sqlite3/" style="font-size: 15px;">sqlite3</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 15px;">笔记</a> <a href="/tags/mqtt/" style="font-size: 15px;">mqtt</a> <a href="/tags/mybatis/" style="font-size: 15px;">mybatis</a> <a href="/tags/Spring-AOP/" style="font-size: 15px;">Spring AOP</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%98%AF%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%E7%9A%84/" style="font-size: 15px;">网络是如何通信的</a> <a href="/tags/searchBar/" style="font-size: 15px;">searchBar</a> <a href="/tags/bluetooth/" style="font-size: 15px;">bluetooth</a> <a href="/tags/objc/" style="font-size: 15px;">objc</a> <a href="/tags/gcd/" style="font-size: 15px;">gcd</a> <a href="/tags/runtime/" style="font-size: 15px;">runtime</a> <a href="/tags/tableView/" style="font-size: 15px;">tableView</a> <a href="/tags/shell/" style="font-size: 15px;">shell</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/tool/" style="font-size: 15px;">tool</a> <a href="/tags/CocoaPods/" style="font-size: 15px;">CocoaPods</a> <a href="/tags/nginx/" style="font-size: 15px;">nginx</a> <a href="/tags/redis/" style="font-size: 15px;">redis</a> <a href="/tags/objc-summary/" style="font-size: 15px;">objc-summary</a> <a href="/tags/SwiftUI/" style="font-size: 15px;">SwiftUI</a> <a href="/tags/miniprogram/" style="font-size: 15px;">miniprogram</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/08/22/java_20200819_note_class_loader/">类加载器</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/18/java_20200818_spring_aop/">Spring AOP 简单实践</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/17/database_20200817_mysql_user/">MYSQL 给用户单个表权限</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/17/java_20200817_note_spring_aop/">Spring AOP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/15/java_20200815_note_proxy/">Java 动态代理</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/14/java_20200814_note_IoC/">Spring IoC</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/12/java_20200812_springboot_feign/">SpringBoot Feign Post 参数过长</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/08/java_20200808_note_string/">String、StringBuffer和StringBuilder之间的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/02/objc_20200302_note_enterprise_app_crash/">iOS企业级应用打开闪退原因总结及发布注意点</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/06/network_20200106_note_6_%E8%AF%B7%E6%B1%82%E5%88%B0%E8%BE%BEWeb%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E5%93%8D%E5%BA%94%E8%BF%94%E5%9B%9E%E6%B5%8F%E8%A7%88%E5%99%A8-%E7%9F%AD%E7%9F%AD%E5%87%A0%E7%A7%92%E5%88%B0%E2%80%9C%E6%BC%AB%E9%95%BF%E6%97%85%E7%A8%8B%E2%80%9D%E8%BF%8E%E6%9D%A5%E7%BB%88%E7%82%B9/">网络是如何通信的 - 6.请求到达Web服务器，响应返回浏览器-短短几秒到“漫长旅程”迎来终点</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://github.com/liangtongdev" title="github" target="_blank">github</a><ul></ul><a href="https://www.jianshu.com/u/39237a8a7121" title="简书" target="_blank">简书</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright© 2016-2019  liangtong . All Rights Reserved</div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
