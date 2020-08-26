@@ -4,7 +4,7 @@ title:      Hexo Blog 添加 Google Adsense
 date:       2019-12-26 11:40:27
 author:     liangtong
 catalog: true
-categories: share
+categories: 分享
 tags: hexo
 
 ---

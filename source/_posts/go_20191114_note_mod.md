@@ -3,8 +3,8 @@ layout: post
 title: Go Module
 date: 2019-11-14 09:29
 catalog: true
-categories: go
-tags: module
+categories: GoLang
+tags: 笔记
 
 ---
 

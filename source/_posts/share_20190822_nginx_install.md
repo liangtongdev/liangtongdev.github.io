@@ -4,7 +4,7 @@ title:      Mac环境中nginx的安装与配置
 date:       2019-08-22 16:50:12
 author:     liangtong
 catalog: true
-categories: share
+categories: 分析
 tags: nginx
 
 ---

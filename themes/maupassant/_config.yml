@@ -36,7 +36,7 @@ minivaline:
   # More i18n info: https://github.com/MiniValine/minivaline-i18n
   lang:
   
-show_ad_post: false  ##设置为 true
+show_ad_post: true  ##设置为 true
 
 google_search: true ## Use Google search, true/false.
 baidu_search: false ## Use Baidu search, true/false.

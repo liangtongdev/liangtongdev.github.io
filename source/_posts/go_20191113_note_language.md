@@ -3,8 +3,8 @@ layout: post
 title: Go语言笔记
 date: 2019-11-13 19:29
 catalog: true
-categories: go
-tags: go
+categories: GoLang
+tags: 笔记
 
 ---
 

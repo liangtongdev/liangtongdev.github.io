@@ -4,7 +4,7 @@ title:      Redis远程批量删除特定的keys
 date:       2019-09-18 14:40:27
 author:     liangtong
 catalog: true
-categories: share
+categories: 分享
 tags: redis
 
 ---

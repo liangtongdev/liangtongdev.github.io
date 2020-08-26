@@ -4,7 +4,7 @@ title:      nginx的主要功能及用法
 date:       2019-08-23 11:40:27
 author:     liangtong
 catalog: true
-categories: share
+categories: 分享
 tags: nginx
 
 ---
