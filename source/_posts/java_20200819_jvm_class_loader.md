@@ -5,7 +5,7 @@ date:       2020-08-22 16:54:13
 author:     liangtong
 catalog: true
 categories: Java
-tags: 笔记
+tags: JVM
 
 ---
 
