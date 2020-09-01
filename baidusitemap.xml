@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://www.liangtong.site/2020/08/26/share_20200826_windows_kill_port/</loc>
-    <lastmod>2020-08-26</lastmod>
+    <loc>http://www.liangtong.site/2020/09/01/java_20200901_jvm_memory/</loc>
+    <lastmod>2020-09-01</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2020/08/22/java_20200819_note_class_loader/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <loc>http://www.liangtong.site/2020/08/22/java_20200819_jvm_class_loader/</loc>
+    <lastmod>2020-09-01</lastmod>
+  </url>
+  <url>
+    <loc>http://www.liangtong.site/2020/08/26/share_20200826_windows_kill_port/</loc>
+    <lastmod>2020-08-26</lastmod>
   </url>
   <url>
     <loc>http://www.liangtong.site/2020/03/02/objc_20200302_note_enterprise_app_crash/</loc>
@@ -93,11 +97,11 @@
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2018/06/13/summary_20180613_ios_bim/</loc>
+    <loc>http://www.liangtong.site/2019/10/16/swiftui_20191016_tutorials/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2019/10/16/swiftui_20191016_tutorials/</loc>
+    <loc>http://www.liangtong.site/2018/06/13/summary_20180613_ios_bim/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
@@ -109,11 +113,11 @@
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2017/08/04/share_20170804_usage_hexo/</loc>
+    <loc>http://www.liangtong.site/2017/10/16/share_20171016_usage_pod/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2017/10/16/share_20171016_usage_pod/</loc>
+    <loc>http://www.liangtong.site/2017/08/04/share_20170804_usage_hexo/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
@@ -217,11 +221,11 @@
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2017/08/08/objc_20170808_bluetooth/</loc>
+    <loc>http://www.liangtong.site/2017/07/27/objc_20170727_bluetooth/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2017/07/27/objc_20170727_bluetooth/</loc>
+    <loc>http://www.liangtong.site/2017/08/08/objc_20170808_bluetooth/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
@@ -241,11 +245,11 @@
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2019/07/03/java_20190706_mybatis_select/</loc>
+    <loc>http://www.liangtong.site/2019/07/03/java_20190703_mybatis_example_or/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2019/07/03/java_20190703_mybatis_example_or/</loc>
+    <loc>http://www.liangtong.site/2019/07/03/java_20190706_mybatis_select/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
@@ -277,19 +281,19 @@
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2018/05/21/algorithm_20180521_astar/</loc>
-    <lastmod>2020-08-03</lastmod>
-  </url>
-  <url>
     <loc>http://www.liangtong.site/2017/04/27/database_20170427_sqlite3/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2016/04/25/algorithm_20160425_sort_insert/</loc>
+    <loc>http://www.liangtong.site/2018/05/21/algorithm_20180521_astar/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
     <loc>http://www.liangtong.site/2016/04/26/algorithm_20160426_sort_merge/</loc>
+    <lastmod>2020-08-03</lastmod>
+  </url>
+  <url>
+    <loc>http://www.liangtong.site/2016/04/25/algorithm_20160425_sort_insert/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
