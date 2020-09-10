@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      JVM内存结构（运行时数据区）
+title:      JVM 内存结构（运行时数据区）
 date:       2020-09-01 19:44:00
 author:     liangtong
 catalog: true
