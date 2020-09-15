@@ -12,31 +12,31 @@ ga('create','UA-146373511-1','auto');ga('send','pageview');
   })();
 </script><script data-ad-client="ca-pub-2920624860740745" async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.0.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">RabbitMQ的安装与配置</h1><a id="logo" href="/.">技术小屋</a><p class="description">积水成渊、 积土成山</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">RabbitMQ的安装与配置</h1><div class="post-meta">2020-09-15<span> | </span><span class="category"><a href="/categories/Java/">Java</a></span></div><a class="disqus-comment-count" href="/2020/09/15/java_20200915_rabbitmq_config/#vcomment"><span class="valine-comment-count" data-xid="/2020/09/15/java_20200915_rabbitmq_config/"></span><span> 条评论</span></a><div class="post-content"><p>​    <strong>RabbitMQ</strong> 是一个在AMQP协议标准基础上完整、可复用的消息系统。采用 Erlang 实现的工业级消息队列。</p>
 <p><img src="/post/java/20200915/rabbitmq.png" alt="rabbitmq.png"></p>
-<h4 id="Windows上安装"><a href="#Windows上安装" class="headerlink" title="Windows上安装"></a>Windows上安装</h4><h5 id="安装Erlang"><a href="#安装Erlang" class="headerlink" title="安装Erlang"></a>安装Erlang</h5><p>下载地址：<a target="_blank" rel="noopener" href="https://www.erlang.org/downloads">https://www.erlang.org/downloads</a><br>安装完成后设置系统变量 ERLANG_HOME </p>
+<h3 id="Windows上安装"><a href="#Windows上安装" class="headerlink" title="Windows上安装"></a>Windows上安装</h3><h4 id="安装Erlang"><a href="#安装Erlang" class="headerlink" title="安装Erlang"></a>安装Erlang</h4><p>下载地址：<a target="_blank" rel="noopener" href="https://www.erlang.org/downloads">https://www.erlang.org/downloads</a><br>安装完成后设置系统变量 <code>ERLANG_HOME</code></p>
 <p><img src="/post/java/20200915/erlang_home.png" alt="erlang_home.png"></p>
-<p>修改环境变量path，增加Erlang变量至path，%ERLANG_HOME%\bin;</p>
-<h4 id="安装RabbitMQ"><a href="#安装RabbitMQ" class="headerlink" title="安装RabbitMQ"></a>安装RabbitMQ</h4><p>下载地址：<a target="_blank" rel="noopener" href="https://www.rabbitmq.com/install-windows.html">https://www.rabbitmq.com/install-windows.html</a><br>安装完成后设置环境变量 RABBITMQ_SERVER</p>
+<p>修改环境变量path，增加Erlang变量至path，<code> %ERLANG_HOME%\bin;</code> </p>
+<h4 id="安装RabbitMQ"><a href="#安装RabbitMQ" class="headerlink" title="安装RabbitMQ"></a>安装RabbitMQ</h4><p>下载地址：<a target="_blank" rel="noopener" href="https://www.rabbitmq.com/install-windows.html">https://www.rabbitmq.com/install-windows.html</a><br>安装完成后设置环境变量 <code>RABBITMQ_SERVER</code></p>
 <p><img src="/post/java/20200915/rabbit_server.png" alt="rabbit_server.png"></p>
-<p>修改环境变量path，增加rabbitmq变量至path，%RABBITMQ_SERVER%\sbin;</p>
+<p>修改环境变量path，增加rabbitmq变量至path， <code>%RABBITMQ_SERVER%\sbin;</code> </p>
 <p>切换到RabbitMQ安装目录sbin下，常用命令如下：</p>
 <ul>
-<li><p>通过rabbitmqctl status 查看启动状态。</p>
+<li><p>通过 <code>rabbitmqctl status</code> 查看启动状态。</p>
 </li>
-<li><p>通过rabbitmq-plugins.bat enable rabbitmq_management 安装管理插件</p>
+<li><p>通过 <code>rabbitmq-plugins.bat enable rabbitmq_management</code> 安装管理插件</p>
 </li>
-<li><p>通过rabbitmq-server.bat 启动服务</p>
+<li><p>通过 <code>rabbitmq-server.bat</code> 启动服务</p>
 </li>
 </ul>
-<p>服务启动后，可以通过<a target="_blank" rel="noopener" href="http://localhost:15672/">http://localhost:15672</a> 进入控制管理页面，默认账号及密码均为guest。登陆之后，点击导航栏 「Admin」添加用户及配置Virtual Host权限</p>
+<p>服务启动后，可以通过<a target="_blank" rel="noopener" href="http://localhost:15672/">http://localhost:15672</a> 进入控制管理页面，默认账号及密码均为guest。登陆之后，点击导航栏 「Admin」添加用户及配置<code>Virtual Host</code>权限</p>
 <p><img src="/post/java/20200915/rabbit_add_user.png" alt="rabbit_add_user.png"></p>
 <p>可以简单通过管理端窗口直接添加用户（也可以通过命令行）</p>
 <p><img src="/post/java/20200915/rabbit_virtual_host_1.png" alt="rabbit_virtual_host_1.png"></p>
-<p>配置 virtual host 权限</p>
+<p>配置 <code>virtual host</code> 权限</p>
 <p><img src="/post/java/20200915/rabbit_virtual_host_2.png" alt="rabbit_virtual_host_2.png"></p>
-<p>最后通过rabbitmqctl.bat stop 停止服务</p>
-<h4 id="Mac上安装"><a href="#Mac上安装" class="headerlink" title="Mac上安装"></a>Mac上安装</h4><h5 id="通过-homebrew-安装"><a href="#通过-homebrew-安装" class="headerlink" title="通过 homebrew 安装"></a>通过 homebrew 安装</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; brew update</span><br><span class="line">&gt; brew install rabbitmq</span><br></pre></td></tr></table></figure>
+<p>最后通过 <code>rabbitmqctl.bat stop</code> 停止服务</p>
+<h3 id="Mac上安装"><a href="#Mac上安装" class="headerlink" title="Mac上安装"></a>Mac上安装</h3><h4 id="通过-homebrew-安装"><a href="#通过-homebrew-安装" class="headerlink" title="通过 homebrew 安装"></a>通过 homebrew 安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; brew update</span><br><span class="line">&gt; brew install rabbitmq</span><br></pre></td></tr></table></figure>
 
-<h5 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h5><p>RabbitMQ服务的脚本和CLI工具安装在<code>/usr/local/Cellar/rabbitmq</code>目录下。启动时可以切换到对应sbin目录下执行命令即可</p>
+<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p>RabbitMQ服务的脚本和CLI工具安装在<code>/usr/local/Cellar/rabbitmq</code>目录下。启动时可以切换到对应sbin目录下执行命令即可</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">cd</span> /usr/<span class="built_in">local</span>/Cellar/rabbitmq/3.8.2/sbin</span><br><span class="line">&gt; ./rabbitmq-server</span><br></pre></td></tr></table></figure>
 
 <p>可以将rabbitmq工作sbin目录添加到环境变量文件<code> ~/.bash_profile</code>中，方便使用。</p>
