@@ -5,7 +5,7 @@ date:       2019-03-15 09:30:12
 author:     liangtong
 catalog: true
 categories: Java
-tags: mqtt
+tags: mq
 
 ---
 
