@@ -268,4 +268,10 @@ java.lang.RuntimeException: 发生异常！
 
 
 
+RabbitMQ相关的Demo代码已上传至Github，有需要的话可自行下载查阅。
+
+地址：https://github.com/liangtongdev/demo-springboot-rabbitmq
+
+
+
 

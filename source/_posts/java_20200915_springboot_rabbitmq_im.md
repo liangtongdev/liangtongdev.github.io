@@ -11,7 +11,7 @@ tags: mq
 
 ​	上一章介绍了`RabbitMQ`的安装与配置，本章基于SpringBoot项目，介绍`RabbitMQ`的消息队列的简单使用。
 
-
+![消息队列](/post/java/20200915/rabbit_queue.png)
 
 ### 环境配置
 
@@ -176,4 +176,10 @@ public class RabbitMsgController {
 
 
 至此，简单的消息队列功能已经实现，下一章节介绍如何使用`RabbitMQ死信队列`。
+
+
+
+RabbitMQ相关的Demo代码已上传至Github，有需要的话可自行下载查阅。
+
+地址：https://github.com/liangtongdev/demo-springboot-rabbitmq
 
