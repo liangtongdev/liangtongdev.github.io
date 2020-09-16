@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://www.liangtong.site/2020/09/16/java_20200916_springboot_rabbitmq_dead/</loc>
+    <loc>http://www.liangtong.site/2020/09/15/java_20200915_springboot_rabbitmq_im/</loc>
     <lastmod>2020-09-16</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2020/09/15/java_20200915_springboot_rabbitmq_im/</loc>
+    <loc>http://www.liangtong.site/2020/09/16/java_20200916_springboot_rabbitmq_delay/</loc>
+    <lastmod>2020-09-16</lastmod>
+  </url>
+  <url>
+    <loc>http://www.liangtong.site/2020/09/16/java_20200916_springboot_rabbitmq_dead/</loc>
     <lastmod>2020-09-16</lastmod>
   </url>
   <url>
