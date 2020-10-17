@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.liangtong.site/2020/10/17/java_20201017_spring_@/</loc>
+    <lastmod>2020-10-17</lastmod>
+  </url>
+  <url>
     <loc>http://www.liangtong.site/2019/09/18/database_20190918_redis_del/</loc>
     <lastmod>2020-09-23</lastmod>
   </url>
@@ -317,11 +321,11 @@
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2016/04/27/algorithm_20160427_search_binary/</loc>
+    <loc>http://www.liangtong.site/2016/04/26/algorithm_20160426_sort_merge/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2016/04/26/algorithm_20160426_sort_merge/</loc>
+    <loc>http://www.liangtong.site/2016/04/27/algorithm_20160427_search_binary/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
