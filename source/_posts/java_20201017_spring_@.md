@@ -9,11 +9,9 @@ tags: 笔记
 
 ---
 
-​	
+
 
 在Spring中，使用 `@Component` 和 `@Bean` 来创建Bean实例，并让Spring容器管理其生命周期。
-
-
 
 
 `@Component`是对应某一个类，表明该类作为组件类,配合 `@ComponentScan` 使用，然后让 Spring IOC 容器实例化。
@@ -38,7 +36,9 @@ public class MsgProducer {
     }
 }
 ```
-> @Component（@Controller、@Service、@Repository）通常是通过类路径扫描来自动侦测以及自动装配到Spring容器中。**SpringBoot中，默认扫描全包，如果显式使用 `@ComponentScan` 的话需要注意**
+
+
+**@Component（@Controller、@Service、@Repository）通常是通过类路径扫描来自动侦测以及自动装配到Spring容器中。SpringBoot中，默认扫描全包，如果显式使用 @ComponentScan 的话需要注意**
 
 
 
