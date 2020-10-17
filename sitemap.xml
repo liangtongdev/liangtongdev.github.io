@@ -240,6 +240,13 @@
   </url>
   
   <url>
+    <loc>http://www.liangtong.site/about/index.bak.html</loc>
+    
+    <lastmod>2020-08-03</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.liangtong.site/about/resume.html</loc>
     
     <lastmod>2020-08-03</lastmod>
@@ -248,13 +255,6 @@
   
   <url>
     <loc>http://www.liangtong.site/categories/index.html</loc>
-    
-    <lastmod>2020-08-03</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.liangtong.site/about/index.bak.html</loc>
     
     <lastmod>2020-08-03</lastmod>
     
@@ -788,14 +788,14 @@
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/tags/nginx/</loc>
+    <loc>http://www.liangtong.site/tags/tool/</loc>
     <lastmod>2020-10-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/tags/tool/</loc>
+    <loc>http://www.liangtong.site/tags/nginx/</loc>
     <lastmod>2020-10-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
