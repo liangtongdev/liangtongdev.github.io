@@ -1,1 +1,6 @@
-#footer= 'Copyright© 2016-2019  liangtong . All Rights Reserved'
+#footer= 'Copyright © 2016-' + date(Date.now(), 'YYYY') + ' '
+  a(href=url_for('.'), rel='nofollow')= config.title + '.'
+  |  ｜
+  a(rel='nofollow', target='_blank', href='https://beian.miit.gov.cn/')  豫ICP备2020029597号-1.
+  |  ｜
+  a(rel='nofollow', target='_blank', href='http://www.beian.gov.cn/portal/index.do')  公安备案.

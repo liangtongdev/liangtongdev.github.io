@@ -3,10 +3,10 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 技术小屋
+title: 成长的点滴积累
 subtitle: 积水成渊、 积土成山
-description: 个人博客
-keywords: 笔记、技术分享、实用工具
+description: 个人技术小屋，点滴积累
+keywords: 移动、Java、数据库、分型、笔记
 author: liangtong
 language: zh-CN
 timezone:
@@ -120,7 +120,15 @@ google_site_verification: 9KXTTa8tuuse9iILjkzFWzLNiBo3w3GtZtjUHQTf6C8
 baidu_analytics: 0403c36751ff449187ad333607a9b98f
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
+#deploy:
+#  type: git
+#  repo: https://github.com/liangtongdev/liangtongdev.github.io.git
+#  branch: master
+
 deploy:
   type: git
-  repo: https://github.com/liangtongdev/liangtongdev.github.io.git
+  repo: git@123.57.106.215:/home/git/blog.git
+#    git@118.31.46.183:/home/git/blog.git
+#    git@123.57.106.215:/home/git/blog.git
+#    https://github.com/liangtongdev/liangtongdev.github.io.git
   branch: master
