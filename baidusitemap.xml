@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.liangtong.site/2020/10/20/java_20201020_springboot_rabbitmq_exchange/</loc>
+    <lastmod>2020-10-20</lastmod>
+  </url>
+  <url>
     <loc>http://www.liangtong.site/2020/10/17/java_20201017_spring_@/</loc>
     <lastmod>2020-10-17</lastmod>
   </url>
@@ -317,11 +321,11 @@
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2016/04/26/algorithm_20160426_sort_merge/</loc>
+    <loc>http://www.liangtong.site/2016/04/25/algorithm_20160425_sort_insert/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2016/04/25/algorithm_20160425_sort_insert/</loc>
+    <loc>http://www.liangtong.site/2016/04/26/algorithm_20160426_sort_merge/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
@@ -329,11 +333,11 @@
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2016/05/11/algorithm_20160511_sort_quick/</loc>
+    <loc>http://www.liangtong.site/2016/05/18/algorithm_20160518_sort_count/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2016/05/18/algorithm_20160518_sort_count/</loc>
+    <loc>http://www.liangtong.site/2016/05/11/algorithm_20160511_sort_quick/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
 </urlset> 
