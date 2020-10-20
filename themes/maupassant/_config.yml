@@ -11,7 +11,7 @@ gitalk:
   client_secret: ## GitHub client secret, e.g. ec2fb9054972c891289640354993b662f4cccc50
   admin: ## Github repo owner and collaborators, only these guys can initialize github issues.
 valine: ## https://valine.js.org
-  enable: true ## If you want to use Valine comment system, please set the value to true.
+  enable: false ## If you want to use Valine comment system, please set the value to true.
   appid: b4NoTNpM7bWgldECesJq4Lyc-gzGzoHsz ## Your LeanCloud application App ID, e.g. pRBBL2JR4N7kLEGojrF0MsSs-gzGzoHsz
   appkey: KXoQP7VEFXlssuenNaq2F470 ## Your LeanCloud application App Key, e.g. tjczHpDfhjYDSYddzymYK1JJ
   notify: true ## Mail notifier, see https://github.com/xCss/Valine/wiki/Valine-评论系统中的邮件提醒设置
@@ -36,7 +36,7 @@ minivaline:
   # More i18n info: https://github.com/MiniValine/minivaline-i18n
   lang:
   
-show_ad_post: true  ##设置为 true
+show_ad_post: flase  ##设置为 true
 
 google_search: true ## Use Google search, true/false.
 baidu_search: false ## Use Baidu search, true/false.
