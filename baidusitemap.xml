@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.liangtong.site/2020/10/22/database_20201022_redis_list/</loc>
+    <lastmod>2020-10-21</lastmod>
+  </url>
+  <url>
+    <loc>http://www.liangtong.site/2020/10/21/database_20201021_redis_sds/</loc>
+    <lastmod>2020-10-21</lastmod>
+  </url>
+  <url>
     <loc>http://www.liangtong.site/2020/10/20/java_20201020_springboot_rabbitmq_exchange/</loc>
     <lastmod>2020-10-20</lastmod>
   </url>
@@ -249,11 +257,11 @@
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2018/06/10/objc_20180610_note_file_manager/</loc>
+    <loc>http://www.liangtong.site/2018/07/13/objc_20180713_note_other/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2018/07/13/objc_20180713_note_other/</loc>
+    <loc>http://www.liangtong.site/2018/06/10/objc_20180610_note_file_manager/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
@@ -269,11 +277,11 @@
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2017/08/08/objc_20170808_bluetooth/</loc>
+    <loc>http://www.liangtong.site/2017/08/24/objc_20170824_bluetooth/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2017/08/24/objc_20170824_bluetooth/</loc>
+    <loc>http://www.liangtong.site/2017/08/08/objc_20170808_bluetooth/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
@@ -329,11 +337,11 @@
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2016/05/11/algorithm_20160511_sort_quick/</loc>
+    <loc>http://www.liangtong.site/2016/04/27/algorithm_20160427_search_binary/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2016/04/27/algorithm_20160427_search_binary/</loc>
+    <loc>http://www.liangtong.site/2016/05/11/algorithm_20160511_sort_quick/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>

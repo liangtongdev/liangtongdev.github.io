@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="个人技术小屋，点滴积累"><title>Redis数据结构 - SDS简单动态字符串 | 成长的点滴积累</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create','UA-146373511-1','auto');ga('send','pageview');
+</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = 'https://hm.baidu.com/hm.js?' + '6e30653711aac2cc552b0ecb94df5e77';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script data-ad-client="ca-pub-2920624860740745" async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.0.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Redis数据结构 - SDS简单动态字符串</h1><a id="logo" href="/.">成长的点滴积累</a><p class="description">积水成渊、 积土成山</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Redis数据结构 - SDS简单动态字符串</h1><div class="post-meta">2020-10-21<span> | </span><span class="category"><a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span></div><div class="post-content"><p>Redis没有使用C语言传统的字符串表示(以空字符<code>\0</code>结尾的字符数组)，而是使用简单动态字符串(Simple Dynamic String， SDS)的抽象类型作为字符串的表示。</p>
+<h3 id="SDS的定义"><a href="#SDS的定义" class="headerlink" title="SDS的定义"></a>SDS的定义</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sdshdr</span> &#123;</span></span><br><span class="line">  <span class="comment">//记录 buf 数组中已使用的字节数量， 即sds保存的字符串长度</span></span><br><span class="line">  <span class="keyword">int</span> len；</span><br><span class="line">  <span class="comment">//记录 buf 数组中未使用的字节的数量</span></span><br><span class="line">  <span class="keyword">int</span> <span class="built_in">free</span>;</span><br><span class="line">  <span class="comment">//字节数组，用于存储字符串</span></span><br><span class="line">  <span class="keyword">char</span> buf[];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/post/db/20201021/redis_sdshdr.png"></p>
+<ul>
+<li>free 值为0，表示这个SDS没有分配为使用的空间</li>
+<li>len 值为5，表示这个SDS保存了一个5字节长的字符串。</li>
+<li>buf 是一个char数组，存储了<code>Redis</code>字符串，最后以空字符<code>\0</code>结尾。</li>
+</ul>
+<p>SDS遵循C字符串以空字符结尾惯例，保存空字符的1个字节空间不计算在SDS的len属性里边。并且为空字符分配空间等操作均由SDS函数自动完成。<strong>好处是SDS可以直接重用一部分C字符串函数库里的函数</strong>。</p>
+<p><img src="/post/db/20201021/redis_sdshdr_free.png"></p>
+<h3 id="SDS与C字符串的区别"><a href="#SDS与C字符串的区别" class="headerlink" title="SDS与C字符串的区别"></a>SDS与C字符串的区别</h3><p>C语言使用长度N+1的字符数组存储长度为N的字符串，最后一个元素是空字符<code>\0</code>。如下图所示：</p>
+<p><img src="/post/db/20201021/redis_c.png"></p>
+<p>C语言使用的字符串方式比较灵活，不能满足Redis对字符串在安全性、效率以及功能方面的要求。</p>
+<h4 id="字符串长度"><a href="#字符串长度" class="headerlink" title="字符串长度"></a>字符串长度</h4><ul>
+<li><p>C字符串并不记录自身长度，获取字符串长度时需要遍历整个字符数组，直到遇到空字符<code>\0</code>。<strong>操作复杂度为O（N）</strong></p>
+</li>
+<li><p>SDS的len属性中记录的本身就是存储字符串的长度，所以获取一个SDS长度的复杂度仅为O（1）</p>
+</li>
+</ul>
+<p>设置和更新SDS长度的工作由SDS的API在执行时自动完成，使用SDS时无需手动干预。</p>
+<p>通过使用SDS而不是C字符串，Redis获取字符串长度所需的复杂度从O（N）降低到O（1），确保获取字符串长度不会成为Redis性能瓶颈。</p>
+<h4 id="缓冲区溢出"><a href="#缓冲区溢出" class="headerlink" title="缓冲区溢出"></a>缓冲区溢出</h4><p>C语言不记录自身长度的另一个问题是容易造成缓冲区溢出。例如 strcat 函数是将src字符串拼接到dest字符串的末尾</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">strcat</span><span class="params">(<span class="keyword">char</span> *dest, <span class="keyword">char</span> *src)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>如果在拼接时，dest没有足够多的内存可用，就会造成缓冲区溢出。</p>
+<p>SDS在空间分配策略完全杜绝了缓冲区溢出的可能性。当SDS的API需要怼SDS进行修改时，API会检查SDS的空间是否满足修改所需的要求。如果不满足的话，API会自动将SDS空间扩展至执行修改所需的大小，然后再进行实际的修改操作。</p>
+<h4 id="修改字符串时的内存分配"><a href="#修改字符串时的内存分配" class="headerlink" title="修改字符串时的内存分配"></a>修改字符串时的内存分配</h4><p>C字符串在执行修改时，每次总要对保存字符的数组进行内存重新分配。（如果执行拼接操作，则需要重新分配空间，如果没有分配则会出现溢出；如果执行缩短操作，需要释放空间，如果不释放则会产生内存泄露）。</p>
+<p>Redis SDS通过未使用空间解除了字符串长度和底层数组长度之间的关联。</p>
+<ul>
+<li>空间预分配<ul>
+<li>当使用API对SDS进行空间扩展时，程序不仅会为SDS分配修改所必须的空间，还会分配额外未使用的空间。如果SDS 字符串长度（len的值）小于1M，那么程序将分配同len一样大小的未使用空间（len 和 free 值相同）；当SDS进行修改后，SDS的长度大于等于1M，那么程序会分配1M的未使用空间。通过空间预分配策略，Redis可用减少连续执行字符串增长操作所需的内存分配次数。</li>
+</ul>
+</li>
+<li>惰性空间释放<ul>
+<li>惰性空间释放用于优化SDS的字符串端操作；当SDS的API需要缩短SDS字符串时，程序并不是立即使用内存重新分配来回收多余的字节。通过惰性空间释放策略，SDS避免了缩短字符串时所需的内存重新分配操作，并为将来的增长操作提供优化。SDS也会提供响应的API，在需要的时候真正的释放SDS未使用的空间，不用担心内存浪费。</li>
+</ul>
+</li>
+</ul>
+<h3 id="二进制安全"><a href="#二进制安全" class="headerlink" title="二进制安全"></a>二进制安全</h3><p>C字符串中的字符必须符合某种编码，且不能出现空字符<code>\0</code>。这些限制使得C字符串只能存储文本数据，不能存储图片、音视频、文件等二进制数据。</p>
+<p>Redis SDS不仅可以存储文本数据，还可以存储任意格式的二进制数据。</p>
+<h3 id="兼容部分C字符串函数"><a href="#兼容部分C字符串函数" class="headerlink" title="兼容部分C字符串函数"></a>兼容部分C字符串函数</h3><p>虽然SDS的API都是二进制安全的。但它们一样遵循C字符串以空字符结尾的惯例。这样SDS可以在有需要重用C 的 string.h 函数库，避免不必要的代码重复。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><table>
+<thead>
+<tr>
+<th align="center">C 字符串</th>
+<th align="center">SDS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">获取字符串长度复杂度O（N）</td>
+<td align="center">获取字符串长度复杂度O（1）</td>
+</tr>
+<tr>
+<td align="center">API不安全，可能造成内存溢出</td>
+<td align="center">API安全，不会造成内存溢出</td>
+</tr>
+<tr>
+<td align="center">对字符串长度调整需要执行内存重新分配</td>
+<td align="center">修改字符串长度，不一定需要执行内存分配</td>
+</tr>
+<tr>
+<td align="center">只能保存文本数据</td>
+<td align="center">可保存文本和二进制数据</td>
+</tr>
+<tr>
+<td align="center">可以使用所有的&lt;string.h&gt;库中的函数</td>
+<td align="center">可以使用部分的&lt;string.h&gt;库中的函数</td>
+</tr>
+</tbody></table>
+</div><div class="post-copyright"><script type="text/javascript" src="/js/copyright.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copyright.css"><p><span>本文标题：</span>Redis数据结构 - SDS简单动态字符串</p><p><span>文章作者：</span>梁通</p><p><span>发布时间：</span>2020-10-21</p><p><span>最后更新：</span>2020-10-21</p><p><span>原始链接：</span><a href="/2020/10/21/database_20201021_redis_sds/">http://www.liangtong.site/2020/10/21/database_20201021_redis_sds/</a><span class="copy-path"><i class="fa fa-clipboard" data-clipboard-text="http://www.liangtong.site/2020/10/21/database_20201021_redis_sds/"></i></span></p><p><span>版权声明：</span>Copyright© 2016-2020 liangtong 版权所有</p></div><br><div class="tags"><a href="/tags/redis/"><i class="fa fa-tag"></i>redis</a></div><div class="post-nav"><a class="pre" href="/2020/10/22/database_20201022_redis_list/">Redis数据结构 - 链表</a><a class="next" href="/2020/10/20/java_20201020_springboot_rabbitmq_exchange/">RabbitMQ 交换器类型</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://www.liangtong.site"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GoLang/">GoLang</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/xx%E6%98%AF%E5%A6%82%E4%BD%95xx%E7%9A%84/">xx是如何xx的</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E4%BA%AB/">分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E6%9E%90/">分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%BB%E7%BB%93/">总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 15px;">排序</a> <a href="/tags/%E6%90%9C%E7%B4%A2/" style="font-size: 15px;">搜索</a> <a href="/tags/%E7%AE%97%E8%B7%AF/" style="font-size: 15px;">算路</a> <a href="/tags/sqlite3/" style="font-size: 15px;">sqlite3</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/redis/" style="font-size: 15px;">redis</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 15px;">笔记</a> <a href="/tags/mq/" style="font-size: 15px;">mq</a> <a href="/tags/mybatis/" style="font-size: 15px;">mybatis</a> <a href="/tags/Spring-AOP/" style="font-size: 15px;">Spring AOP</a> <a href="/tags/JVM/" style="font-size: 15px;">JVM</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%98%AF%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%E7%9A%84/" style="font-size: 15px;">网络是如何通信的</a> <a href="/tags/searchBar/" style="font-size: 15px;">searchBar</a> <a href="/tags/bluetooth/" style="font-size: 15px;">bluetooth</a> <a href="/tags/objc/" style="font-size: 15px;">objc</a> <a href="/tags/gcd/" style="font-size: 15px;">gcd</a> <a href="/tags/runtime/" style="font-size: 15px;">runtime</a> <a href="/tags/tableView/" style="font-size: 15px;">tableView</a> <a href="/tags/shell/" style="font-size: 15px;">shell</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/CocoaPods/" style="font-size: 15px;">CocoaPods</a> <a href="/tags/tool/" style="font-size: 15px;">tool</a> <a href="/tags/nginx/" style="font-size: 15px;">nginx</a> <a href="/tags/objc-summary/" style="font-size: 15px;">objc-summary</a> <a href="/tags/SwiftUI/" style="font-size: 15px;">SwiftUI</a> <a href="/tags/miniprogram/" style="font-size: 15px;">miniprogram</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/10/22/database_20201022_redis_list/">Redis数据结构 - 链表</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/21/database_20201021_redis_sds/">Redis数据结构 - SDS简单动态字符串</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/20/java_20201020_springboot_rabbitmq_exchange/">RabbitMQ 交换器类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/17/java_20201017_spring_@/">Spring 中 @Component和@Bean的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/16/java_20200916_springboot_rabbitmq_delay/">RabbitMQ 延时队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/16/java_20200916_springboot_rabbitmq_dead/">RabbitMQ 死信队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/15/java_20200915_springboot_rabbitmq_im/">RabbitMQ消息队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/14/java_20200914_rabbitmq_config/">RabbitMQ的安装与配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/10/java_20200910_jvm_circle_life/">JVM 生命周期</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/04/database_20200904_mysql_event/">MYSQL 定时任务</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://github.com/liangtongdev" title="github" target="_blank">github</a><ul></ul><a href="https://www.jianshu.com/u/39237a8a7121" title="简书" target="_blank">简书</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2016-2020 梁通 <br/><a rel="nofollow" target="_blank" href="https://beian.miit.gov.cn/"> 豫ICP备2020029597号-1</a><br/><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41010202002931" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src="/img/beian.png" style="float:left;"/><p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">豫公网安备 41010202002931号</p></a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
