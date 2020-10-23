@@ -13,6 +13,8 @@ tags: redis
 
 Redis没有使用C语言传统的字符串表示(以空字符`\0`结尾的字符数组)，而是使用简单动态字符串(Simple Dynamic String， SDS)的抽象类型作为字符串的表示。
 
+![](/post/db/20201021/redis_sdshdr_free.png)
+
 ### SDS的定义
 
 ```C
@@ -38,7 +40,6 @@ struct sdshdr {
 
 SDS遵循C字符串以空字符结尾惯例，保存空字符的1个字节空间不计算在SDS的len属性里边。并且为空字符分配空间等操作均由SDS函数自动完成。**好处是SDS可以直接重用一部分C字符串函数库里的函数**。
 
-![](/post/db/20201021/redis_sdshdr_free.png)
 
 
 
