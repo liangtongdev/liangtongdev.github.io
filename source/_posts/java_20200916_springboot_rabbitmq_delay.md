@@ -12,7 +12,7 @@ tags: mq
 ​	上一章介绍了`RabbitMQ`中死信队列的使用，接下来介绍RabbitMQ中延时队列的使用，**包括队列TTL，消息TTL和RabbitMQ延迟插件。**
 
 
-![定时任务](/post/java/20200916/timer.jpg)
+![](/post/java/20200916/timer.png)
 
 ### 使用场景
 
