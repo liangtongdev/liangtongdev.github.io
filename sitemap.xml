@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.liangtong.site/2020/10/24/database_20201024_redis_skiplist/</loc>
+    
+    <lastmod>2020-10-24</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.liangtong.site/2020/09/16/java_20200916_springboot_rabbitmq_delay/</loc>
     
     <lastmod>2020-10-23</lastmod>
@@ -373,14 +380,14 @@
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/2019/03/18/os_20190318_linux_dictionary/</loc>
+    <loc>http://www.liangtong.site/2017/08/29/os_20170829_shell_std_inout/</loc>
     
     <lastmod>2020-08-03</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/2017/08/29/os_20170829_shell_std_inout/</loc>
+    <loc>http://www.liangtong.site/2019/03/18/os_20190318_linux_dictionary/</loc>
     
     <lastmod>2020-08-03</lastmod>
     
@@ -408,6 +415,13 @@
   </url>
   
   <url>
+    <loc>http://www.liangtong.site/2019/10/21/objc_20191021_runtime_method_swizzing/</loc>
+    
+    <lastmod>2020-08-03</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.liangtong.site/2017/08/15/os_20170815_shell_cd/</loc>
     
     <lastmod>2020-08-03</lastmod>
@@ -422,21 +436,7 @@
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/2019/10/21/objc_20191021_runtime_method_swizzing/</loc>
-    
-    <lastmod>2020-08-03</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.liangtong.site/2019/01/29/objc_20190129_runtime_object/</loc>
-    
-    <lastmod>2020-08-03</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.liangtong.site/2019/01/26/objc_20190126_note_object/</loc>
     
     <lastmod>2020-08-03</lastmod>
     
@@ -450,7 +450,7 @@
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/2019/01/25/objc_20190125_runtime_@dynamic/</loc>
+    <loc>http://www.liangtong.site/2019/01/26/objc_20190126_note_object/</loc>
     
     <lastmod>2020-08-03</lastmod>
     
@@ -458,6 +458,13 @@
   
   <url>
     <loc>http://www.liangtong.site/2019/01/23/objc_20190123_runtime_objc_msgSend/</loc>
+    
+    <lastmod>2020-08-03</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.liangtong.site/2019/01/25/objc_20190125_runtime_@dynamic/</loc>
     
     <lastmod>2020-08-03</lastmod>
     
@@ -499,14 +506,14 @@
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/2018/07/13/objc_20180713_note_other/</loc>
+    <loc>http://www.liangtong.site/2018/06/10/objc_20180610_note_file_manager/</loc>
     
     <lastmod>2020-08-03</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/2018/06/10/objc_20180610_note_file_manager/</loc>
+    <loc>http://www.liangtong.site/2018/07/13/objc_20180713_note_other/</loc>
     
     <lastmod>2020-08-03</lastmod>
     
@@ -555,14 +562,14 @@
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/2020/01/04/network_20200104_note_4/</loc>
+    <loc>http://www.liangtong.site/2020/01/03/network_20200103_note_3/</loc>
     
     <lastmod>2020-08-03</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/2020/01/03/network_20200103_note_3/</loc>
+    <loc>http://www.liangtong.site/2020/01/04/network_20200104_note_4/</loc>
     
     <lastmod>2020-08-03</lastmod>
     
@@ -802,13 +809,6 @@
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/tags/tool/</loc>
-    <lastmod>2020-10-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://www.liangtong.site/tags/hexo/</loc>
     <lastmod>2020-10-24</lastmod>
     <changefreq>daily</changefreq>
@@ -817,6 +817,13 @@
   
   <url>
     <loc>http://www.liangtong.site/tags/CocoaPods/</loc>
+    <lastmod>2020-10-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.liangtong.site/tags/tool/</loc>
     <lastmod>2020-10-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -837,14 +844,14 @@
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/tags/miniprogram/</loc>
+    <loc>http://www.liangtong.site/tags/SwiftUI/</loc>
     <lastmod>2020-10-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/tags/SwiftUI/</loc>
+    <loc>http://www.liangtong.site/tags/miniprogram/</loc>
     <lastmod>2020-10-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
