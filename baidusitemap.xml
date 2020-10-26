@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.liangtong.site/2020/10/25/database_20201025_redis_intset/</loc>
+    <lastmod>2020-10-24</lastmod>
+  </url>
+  <url>
     <loc>http://www.liangtong.site/2020/10/24/database_20201024_redis_skiplist/</loc>
     <lastmod>2020-10-24</lastmod>
   </url>
