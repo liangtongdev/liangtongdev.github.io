@@ -23,10 +23,10 @@ valine: ## https://valine.js.org
 # MiniValine
 # See: https://github.com/MiniValine/MiniValine
 minivaline:
-  enable: false
-  appId:  # Your leancloud application appid
-  appKey:  # Your leancloud application appkey
-  placeholder: Write a Comment # Comment box placeholder
+  enable: true
+  appId:  b4NoTNpM7bWgldECesJq4Lyc-gzGzoHsz
+  appKey:  KXoQP7VEFXlssuenNaq2F470
+  placeholder: 欢迎留言，填写邮箱，会更快的得到回复哦～ # Comment box placeholder
   adminEmailMd5: # The MD5 of Admin Email to show Admin Flag.
   math: true # Support MathJax.
   md: true # Support Markdown.
@@ -36,7 +36,7 @@ minivaline:
   # More i18n info: https://github.com/MiniValine/minivaline-i18n
   lang:
   
-show_ad_post: flase  ##设置为 true
+show_ad_post: true  ##设置为 true
 
 google_search: true ## Use Google search, true/false.
 baidu_search: false ## Use Baidu search, true/false.
@@ -83,12 +83,15 @@ menu:
   - page: archive
     directory: archives/
     icon: fa-archive
+  - page: guestbook
+    directory: guestbook/
+    icon: fa-book
   - page: about
     directory: about/
     icon: fa-user
-  - page: rss
-    directory: atom.xml
-    icon: fa-rss
+ #  - page: rss
+ #    directory: atom.xml
+ #   icon: fa-rss
 
 widgets: ## Six widgets in sidebar provided: search, category, tag, recent_posts, rencent_comments and links.
   - search
