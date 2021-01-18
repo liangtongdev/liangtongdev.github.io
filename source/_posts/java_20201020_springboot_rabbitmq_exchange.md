@@ -84,8 +84,9 @@ public class RabbitMQConfig {
 一个队列可以指定多个路由键，当生产者发送一条消息到交换器后，交换器会根据路由键将消息分发到对应绑定到队列中。
 **如果与 `direct` 类型交换器绑定的消息队列中，多个队列绑定了相同的路由键 BindingKey，当发送路由键 RouteKey 类型消息到交换器后，交换器会匹配消息的RouteKey 和 队列的BindingKey ，并把分发到所有绑定该路由键的队列中，即多个队列会收到消息**
 
-
 ### topic
+
+![topic](/post/java/20201020/exchange-topic.png)
 
 在类型是 `topic` 的情况下，交换器在分发时也需要匹配路由键，与 `direct` 类型的区别是 `topic` 类型时，判断路由键的规则是模糊匹配。
 
@@ -95,9 +96,11 @@ public class RabbitMQConfig {
 
 + `#` 作为通配符，每个 `#` 可以匹配多个单词。
 
-
+![topic](/post/java/20201020/exchange-topic-demo.png)
 
 #### header
+
+![header](/post/java/20201020/exchange-header.png)
 
 类型为 `header` 的交换器与前边的几种完全不一样。不依赖绑定Key和路由Key，而是在绑定队列和交换器的时候指定健值对，当交换器在分发消息时会匹配消息体的header数据，如果匹配成功则将消息转发到对应的队列中。
 
