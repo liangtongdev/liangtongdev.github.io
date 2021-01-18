@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.liangtong.site/2020/10/20/java_20201020_springboot_rabbitmq_exchange/</loc>
+    <lastmod>2021-01-18</lastmod>
+  </url>
+  <url>
     <loc>http://www.liangtong.site/2021/01/16/java_20210116_spring_boot_filter_interceptor/</loc>
     <lastmod>2021-01-16</lastmod>
   </url>
@@ -27,10 +31,6 @@
   <url>
     <loc>http://www.liangtong.site/2020/10/23/database_20201023_redis_dict/</loc>
     <lastmod>2020-10-23</lastmod>
-  </url>
-  <url>
-    <loc>http://www.liangtong.site/2020/10/20/java_20201020_springboot_rabbitmq_exchange/</loc>
-    <lastmod>2020-10-20</lastmod>
   </url>
   <url>
     <loc>http://www.liangtong.site/2020/10/17/java_20201017_spring_@/</loc>
@@ -293,11 +293,11 @@
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2017/08/08/objc_20170808_bluetooth/</loc>
+    <loc>http://www.liangtong.site/2017/08/24/objc_20170824_bluetooth/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2017/08/24/objc_20170824_bluetooth/</loc>
+    <loc>http://www.liangtong.site/2017/08/08/objc_20170808_bluetooth/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
