@@ -22,13 +22,3 @@ WARNING: IPv4 forwarding is disabled. Networking will not work.
 + **/usr/lib/sysctl.d/00-system.conf** 文件中，追加 **net.ipv4.ip_forward=1**
 + 重启docker和网络服务 **systemctl restart network && systemctl restart docker**。 如果配置了开机启动，也可以直接进行**reboot**操作
 
-
-
-
-
-
-
-
-
-
-
