@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      CentOs 7 docker image WARNING: IPv4 forwarding is disabled. Networking will not work. 
+title:      IPv4 forwarding is disabled. Networking will not work. 
 date:       2021-02-01 14:49:21
 author:     liangtong
 catalog: true
