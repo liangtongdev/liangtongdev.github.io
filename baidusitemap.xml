@@ -213,15 +213,15 @@
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2017/08/29/os_20170829_shell_std_inout/</loc>
-    <lastmod>2020-08-03</lastmod>
-  </url>
-  <url>
     <loc>http://www.liangtong.site/2019/03/18/os_20190318_linux_dictionary/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
     <loc>http://www.liangtong.site/2019/03/19/os_20190319_shell_command/</loc>
+    <lastmod>2020-08-03</lastmod>
+  </url>
+  <url>
+    <loc>http://www.liangtong.site/2017/08/29/os_20170829_shell_std_inout/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
@@ -257,11 +257,11 @@
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2019/01/23/objc_20190123_runtime_objc_msgSend/</loc>
+    <loc>http://www.liangtong.site/2019/01/25/objc_20190125_runtime_@dynamic/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2019/01/25/objc_20190125_runtime_@dynamic/</loc>
+    <loc>http://www.liangtong.site/2019/01/23/objc_20190123_runtime_objc_msgSend/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
@@ -357,19 +357,19 @@
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
-    <loc>http://www.liangtong.site/2016/04/25/algorithm_20160425_sort_insert/</loc>
-    <lastmod>2020-08-03</lastmod>
-  </url>
-  <url>
-    <loc>http://www.liangtong.site/2016/04/26/algorithm_20160426_sort_merge/</loc>
-    <lastmod>2020-08-03</lastmod>
-  </url>
-  <url>
     <loc>http://www.liangtong.site/2016/04/27/algorithm_20160427_search_binary/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
+    <loc>http://www.liangtong.site/2016/04/25/algorithm_20160425_sort_insert/</loc>
+    <lastmod>2020-08-03</lastmod>
+  </url>
+  <url>
     <loc>http://www.liangtong.site/2016/05/11/algorithm_20160511_sort_quick/</loc>
+    <lastmod>2020-08-03</lastmod>
+  </url>
+  <url>
+    <loc>http://www.liangtong.site/2016/04/26/algorithm_20160426_sort_merge/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>
   <url>
