@@ -331,13 +331,6 @@
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/categories/index.html</loc>
-    
-    <lastmod>2020-08-03</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.liangtong.site/about/index.bak.html</loc>
     
     <lastmod>2020-08-03</lastmod>
@@ -346,6 +339,13 @@
   
   <url>
     <loc>http://www.liangtong.site/about/resume.html</loc>
+    
+    <lastmod>2020-08-03</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.liangtong.site/categories/index.html</loc>
     
     <lastmod>2020-08-03</lastmod>
     
@@ -534,14 +534,14 @@
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/2018/08/23/objc_20180823_note_share_file_from_other/</loc>
+    <loc>http://www.liangtong.site/2018/08/23/objc_20180823_gcd_semaphore/</loc>
     
     <lastmod>2020-08-03</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/2018/08/23/objc_20180823_gcd_semaphore/</loc>
+    <loc>http://www.liangtong.site/2018/08/23/objc_20180823_note_share_file_from_other/</loc>
     
     <lastmod>2020-08-03</lastmod>
     
@@ -667,14 +667,14 @@
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/2018/05/21/algorithm_20180521_astar/</loc>
+    <loc>http://www.liangtong.site/2016/06/13/algorithm_20160613_sort_radix/</loc>
     
     <lastmod>2020-08-03</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/2016/06/13/algorithm_20160613_sort_radix/</loc>
+    <loc>http://www.liangtong.site/2018/05/21/algorithm_20180521_astar/</loc>
     
     <lastmod>2020-08-03</lastmod>
     
@@ -688,14 +688,14 @@
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/2016/04/26/algorithm_20160426_sort_merge/</loc>
+    <loc>http://www.liangtong.site/2016/04/25/algorithm_20160425_sort_insert/</loc>
     
     <lastmod>2020-08-03</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.liangtong.site/2016/04/25/algorithm_20160425_sort_insert/</loc>
+    <loc>http://www.liangtong.site/2016/04/26/algorithm_20160426_sort_merge/</loc>
     
     <lastmod>2020-08-03</lastmod>
     
