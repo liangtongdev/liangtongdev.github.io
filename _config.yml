@@ -120,15 +120,15 @@ google_site_verification: 9KXTTa8tuuse9iILjkzFWzLNiBo3w3GtZtjUHQTf6C8
 baidu_analytics: 0403c36751ff449187ad333607a9b98f
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
-#deploy:
-#  type: git
-#  repo: https://github.com/liangtongdev/liangtongdev.github.io.git
-#  branch: master
-
 deploy:
-  type: git
-  repo: git@123.57.106.215:/home/git/blog.git
-#    git@118.31.46.183:/home/git/blog.git
-#    git@123.57.106.215:/home/git/blog.git
-#    https://github.com/liangtongdev/liangtongdev.github.io.git
-  branch: master
+ type: git
+ repo: https://github.com/liangtongdev/liangtongdev.github.io.git
+ branch: master
+
+# deploy:
+#   type: git
+#   repo: git@123.57.106.215:/home/git/blog.git
+# #    git@118.31.46.183:/home/git/blog.git
+# #    git@123.57.106.215:/home/git/blog.git
+# #    https://github.com/liangtongdev/liangtongdev.github.io.git
+#   branch: master

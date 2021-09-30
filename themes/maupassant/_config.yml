@@ -1,6 +1,6 @@
 disqus: ## Your disqus_shortname, e.g. username
 uyan: ## Your uyan_id. e.g. 1234567
-livere: ## Your livere data-uid, e.g. MTAyMC8zMDAxOC78NTgz
+livere: MTAyMC81Mjk5OS8yOTQ3NQ ## Your livere data-uid, e.g. MTAyMC8zMDAxOC78NTgz
 changyan: ## Your changyan appid, e.g. cyrALsXc8
 changyan_conf: ## Your changyan conf, e.g. prod_d8a508c2825ab57eeb43e7c69bba0e8b
 gitalk:
@@ -23,7 +23,7 @@ valine: ## https://valine.js.org
 # MiniValine
 # See: https://github.com/MiniValine/MiniValine
 minivaline:
-  enable: true
+  enable: false
   appId:  b4NoTNpM7bWgldECesJq4Lyc-gzGzoHsz
   appKey:  KXoQP7VEFXlssuenNaq2F470
   placeholder: 欢迎留言，填写邮箱，会更快的得到回复哦～ # Comment box placeholder
